@@ -61,16 +61,16 @@
             <div>
                 <div class="eyebrow">لوحة المدرب</div>
                 <h1 class="h2" style="margin:0">
-الدرس الحالي: اليوم 1 · مدخل إلى البرمجة وأول صفحة HTML                </h1>
+الدرس الحالي: اليوم 2 · القوائم والجداول والنماذج                </h1>
             </div>
                 <div class="pills">
-                    <a class="btn" href="lessons/day-1.html">افتح الدرس</a>
-                    <a class="btn primary" href="present/day-1.html">▶ ابدأ العرض</a>
+                    <a class="btn" href="lessons/day-2.html">افتح الدرس</a>
+                    <a class="btn primary" href="present/day-2.html">▶ ابدأ العرض</a>
                 </div>
         </div>
         <div class="flowbar" aria-hidden="true">
+                <span class="step st-done"></span>
                 <span class="step st-current"></span>
-                <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
@@ -81,11 +81,12 @@
                 <span class="step st-upcoming"></span>
         </div>
         <div class="control-row">
-                <button class="btn ok" type="button" data-set-completed="1" data-confirm="إكمال اليوم 1 وفتح الدرس التالي للمتدربين؟">✓ إكمال اليوم 1</button>
+                <button class="btn ok" type="button" data-set-completed="2" data-confirm="إكمال اليوم 2 وفتح الدرس التالي للمتدربين؟">✓ إكمال اليوم 2</button>
+                <button class="btn" type="button" data-set-completed="0" data-confirm="إعادة فتح اليوم 1؟ سيعود هو الدرس الحالي.">↶ إعادة فتح اليوم 1</button>
             <label class="muted small" for="completedSelect">أو حدّد عدد الدروس المكتملة:</label>
             <select id="completedSelect">
-                    <option value="0" selected="selected">0</option>
-                    <option value="1">1</option>
+                    <option value="0">0</option>
+                    <option value="1" selected="selected">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -98,7 +99,7 @@
             </select>
             <button class="btn" type="button" id="applyCompleted">تطبيق</button>
         </div>
-        <p class="muted small" style="margin:0">التغيير يظهر للمتدربين خلال دقيقتين تقريبًا. اكتمل 0 من 10. <span id="ghStatus"></span></p>
+        <p class="muted small" style="margin:0">التغيير يظهر للمتدربين خلال دقيقتين تقريبًا. اكتمل 1 من 10. <span id="ghStatus"></span></p>
     </div>
 
     <div class="panel student-only">
@@ -106,16 +107,16 @@
             <div>
                 <div class="eyebrow">مسار الدورة</div>
                 <h1 class="h2" style="margin:0">
-الدرس الحالي: اليوم 1 · مدخل إلى البرمجة وأول صفحة HTML                </h1>
+الدرس الحالي: اليوم 2 · القوائم والجداول والنماذج                </h1>
             </div>
             <div class="pills">
-                <span class="muted small">اكتمل 0 من 10</span>
-                    <a class="btn primary" href="lessons/day-1.html">افتح الدرس الحالي</a>
+                <span class="muted small">اكتمل 1 من 10</span>
+                    <a class="btn primary" href="lessons/day-2.html">افتح الدرس الحالي</a>
             </div>
         </div>
         <div class="flowbar" aria-hidden="true">
+                <span class="step st-done"></span>
                 <span class="step st-current"></span>
-                <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
@@ -146,7 +147,7 @@
                         <tr>
                             <td class="num"><b>1</b><br><small class="muted">أسبوع 1</small></td>
                             <td>
-                                <span class="status-pill st-current ">● الدرس الحالي</span>
+                                <span class="status-pill st-done ">✓ مكتمل</span>
                             </td>
                             <td><span class="pill t-html">HTML وCSS</span></td>
                             <td>
@@ -163,16 +164,14 @@
                         <tr>
                             <td class="num"><b>2</b><br><small class="muted">أسبوع 1</small></td>
                             <td>
-                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
-                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                                <span class="status-pill st-current ">● الدرس الحالي</span>
                             </td>
                             <td><span class="pill t-html">HTML وCSS</span></td>
                             <td>
-                                <a class="trainer-only" href="lessons/day-2.html"><b>القوائم والجداول والنماذج</b></a>
-                                    <span class="student-only"><span class="muted">القوائم والجداول والنماذج</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
+                                <a class="" href="lessons/day-2.html"><b>القوائم والجداول والنماذج</b></a>
                             </td>
                             <td>
-                                <div class="pills trainer-only">
+                                <div class="pills ">
                                     <a class="btn" href="downloads/day-2.pdf" download>PDF</a>
                                     <a class="btn" href="downloads/day-2.docx" download>Word</a>
                                 </div>
@@ -334,7 +333,7 @@
                 </tbody>
             </table>
         </div>
-        <p class="muted small">آخر تحديث للموقع: 2026/10/19 00:16</p>
+        <p class="muted small">آخر تحديث للموقع: 2026/10/19 00:37</p>
     </div>
 </section>
 
