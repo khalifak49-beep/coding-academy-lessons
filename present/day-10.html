@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>عرض اليوم 10: العروض والاختبار النهائي</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body class="presenting" data-playground="../editor.html" data-root="../">
+    <div class="deck" id="deck">
+        <div class="deck-controls deck-top">
+            <a class="deck-btn" href="../lessons/day-10.html" title="الخروج من العرض (Esc)">✕ خروج</a>
+            <button class="deck-btn" type="button" id="fsBtn" title="ملء الشاشة (F)">⛶ ملء الشاشة</button>
+        </div>
+
+        <main class="slides">
+            <section class="slide slide-title">
+                <div class="slide-inner">
+                    <span class="pill t-proj">المشروع</span>
+                    <div class="eyebrow big">اليوم 10 · الأسبوع 2</div>
+                    <h1>المشروع النهائي: الإكمال والعرض والاختبار النهائي</h1>
+                    <h3>في نهاية الدرس ستستطيع أن:</h3>
+                    <ul class="goals">
+                            <li>يدمج HTML و⁦C#⁩ وSQL Server في مشروع واحد يعمل.</li>
+                            <li>يشرح الكود الذي كتبه ويجيب عن أسئلة حوله.</li>
+                            <li>يقيّم ما تعلمه ويعرف الخطوة التالية في رحلته.</li>
+                    </ul>
+                </div>
+            </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 1 من 3</div>
+                        <h2>قائمة التحقق قبل العرض</h2>
+                            <div class="prose"><ul class="clean"><li>صفحة HTML تفتح وتعرض اسم النظام والنموذج والجدول بشكل منسق.</li><li>قاعدة البيانات موجودة وفيها 5 صفوف على الأقل.</li><li>برنامج ⁦C#⁩ يعمل بدون أخطاء، وكل خيارات القائمة تعمل.</li><li>جربت إدخال قيمة خاطئة (حروف بدل رقم) ولم يتوقف البرنامج.</li><li>جهزت 3 نقاط تريد أن تقولها: الفكرة، أصعب جزء، ماذا ستضيف لاحقًا.</li></ul></div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 2 من 3</div>
+                        <h2>طريقة العرض (5 دقائق)</h2>
+                            <div class="prose"><ol class="clean"><li>الفكرة ولمن هذا النظام (30 ثانية).</li><li>صفحة HTML (دقيقة).</li><li>قاعدة البيانات وتصميم الجدول في SSMS (دقيقة).</li><li>تشغيل برنامج ⁦C#⁩ وتجربة: إضافة، عرض، تعديل، حذف، إحصائيات (دقيقتان).</li><li>ما تعلمته وأصعب مشكلة واجهتها (30 ثانية).</li></ol></div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 3 من 3</div>
+                        <h2>ماذا بعد الدورة؟</h2>
+                            <div class="prose"><p>الخطوات المقترحة: JavaScript لجعل الصفحات تفاعلية، ثم ASP.NET Core لبناء مواقع تتصل بـ SQL Server مباشرة، ثم Entity Framework Core. المهم الآن: اكتب كودًا كل يوم ولو 30 دقيقة.</p></div>
+                    </div>
+                </section>
+
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">مراجعة سريعة</div>
+                        <h2>اختبر نفسك</h2>
+                        <ol class="deck-quiz" id="deckQuiz">
+                                <li>
+                                    <div>لحماية الاستعلام من SQL Injection نستخدم:</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="1">الباراميترات</span>
+                                            <span class="opt" data-correct="0">تكبير الخط</span>
+                                            <span class="opt" data-correct="0">حلقة for</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>أي لغة تُستخدم لبناء واجهة صفحة الويب؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">SQL</span>
+                                            <span class="opt" data-correct="1">HTML</span>
+                                            <span class="opt" data-correct="0">⁦C#⁩</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>List أفضل من المصفوفة عندما:</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="1">يكون عدد العناصر متغيرًا</span>
+                                            <span class="opt" data-correct="0">نريد رقمًا واحدًا</span>
+                                            <span class="opt" data-correct="0">نكتب HTML</span>
+                                    </div>
+                                </li>
+                        </ol>
+                        <button class="btn" type="button" id="revealQuiz">أظهر الإجابات</button>
+                    </div>
+                </section>
+
+            <section class="slide slide-end" hidden>
+                <div class="slide-inner">
+                    <div class="eyebrow">نهاية اليوم 10</div>
+                    <h2>الواجب</h2>
+                    <p class="lead">مبروك إتمام الدورة!</p>
+                    <div class="lesson-actions">
+                        <a class="btn big" href="../lessons/day-10.html">العودة لصفحة الدرس</a>
+                    </div>
+                    <div class="flash ok" id="caFlash" role="status" hidden></div>
+                </div>
+            </section>
+        </main>
+
+        <div class="deck-controls deck-bar">
+            <button class="deck-btn" type="button" id="prevBtn" title="السابق (→)">→ السابق</button>
+            <span class="deck-count" id="deckCount"></span>
+            <button class="deck-btn" type="button" id="nextBtn" title="التالي (← أو المسافة)">التالي ←</button>
+        </div>
+        <div class="deck-progress"><i id="deckProgress"></i></div>
+    </div>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    <script src="../js/present.js"></script>
+</body>
+</html>

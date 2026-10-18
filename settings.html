@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>الإعدادات · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-playground="editor.html" data-root="">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="false" href="index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="true" href="settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <section class="view">
+    <div class="panel stack">
+        <h1 class="h2">ربط الموقع بحساب GitHub</h1>
+        <p class="muted">لكي تتحكم من الموقع (إكمال الدروس وحفظ الدرجات) يحتاج متصفحك مفتاح وصول شخصيًا لمستودعك. المفتاح يُحفظ في هذا المتصفح فقط ولا يُنشر ولا يراه أحد. كرر الخطوة على كل جهاز تستخدمه كمدرب.</p>
+        <div class="gh-status" id="ghState">جارٍ التحقق…</div>
+        <form id="tokenForm" class="form" style="max-width:560px">
+            <label for="ghToken">مفتاح الوصول (Personal access token)</label>
+            <input id="ghToken" type="password" dir="ltr" autocomplete="off" placeholder="github_pat_..." />
+            <div class="pills">
+                <button class="btn primary" type="submit">حفظ والتحقق</button>
+                <button class="btn" type="button" id="removeToken">إزالة المفتاح من هذا المتصفح</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2 class="h3">طريقة إنشاء المفتاح (مرة واحدة، دقيقتان)</h2>
+        <ol class="clean">
+            <li>افتح <a href="https://github.com/settings/personal-access-tokens/new?name=%D9%85%D9%88%D9%82%D8%B9%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D8%A9&amp;description=%D8%AA%D8%AD%D9%83%D9%85%20%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%A8%20%D9%81%D9%8A%20%D9%85%D9%88%D9%82%D8%B9%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D8%A9%3A%20%D8%A5%D9%83%D9%85%D8%A7%D9%84%20%D8%A7%D9%84%D8%AF%D8%B1%D9%88%D8%B3%20%D9%88%D8%AD%D9%81%D8%B8%20%D8%A7%D9%84%D8%AF%D8%B1%D8%AC%D8%A7%D8%AA&amp;expires_in=90&amp;contents=write&amp;actions=write" target="_blank" rel="noopener">صفحة إنشاء مفتاح في GitHub</a> وسجّل الدخول بحسابك.</li>
+            <li>في <b>Repository access</b> اختر <b>Only select repositories</b> ثم المستودع <code dir="ltr">khalifak49-beep/CodingAcademy</code>.</li>
+            <li>في <b>Permissions</b> ← <b>Repository permissions</b> اجعل <b>Actions</b> و<b>Contents</b> على <b>Read and write</b> (إن لم تكونا مضبوطتين تلقائيًا).</li>
+            <li>اضغط <b>Generate token</b>، انسخ المفتاح والصقه في الخانة أعلاه، ثم «حفظ والتحقق».</li>
+        </ol>
+        <p class="muted small">المفتاح ينتهي بعد 90 يومًا؛ أنشئ مفتاحًا جديدًا عندها. يمكنك إلغاؤه في أي وقت من إعدادات GitHub.</p>
+    </div>
+
+    <div class="panel">
+        <h2 class="h3">الحسابات</h2>
+        <div class="scroll flat">
+            <table>
+                <thead><tr><th>اسم المستخدم</th><th>الاسم</th><th>الدور</th></tr></thead>
+                <tbody>
+                        <tr><td dir="ltr" class="mono">trainer</td><td>المدرب</td><td>مدرب: كل شيء</td></tr>
+                        <tr><td dir="ltr" class="mono">student1</td><td>المتدرب 1</td><td>متدرب: الدروس والمحرر</td></tr>
+                        <tr><td dir="ltr" class="mono">student2</td><td>المتدرب 2</td><td>متدرب: الدروس والمحرر</td></tr>
+                        <tr><td dir="ltr" class="mono">student3</td><td>المتدرب 3</td><td>متدرب: الدروس والمحرر</td></tr>
+                        <tr><td dir="ltr" class="mono">student4</td><td>المتدرب 4</td><td>متدرب: الدروس والمحرر</td></tr>
+                        <tr><td dir="ltr" class="mono">student5</td><td>المتدرب 5</td><td>متدرب: الدروس والمحرر</td></tr>
+                        <tr><td dir="ltr" class="mono">student6</td><td>المتدرب 6</td><td>متدرب: الدروس والمحرر</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="muted small">لتغيير الأسماء أو كلمات المرور أو إضافة متدرب: عدّل قسم <code>StudentSite → Accounts</code> في <a href="https://github.com/khalifak49-beep/CodingAcademy/edit/main/appsettings.json" target="_blank" rel="noopener">appsettings.json</a> على GitHub، فيتحدث الموقع تلقائيًا خلال دقيقتين.</p>
+    </div>
+</section>
+
+    </main>
+    <script src="js/site.js"></script>
+    <script src="js/static-site.js"></script>
+    
+</body>
+</html>

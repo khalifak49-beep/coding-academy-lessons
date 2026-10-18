@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>الدرجات والحضور · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-playground="editor.html" data-root="">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="false" href="index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="true" href="grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <section class="view" id="gradesApp" data-students="[{&quot;id&quot;:&quot;student1&quot;,&quot;name&quot;:&quot;\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1&quot;},{&quot;id&quot;:&quot;student2&quot;,&quot;name&quot;:&quot;\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2&quot;},{&quot;id&quot;:&quot;student3&quot;,&quot;name&quot;:&quot;\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3&quot;},{&quot;id&quot;:&quot;student4&quot;,&quot;name&quot;:&quot;\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4&quot;},{&quot;id&quot;:&quot;student5&quot;,&quot;name&quot;:&quot;\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5&quot;},{&quot;id&quot;:&quot;student6&quot;,&quot;name&quot;:&quot;\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6&quot;}]">
+    <div class="panel stack">
+        <h1 class="h2">آلية تقييم المتدربين (100 درجة)</h1>
+        <div class="weights">
+                <div class="w"><b>5</b><span>الحضور<br><small class="muted">يُحسب تلقائيًا من 10 أيام</small></span></div>
+                <div class="w"><b>5</b><span>المشاركة<br><small class="muted">التفاعل وعرض الحلول ومساعدة الزملاء</small></span></div>
+                <div class="w"><b>20</b><span>التمارين اليومية<br><small class="muted">حل تمارين الأيام 1–9 وتسليم الواجبات</small></span></div>
+                <div class="w"><b>15</b><span>اختبار المنتصف<br><small class="muted">اليوم 5: HTML وأساسيات ⁦C#⁩</small></span></div>
+                <div class="w"><b>35</b><span>المشروع النهائي<br><small class="muted">HTML 8 &#x2B; SQL 8 &#x2B; ⁦C#⁩ 12 &#x2B; العرض 7</small></span></div>
+                <div class="w"><b>20</b><span>الاختبار النهائي<br><small class="muted">اليوم 10: شامل</small></span></div>
+        </div>
+        <p class="muted small">التقديرات: ممتاز 90+ · جيد جدًا 80–89 · جيد 70–79 · مقبول 60–69 · أقل من 60 يحتاج دعمًا. الدرجات تُحفظ في مستودعك الخاص على GitHub ولا يراها المتدربون.</p>
+    </div>
+
+    <div class="grid g4" id="evalSummary"></div>
+
+    <div>
+        <div class="bar-row">
+            <h2 class="h2">الدرجات والحضور</h2>
+            <div class="pills">
+                <span class="status" id="saveState"></span>
+                <button class="btn" type="button" id="csvBtn">تنزيل CSV</button>
+                <button class="btn primary" type="button" id="saveBtn" disabled>حفظ الدرجات</button>
+            </div>
+        </div>
+        <div class="scroll">
+            <table id="evalTable">
+                <thead>
+                    <tr>
+                        <th>المتدرب</th><th>الحضور (الأيام 1–10)</th>
+                        <th class="num">مشاركة<br><small>/5</small></th><th class="num">تمارين<br><small>/20</small></th>
+                        <th class="num">منتصف<br><small>/15</small></th><th class="num">مشروع HTML<br><small>/8</small></th>
+                        <th class="num">مشروع SQL<br><small>/8</small></th><th class="num">مشروع &#x2066;C#&#x2069;<br><small>/12</small></th>
+                        <th class="num">العرض<br><small>/7</small></th><th class="num">نهائي<br><small>/20</small></th>
+                        <th class="num">المجموع<br><small>/100</small></th><th class="num">التقدير</th><th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody><tr><td colspan="13" class="muted">جارٍ تحميل الدرجات من GitHub…</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    </main>
+    <script src="js/site.js"></script>
+    <script src="js/static-site.js"></script>
+    
+    <script src="js/static-grades.js"></script>
+
+</body>
+</html>

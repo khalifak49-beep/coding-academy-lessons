@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>عرض اليوم 1: أول صفحة HTML</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body class="presenting" data-playground="../editor.html" data-root="../">
+    <div class="deck" id="deck">
+        <div class="deck-controls deck-top">
+            <a class="deck-btn" href="../lessons/day-1.html" title="الخروج من العرض (Esc)">✕ خروج</a>
+            <button class="deck-btn" type="button" id="fsBtn" title="ملء الشاشة (F)">⛶ ملء الشاشة</button>
+        </div>
+
+        <main class="slides">
+            <section class="slide slide-title">
+                <div class="slide-inner">
+                    <span class="pill t-html">HTML وCSS</span>
+                    <div class="eyebrow big">اليوم 1 · الأسبوع 1</div>
+                    <h1>مدخل إلى البرمجة وأول صفحة HTML</h1>
+                    <h3>في نهاية الدرس ستستطيع أن:</h3>
+                    <ul class="goals">
+                            <li>يشرح الفرق بين HTML (لغة ترميز) و⁦C#⁩ (لغة برمجة) وSQL (لغة استعلام) ودور كل منها في التطبيق.</li>
+                            <li>ينشئ ملف index.html في Visual Studio Community ويفتحه في المتصفح.</li>
+                            <li>يكتب الهيكل الأساسي لصفحة HTML.</li>
+                            <li>يستخدم العناوين h1–h6 والفقرات p والتنسيق strong وem.</li>
+                            <li>يضيف روابط a وصورًا img بشكل صحيح.</li>
+                    </ul>
+                </div>
+            </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 1 من 5</div>
+                        <h2>ما هي البرمجة؟</h2>
+                            <div class="prose"><p>البرمجة هي كتابة <b>تعليمات دقيقة ومرتبة</b> ينفذها الحاسوب خطوة بخطوة. الحاسوب لا يخمّن، ينفّذ ما كُتب بالضبط.</p><p>في هذه الدورة سنتعلم ثلاث لغات تعمل معًا في أي تطبيق حقيقي:</p><ul class="clean"><li><b>HTML وCSS</b>: الواجهة التي يراها المستخدم (الشكل والمحتوى).</li><li><b>⁦C#⁩</b>: المنطق والحسابات واتخاذ القرارات.</li><li><b>SQL Server</b>: حفظ البيانات واسترجاعها.</li></ul></div>
+                            <div class="note">مثال من الواقع: في نظام تسجيل الطلاب، صفحة التسجيل = HTML، التحقق من البيانات وحساب المعدل = ⁦C#⁩، حفظ بيانات الطالب = SQL Server.</div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 2 من 5</div>
+                        <h2>تجهيز الأدوات</h2>
+                            <div class="prose"><p>سنكتب HTML في <b>Visual Studio Community</b> المثبت على أجهزتكم، ونشاهد النتيجة في المتصفح (Chrome أو Edge).</p><ol class="clean"><li>أنشئ مجلدًا باسم <code>my-site</code> على سطح المكتب.</li><li>في Visual Studio اختر <b>File ← Open ← Folder</b> ثم المجلد <code>my-site</code>.</li><li>في <b>Solution Explorer</b> انقر بالزر الأيمن على المجلد ← <b>Add ← New File</b> واكتب الاسم <code>index.html</code>.</li><li>اكتب الكود واحفظ بـ <kbd>Ctrl+S</kbd>، ثم افتح الملف في المتصفح بالنقر المزدوج عليه من المجلد. بعد كل تعديل: احفظ ثم حدّث المتصفح بـ <kbd>F5</kbd>.</li></ol><p>Visual Studio يقترح أسماء الوسوم والخصائص أثناء الكتابة. وللتجربة السريعة استخدم «محرر HTML» في هذه المنصة.</p></div>
+                            <div class="note">إذا لم تظهر اقتراحات HTML في Visual Studio، افتح Visual Studio Installer ← Modify وتأكد من تثبيت حزمة ASP.NET and web development.</div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 3 من 5</div>
+                        <h2>هيكل صفحة HTML</h2>
+                            <div class="prose"><p>كل صفحة تتكون من <b>وسوم</b> (Tags) تُكتب بين علامتي <code>&lt; &gt;</code>، وأغلب الوسوم لها وسم فتح ووسم إغلاق.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;!DOCTYPE html&gt;</span><span class="ln" data-ln="1">&lt;html lang=&quot;ar&quot; dir=&quot;rtl&quot;&gt;</span><span class="ln" data-ln="2">&lt;head&gt;</span><span class="ln" data-ln="3">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><span class="ln" data-ln="4">  &lt;title&gt;صفحتي الأولى&lt;/title&gt;</span><span class="ln" data-ln="5">&lt;/head&gt;</span><span class="ln" data-ln="6">&lt;body&gt;</span><span class="ln" data-ln="7">  &lt;h1&gt;مرحبًا بالعالم&lt;/h1&gt;</span><span class="ln" data-ln="8">  &lt;p&gt;هذه أول صفحة أكتبها بلغة HTML.&lt;/p&gt;</span><span class="ln" data-ln="9">&lt;/body&gt;</span><span class="ln" data-ln="10">&lt;/html&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> هذه صفحة HTML كاملة بأبسط شكل. عند فتحها في المتصفح سترى عنوانًا كبيرًا «مرحبًا بالعالم» وتحته فقرة قصيرة، وسيظهر «صفحتي الأولى» في أعلى تبويب المتصفح.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;!DOCTYPE html&gt;</code>
+                        <span>هذا السطر يخبر المتصفح أن الملف مكتوب بالإصدار الحديث من HTML (وهو HTML5). يُكتب دائمًا في أول سطر من الصفحة ولا يظهر على الشاشة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;html lang=&quot;ar&quot; dir=&quot;rtl&quot;&gt;</code>
+                        <span>الوسم html هو الوعاء الذي يحتوي الصفحة كلها. الخاصية lang=&quot;ar&quot; تقول إن لغة الصفحة عربية، والخاصية dir=&quot;rtl&quot; تجعل اتجاه الكتابة من اليمين إلى اليسار كما يناسب العربية.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;head&gt;</code>
+                        <span>الوسم head هو «رأس» الصفحة، ويضم معلومات عن الصفحة لا تظهر داخلها مباشرة، مثل الترميز والعنوان الذي يظهر في التبويب.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;meta charset=&quot;UTF-8&quot;&gt;</code>
+                        <span>الوسم meta مع الخاصية charset=&quot;UTF-8&quot; يحدد طريقة ترميز الحروف، أي كيف تُحفظ الحروف داخل الملف. الترميز UTF-8 يدعم الحروف العربية وغيرها، فلا تظهر الكلمات رموزًا غريبة.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;title&gt;صفحتي الأولى&lt;/title&gt;</code>
+                        <span>الوسم title يحدد عنوان الصفحة الذي يظهر في أعلى تبويب المتصفح، وليس داخل الصفحة نفسها.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;/head&gt;</code>
+                        <span>هذا وسم إغلاق؛ الشرطة المائلة / تعني نهاية قسم head. معظم وسوم HTML تُفتح ثم تُغلق بهذا الشكل.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;body&gt;</code>
+                        <span>الوسم body هو «جسم» الصفحة، وكل ما نكتبه داخله هو ما يراه الزائر فعلًا على الشاشة.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;h1&gt;مرحبًا بالعالم&lt;/h1&gt;</code>
+                        <span>الوسم h1 يعرض عنوانًا رئيسيًا بخط كبير وعريض. هنا سيظهر النص «مرحبًا بالعالم» كأكبر عنوان في الصفحة.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">&lt;p&gt;هذه أول صفحة أكتبها بلغة HTML.&lt;/p&gt;</code>
+                        <span>الوسم p اختصار لكلمة paragraph أي فقرة، ويعرض نصًا عاديًا. سيظهر هذا النص تحت العنوان بخط عادي.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">&lt;/body&gt;</code>
+                        <span>هذا السطر والذي بعده يغلقان الوسمين body ثم html، أي أن جسم الصفحة انتهى ثم الصفحة كلها انتهت.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            <div class="note">head يحتوي معلومات عن الصفحة لا تظهر فيها، وbody يحتوي كل ما يراه المستخدم. dir=&quot;rtl&quot; يجعل الاتجاه من اليمين لليسار.</div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 4 من 5</div>
+                        <h2>العناوين والفقرات والتنسيق</h2>
+                            <div class="prose"><p>العناوين من <code>h1</code> (الأكبر) إلى <code>h6</code> (الأصغر). الفقرة <code>p</code>، وسطر جديد <code>br</code>، والخط العريض <code>strong</code>، والمائل <code>em</code>.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;h1&gt;عنوان رئيسي&lt;/h1&gt;</span><span class="ln" data-ln="1">&lt;h2&gt;عنوان فرعي&lt;/h2&gt;</span><span class="ln" data-ln="2">&lt;p&gt;هذه فقرة فيها كلمة &lt;strong&gt;مهمة&lt;/strong&gt; وكلمة &lt;em&gt;مائلة&lt;/em&gt;.&lt;/p&gt;</span><span class="ln" data-ln="3">&lt;p&gt;سطر أول&lt;br&gt;سطر ثانٍ&lt;/p&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> هذا المثال يعرض أنواعًا من النصوص: عنوانًا رئيسيًا، وعنوانًا فرعيًا أصغر، وفقرة فيها كلمة عريضة وكلمة مائلة، ثم فقرة مقسومة على سطرين.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;h1&gt;عنوان رئيسي&lt;/h1&gt;</code>
+                        <span>الوسم h1 يعرض أهم وأكبر عنوان في الصفحة. توجد عناوين من h1 (الأكبر) إلى h6 (الأصغر).</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;h2&gt;عنوان فرعي&lt;/h2&gt;</code>
+                        <span>الوسم h2 عنوان من المستوى الثاني، فيظهر أصغر قليلًا من h1، ونستخدمه لعناوين الأقسام الفرعية.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;p&gt;هذه فقرة فيها كلمة &lt;strong&gt;مهمة&lt;/strong&gt; وكلمة &lt;em&gt;مائلة&lt;/em&gt;.&lt;/p&gt;</code>
+                        <span>هذه فقرة p بداخلها وسمان: الوسم strong يجعل كلمة «مهمة» عريضة ويعني أنها مهمة، والوسم em يجعل كلمة «مائلة» مائلة ويعني التوكيد عليها. لاحظ أن الوسوم يمكن أن توضع داخل بعضها.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;p&gt;سطر أول&lt;br&gt;سطر ثانٍ&lt;/p&gt;</code>
+                        <span>الوسم br ينقل الكتابة إلى سطر جديد داخل الفقرة نفسها، فيظهر «سطر ثانٍ» تحت «سطر أول». هذا الوسم ليس له وسم إغلاق لأنه لا يحتوي على نص.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 5 من 5</div>
+                        <h2>الروابط والصور</h2>
+                            <div class="prose"><p>الرابط يستخدم الخاصية <code>href</code>، والصورة تستخدم <code>src</code> للمسار و<code>alt</code> لوصف الصورة. الصورة وسم مفرد لا يُغلق.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;افتح جوجل&lt;/a&gt;</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">&lt;img src=&quot;https://placehold.co/300x150&quot; alt=&quot;صورة توضيحية&quot; width=&quot;300&quot;&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> هذا المثال يضيف رابطًا يفتح موقع جوجل في تبويب جديد، وصورة عرضها 300 بكسل.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;افتح جوجل&lt;/a&gt;</code>
+                        <span>الوسم a يصنع رابطًا يمكن الضغط عليه، والخاصية href تحدد عنوان الموقع الذي ينتقل إليه. الخاصية target=&quot;_blank&quot; تجعل الرابط يُفتح في تبويب جديد، والنص «افتح جوجل» هو ما يظهر للزائر.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;img src=&quot;https://placehold.co/300x150&quot; alt=&quot;صورة توضيحية&quot; width=&quot;300&quot;&gt;</code>
+                        <span>الوسم img يعرض صورة، والخاصية src تحدد مكان الصورة (هنا صورة تجريبية من الإنترنت). الخاصية alt نص بديل يظهر إذا لم تُحمَّل الصورة وتقرؤه برامج المكفوفين، والخاصية width تجعل عرض الصورة 300 بكسل. الوسم img ليس له وسم إغلاق.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            <div class="note">target=&quot;_blank&quot; يفتح الرابط في نافذة جديدة. احفظ الصور داخل مجلد المشروع واكتب اسمها: src=&quot;photo.jpg&quot;.</div>
+                    </div>
+                </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 1 من 3 · سهل</div>
+                        <h2>صفحة تعريف بنفسي</h2>
+                        <p class="lead">أنشئ صفحة فيها عنوان رئيسي باسمك، وعنوان فرعي «نبذة عني»، وفقرتان عن نفسك وهواياتك، واجعل كلمة واحدة على الأقل بخط عريض.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;!DOCTYPE html&gt;</span><span class="ln" data-ln="1">&lt;html lang=&quot;ar&quot; dir=&quot;rtl&quot;&gt;</span><span class="ln" data-ln="2">&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;أحمد&lt;/title&gt;&lt;/head&gt;</span><span class="ln" data-ln="3">&lt;body&gt;</span><span class="ln" data-ln="4">  &lt;h1&gt;أحمد علي&lt;/h1&gt;</span><span class="ln" data-ln="5">  &lt;h2&gt;نبذة عني&lt;/h2&gt;</span><span class="ln" data-ln="6">  &lt;p&gt;أنا طالب أحب &lt;strong&gt;البرمجة&lt;/strong&gt; والتقنية.&lt;/p&gt;</span><span class="ln" data-ln="7">  &lt;p&gt;هواياتي: القراءة وكرة القدم.&lt;/p&gt;</span><span class="ln" data-ln="8">&lt;/body&gt;</span><span class="ln" data-ln="9">&lt;/html&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> صفحة تعريف شخصية بسيطة: تعرض اسم «أحمد علي» كعنوان كبير، ثم عنوانًا فرعيًا «نبذة عني»، ثم فقرتين عنه.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;!DOCTYPE html&gt;</code>
+                        <span>يخبر المتصفح أن الصفحة مكتوبة بلغة HTML الحديثة، ويوضع دائمًا في أول سطر.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;html lang=&quot;ar&quot; dir=&quot;rtl&quot;&gt;</code>
+                        <span>الوسم html يحتوي الصفحة كلها؛ lang=&quot;ar&quot; يحدد أن اللغة عربية، وdir=&quot;rtl&quot; يجعل الاتجاه من اليمين إلى اليسار.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;أحمد&lt;/title&gt;&lt;/head&gt;</code>
+                        <span>هنا كُتب قسم head كاملًا في سطر واحد: الوسم meta charset=&quot;UTF-8&quot; لدعم الحروف العربية، والوسم title يجعل كلمة «أحمد» تظهر في تبويب المتصفح.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;body&gt;</code>
+                        <span>بداية جسم الصفحة؛ كل ما بداخله يظهر على الشاشة.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;h1&gt;أحمد علي&lt;/h1&gt;</code>
+                        <span>الوسم h1 يعرض الاسم «أحمد علي» كعنوان رئيسي كبير في أعلى الصفحة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;h2&gt;نبذة عني&lt;/h2&gt;</code>
+                        <span>الوسم h2 عنوان فرعي أصغر من h1، يبدأ قسم التعريف بالنفس.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;p&gt;أنا طالب أحب &lt;strong&gt;البرمجة&lt;/strong&gt; والتقنية.&lt;/p&gt;</code>
+                        <span>فقرة p تعرض جملة تعريفية، والوسم strong يجعل كلمة «البرمجة» عريضة للتأكيد على أهميتها.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;p&gt;هواياتي: القراءة وكرة القدم.&lt;/p&gt;</code>
+                        <span>فقرة ثانية تعرض الهوايات، وتظهر تحت الفقرة الأولى في سطر جديد تلقائيًا لأن كل فقرة p تبدأ من سطر جديد.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">&lt;/body&gt;</code>
+                        <span>هذا السطر والذي بعده يغلقان جسم الصفحة ثم الصفحة كلها.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 2 من 3 · سهل</div>
+                        <h2>صورة ورابط</h2>
+                        <p class="lead">أضف إلى صفحتك صورة بعرض 250 بكسل مع نص بديل، ورابطًا لموقع تحبه يفتح في نافذة جديدة.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;img src=&quot;https://placehold.co/250x250&quot; alt=&quot;صورتي&quot; width=&quot;250&quot;&gt;</span><span class="ln" data-ln="1">&lt;p&gt;موقعي المفضل: &lt;a href=&quot;https://www.wikipedia.org&quot; target=&quot;_blank&quot;&gt;ويكيبيديا&lt;/a&gt;&lt;/p&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الكود صورة مربعة بحجم 250 بكسل، وتحتها جملة فيها رابط إلى موقع ويكيبيديا يُفتح في تبويب جديد.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;img src=&quot;https://placehold.co/250x250&quot; alt=&quot;صورتي&quot; width=&quot;250&quot;&gt;</code>
+                        <span>الوسم img يعرض صورة مصدرها في الخاصية src، والخاصية alt تعطي وصفًا نصيًا «صورتي» يظهر إذا تعذر تحميل الصورة، والخاصية width تحدد عرضها بـ 250 بكسل.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;p&gt;موقعي المفضل: &lt;a href=&quot;https://www.wikipedia.org&quot; target=&quot;_blank&quot;&gt;ويكيبيديا&lt;/a&gt;&lt;/p&gt;</code>
+                        <span>فقرة p بداخلها رابط a؛ الخاصية href تحدد عنوان موقع ويكيبيديا، وtarget=&quot;_blank&quot; تفتحه في تبويب جديد. كلمة «ويكيبيديا» تظهر بلون مختلف وتحتها خط لتدل على أنها رابط.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 3 من 3 · تحدٍّ</div>
+                        <h2>تحدٍّ: صفحة وصفة طعام</h2>
+                        <p class="lead">صمم صفحة لوصفة طعام: عنوان رئيسي باسم الوصفة، صورة، عنوانان فرعيان «المكونات» و«طريقة التحضير» وتحت كل منهما فقرة.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;h1&gt;الكبسة&lt;/h1&gt;</span><span class="ln" data-ln="1">&lt;img src=&quot;https://placehold.co/400x200&quot; alt=&quot;صورة الكبسة&quot; width=&quot;400&quot;&gt;</span><span class="ln" data-ln="2">&lt;h2&gt;المكونات&lt;/h2&gt;</span><span class="ln" data-ln="3">&lt;p&gt;أرز، دجاج، بصل، طماطم، بهارات الكبسة.&lt;/p&gt;</span><span class="ln" data-ln="4">&lt;h2&gt;طريقة التحضير&lt;/h2&gt;</span><span class="ln" data-ln="5">&lt;p&gt;نقلي البصل ثم نضيف الدجاج والطماطم والبهارات، ثم الماء والأرز ونتركه ينضج.&lt;/p&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> صفحة وصفة طبخ للكبسة: عنوان رئيسي، ثم صورة، ثم قسم للمكونات وقسم لطريقة التحضير، لكل قسم عنوان فرعي وفقرة.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;h1&gt;الكبسة&lt;/h1&gt;</code>
+                        <span>الوسم h1 يعرض اسم الوصفة «الكبسة» كعنوان رئيسي كبير.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;img src=&quot;https://placehold.co/400x200&quot; alt=&quot;صورة الكبسة&quot; width=&quot;400&quot;&gt;</code>
+                        <span>الوسم img يعرض صورة للوصفة؛ src مكان الصورة، وalt وصف نصي بديل، وwidth يجعل عرضها 400 بكسل.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;h2&gt;المكونات&lt;/h2&gt;</code>
+                        <span>الوسم h2 عنوان فرعي يبدأ قسم المكونات، ويظهر أصغر من العنوان الرئيسي.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;p&gt;أرز، دجاج، بصل، طماطم، بهارات الكبسة.&lt;/p&gt;</code>
+                        <span>فقرة p تعرض قائمة المكونات كنص عادي.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;h2&gt;طريقة التحضير&lt;/h2&gt;</code>
+                        <span>عنوان فرعي آخر من نوع h2 يبدأ قسم طريقة التحضير، فتبدو الصفحة منظمة في أقسام.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;p&gt;نقلي البصل ثم نضيف الدجاج والطماطم والبهارات، ثم الماء والأرز ونتركه ينضج.&lt;/p&gt;</code>
+                        <span>فقرة p تشرح خطوات التحضير، وتظهر تحت عنوان «طريقة التحضير».</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">مراجعة سريعة</div>
+                        <h2>اختبر نفسك</h2>
+                        <ol class="deck-quiz" id="deckQuiz">
+                                <li>
+                                    <div>أي لغة مسؤولة عن حفظ البيانات واسترجاعها؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">HTML</span>
+                                            <span class="opt" data-correct="0">⁦C#⁩</span>
+                                            <span class="opt" data-correct="1">SQL</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>أين نكتب المحتوى الذي يظهر للمستخدم؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">داخل head</span>
+                                            <span class="opt" data-correct="1">داخل body</span>
+                                            <span class="opt" data-correct="0">داخل title</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>ما الخاصية التي تحدد مسار الصورة؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">href</span>
+                                            <span class="opt" data-correct="1">src</span>
+                                            <span class="opt" data-correct="0">alt</span>
+                                    </div>
+                                </li>
+                        </ol>
+                        <button class="btn" type="button" id="revealQuiz">أظهر الإجابات</button>
+                    </div>
+                </section>
+
+            <section class="slide slide-end" hidden>
+                <div class="slide-inner">
+                    <div class="eyebrow">نهاية اليوم 1</div>
+                    <h2>الواجب</h2>
+                    <p class="lead">أكمل صفحة التعريف وأضف إليها رابطين وصورتين.</p>
+                    <div class="lesson-actions">
+                            <button class="btn ok big" type="button" data-set-completed="1" data-confirm="إكمال اليوم 1 وفتح الدرس التالي للمتدربين؟">✓ إكمال الدرس وفتح اليوم 2</button>
+                        <a class="btn big" href="../lessons/day-1.html">العودة لصفحة الدرس</a>
+                    </div>
+                    <div class="flash ok" id="caFlash" role="status" hidden></div>
+                </div>
+            </section>
+        </main>
+
+        <div class="deck-controls deck-bar">
+            <button class="deck-btn" type="button" id="prevBtn" title="السابق (→)">→ السابق</button>
+            <span class="deck-count" id="deckCount"></span>
+            <button class="deck-btn" type="button" id="nextBtn" title="التالي (← أو المسافة)">التالي ←</button>
+        </div>
+        <div class="deck-progress"><i id="deckProgress"></i></div>
+    </div>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    <script src="../js/present.js"></script>
+</body>
+</html>

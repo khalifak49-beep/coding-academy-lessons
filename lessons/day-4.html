@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 4: المتغيرات والإدخال · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="true">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-cs">⁦C#⁩</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 4 · الأسبوع 1 · ساعتان</span>
+            </div>
+            <h1>أول برنامج بـ ⁦C#⁩: المتغيرات وأنواع البيانات</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-4.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-4.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-4.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>ينشئ مشروع Console App في Visual Studio ويشغله.</li>
+                <li>يطبع النصوص بـ Console.WriteLine.</li>
+                <li>يعرّف متغيرات من الأنواع int وdouble وstring وbool.</li>
+                <li>يقرأ مدخلات المستخدم ويحولها إلى أرقام.</li>
+                <li>يدمج المتغيرات في النصوص باستخدام $&quot;...&quot;.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:10</time><span>مراجعة سريعة لدرس الأمس وحل الواجب</span></div>
+                <div class="slot"><time>0:10 – 0:50</time><span>شرح الدرس مع أمثلة حيّة يكتبها المدرب والمتدربون معًا</span></div>
+                <div class="slot"><time>0:50 – 1:00</time><span>استراحة</span></div>
+                <div class="slot"><time>1:00 – 1:40</time><span>تمارين عملية فردية (المدرب يتنقل بين المتدربين الستة)</span></div>
+                <div class="slot"><time>1:40 – 1:55</time><span>تصحيح جماعي ومناقشة الأخطاء الشائعة</span></div>
+                <div class="slot"><time>1:55 – 2:00</time><span>ملخص الدرس &#x2B; اختبار ذاتي سريع &#x2B; الواجب</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. إنشاء أول مشروع</h3>
+            <div class="prose"><p>افتح <b>Visual Studio Community</b> ← Create a new project ← <b>Console App</b> (⁦C#⁩) ← اختر أحدث إصدار <b>.NET</b> يظهر في القائمة ← Create. ثم اضغط <kbd>F5</kbd> أو زر التشغيل الأخضر.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">// هذا تعليق: لا ينفذه الحاسوب</span><span class="ln" data-ln="1">Console.WriteLine(&quot;مرحبًا بالعالم!&quot;);</span><span class="ln" data-ln="2">Console.WriteLine(&quot;أنا أتعلم C#&quot;);</span></code></pre>
+            <div class="out">مرحبًا بالعالم!&#xA;أنا أتعلم C#</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج بسيط يطبع سطرين على الشاشة: «مرحبًا بالعالم!» ثم «أنا أتعلم ⁦C#⁩». السطر الأول تعليق لا يظهر عند التشغيل.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">// هذا تعليق: لا ينفذه الحاسوب</code>
+                        <span>الرمزان // يبدآن «تعليقًا»، وهو ملاحظة نكتبها للبشر داخل الكود. الحاسوب يتجاهل كل ما بعد // حتى نهاية السطر، فلا يؤثر على عمل البرنامج.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">Console.WriteLine(&quot;مرحبًا بالعالم!&quot;);</code>
+                        <span>Console هي «الشاشة السوداء» التي يكتب فيها البرنامج، و WriteLine أمر يطبع النص الموجود بين القوسين ثم ينتقل إلى سطر جديد. النص يوضع بين علامتي تنصيص &quot;...&quot;، والفاصلة المنقوطة ; في النهاية تعني «انتهت هذه التعليمة» ويجب وضعها بعد كل تعليمة في ⁦C#⁩.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.WriteLine(&quot;أنا أتعلم C#&quot;);</code>
+                        <span>تعليمة ثانية من نفس النوع تطبع «أنا أتعلم ⁦C#⁩» في سطر جديد. الحاسوب ينفذ التعليمات بالترتيب من الأعلى إلى الأسفل، لذلك يظهر هذا السطر بعد الأول.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">كل أمر في ⁦C#⁩ ينتهي بفاصلة منقوطة ; ونسيانها هو أكثر خطأ شائع عند المبتدئين. ولغة ⁦C#⁩ حساسة لحالة الأحرف: Console غير console.</div>
+    </div>
+    <div class="sec">
+        <h3>2. المتغيرات وأنواع البيانات</h3>
+            <div class="prose"><p>المتغير صندوق له <b>نوع</b> و<b>اسم</b> و<b>قيمة</b>.</p><table><thead><tr><th>النوع</th><th>يخزن</th><th>مثال</th></tr></thead><tbody><tr><td><code>int</code></td><td>عدد صحيح</td><td><code>int age = 20;</code></td></tr><tr><td><code>double</code></td><td>عدد عشري</td><td><code>double price = 9.5;</code></td></tr><tr><td><code>string</code></td><td>نص</td><td><code>string name = "Ali";</code></td></tr><tr><td><code>bool</code></td><td>صح/خطأ</td><td><code>bool passed = true;</code></td></tr><tr><td><code>char</code></td><td>حرف واحد</td><td><code>char grade = 'A';</code></td></tr></tbody></table></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">string name = &quot;سارة&quot;;</span><span class="ln" data-ln="1">int age = 22;</span><span class="ln" data-ln="2">double gpa = 3.75;</span><span class="ln" data-ln="3">bool isStudent = true;</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">Console.WriteLine($&quot;الاسم: {name}&quot;);</span><span class="ln" data-ln="6">Console.WriteLine($&quot;العمر: {age} - المعدل: {gpa}&quot;);</span><span class="ln" data-ln="7">Console.WriteLine($&quot;طالبة؟ {isStudent}&quot;);</span></code></pre>
+            <div class="out">الاسم: سارة&#xA;العمر: 22 - المعدل: 3.75&#xA;طالبة؟ True</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> ينشئ البرنامج أربعة متغيرات من أنواع مختلفة (نص، عدد صحيح، عدد عشري، صح/خطأ) ثم يطبع قيمها داخل جمل. سيرى الطالب: الاسم: سارة، ثم العمر والمعدل، ثم «طالبة؟ True».</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">string name = &quot;سارة&quot;;</code>
+                        <span>هنا ننشئ «متغيرًا»، وهو صندوق في الذاكرة له اسم ويحفظ قيمة. الكلمة string تعني أن نوعه «نص»، واسمه name، والعلامة = تعني «ضع القيمة التي على اليمين داخل المتغير»، فيصبح name يحتوي على النص &quot;سارة&quot;.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">int age = 22;</code>
+                        <span>الكلمة int تعني «عدد صحيح» أي عدد بدون كسور. أنشأنا متغيرًا اسمه age ووضعنا فيه 22، ولاحظ أن الأعداد لا توضع بين علامات تنصيص.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">double gpa = 3.75;</code>
+                        <span>الكلمة double تعني «عدد عشري» يمكن أن يحتوي على فاصلة عشرية. المتغير gpa يحفظ المعدل 3.75، ونكتب الفاصلة العشرية في الكود بنقطة دائمًا.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">bool isStudent = true;</code>
+                        <span>الكلمة bool نوع لا يحمل إلا قيمتين: true (صحيح) أو false (خطأ). المتغير isStudent يحفظ true أي «نعم، هي طالبة».</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Console.WriteLine($&quot;الاسم: {name}&quot;);</code>
+                        <span>العلامة $ قبل النص تسمح لنا بوضع متغيرات داخل النص بين قوسين معقوفين { }، وهذا يسمى «إدراج القيم في النص». عند التشغيل يُستبدل {name} بقيمته فيظهر: الاسم: سارة.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine($&quot;العمر: {age} - المعدل: {gpa}&quot;);</code>
+                        <span>يمكن إدراج أكثر من متغير في النص نفسه. هنا يُستبدل {age} بـ 22 و {gpa} بـ 3.75، فيظهر العمر والمعدل في سطر واحد.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">Console.WriteLine($&quot;طالبة؟ {isStudent}&quot;);</code>
+                        <span>عند طباعة متغير من نوع bool تكتب ⁦C#⁩ قيمته بالإنجليزية وبحرف كبير في أوله، فيظهر على الشاشة: طالبة؟ True.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>3. قراءة مدخلات المستخدم</h3>
+            <div class="prose"><p><code>Console.ReadLine()</code> يقرأ ما يكتبه المستخدم كنص دائمًا. لتحويله إلى رقم نستخدم <code>int.Parse</code> أو <code>double.Parse</code>.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;ما اسمك؟ &quot;);</span><span class="ln" data-ln="1">string name = Console.ReadLine();</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">Console.Write(&quot;كم عمرك؟ &quot;);</span><span class="ln" data-ln="4">int age = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">Console.WriteLine($&quot;أهلًا {name}، بعد 5 سنوات سيكون عمرك {age &#x2B; 5}&quot;);</span></code></pre>
+            <div class="out">ما اسمك؟ خالد&#xA;كم عمرك؟ 20&#xA;أهلًا خالد، بعد 5 سنوات سيكون عمرك 25</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يسأل البرنامج المستخدم عن اسمه وعمره، ثم يرحب به ويخبره كم سيكون عمره بعد 5 سنوات. مثلًا إذا كتب «أحمد» و 20 يظهر: أهلًا أحمد، بعد 5 سنوات سيكون عمرك 25.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;ما اسمك؟ &quot;);</code>
+                        <span>الأمر Write يطبع النص مثل WriteLine لكنه لا ينتقل إلى سطر جديد، فيبقى المؤشر بجانب السؤال ليكتب المستخدم إجابته في نفس السطر.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">string name = Console.ReadLine();</code>
+                        <span>الأمر Console.ReadLine ينتظر حتى يكتب المستخدم شيئًا ويضغط Enter، ثم يعيد ما كتبه على شكل نص (string). نحفظ هذا النص في المتغير name لنستخدمه لاحقًا.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.Write(&quot;كم عمرك؟ &quot;);</code>
+                        <span>نطبع السؤال الثاني بنفس الطريقة، دون الانتقال إلى سطر جديد.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">int age = int.Parse(Console.ReadLine());</code>
+                        <span>ReadLine يعيد دائمًا نصًا حتى لو كتب المستخدم أرقامًا، والنص &quot;20&quot; لا يمكن جمعه كعدد. لذلك نستخدم int.Parse الذي يحوّل النص إلى عدد صحيح int، وإذا كتب المستخدم شيئًا ليس عددًا يتوقف البرنامج برسالة خطأ.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine($&quot;أهلًا {name}، بعد 5 سنوات سيكون عمرك {age &#x2B; 5}&quot;);</code>
+                        <span>داخل الأقواس { } في النص الذي يبدأ بـ $ يمكن وضع عملية حسابية وليس متغيرًا فقط. هنا {age &#x2B; 5} يُحسب أولًا ثم تُطبع النتيجة، أما المتغير age نفسه فلا تتغير قيمته.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">لعرض العربية بشكل صحيح في الكونسول أضف في أول البرنامج: Console.OutputEncoding = System.Text.Encoding.UTF8;</div>
+    </div>
+
+    <h2 class="h2">التمارين العملية</h2>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 1: برنامج ترحيب</h4>
+                <span class="lvl">سهل</span>
+            </div>
+            <div class="prose">اطلب من المستخدم اسمه ومدينته، ثم اطبع: «مرحبًا [الاسم] من [المدينة]!».</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;اسمك: &quot;);</span><span class="ln" data-ln="1">string name = Console.ReadLine();</span><span class="ln" data-ln="2">Console.Write(&quot;مدينتك: &quot;);</span><span class="ln" data-ln="3">string city = Console.ReadLine();</span><span class="ln" data-ln="4">Console.WriteLine($&quot;مرحبًا {name} من {city}!&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يسأل البرنامج المستخدم عن اسمه ومدينته ثم يطبع ترحيبًا يجمعهما، مثل: مرحبًا سارة من مسقط!</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;اسمك: &quot;);</code>
+                        <span>Console.Write يطبع السؤال ويترك المؤشر في نفس السطر حتى يكتب المستخدم بجانبه.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">string name = Console.ReadLine();</code>
+                        <span>Console.ReadLine يقرأ ما يكتبه المستخدم حتى يضغط Enter ويعيده كنص، فنحفظه في المتغير name من نوع string.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.Write(&quot;مدينتك: &quot;);</code>
+                        <span>نطبع السؤال الثاني عن المدينة بنفس الطريقة.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">string city = Console.ReadLine();</code>
+                        <span>نقرأ اسم المدينة ونحفظه في متغير نصي جديد اسمه city. لا نحتاج إلى تحويل هنا لأننا نريد نصًا أصلًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">Console.WriteLine($&quot;مرحبًا {name} من {city}!&quot;);</code>
+                        <span>النص الذي يبدأ بـ $ يسمح بإدراج المتغيرات بين { }، فيُستبدل {name} و {city} بما كتبه المستخدم ثم يُطبع السطر كاملًا.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 2: مساحة المستطيل</h4>
+                <span class="lvl">متوسط</span>
+            </div>
+            <div class="prose">اقرأ الطول والعرض (أعداد عشرية) واطبع المساحة والمحيط.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;الطول: &quot;);</span><span class="ln" data-ln="1">double length = double.Parse(Console.ReadLine());</span><span class="ln" data-ln="2">Console.Write(&quot;العرض: &quot;);</span><span class="ln" data-ln="3">double width = double.Parse(Console.ReadLine());</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">double area = length * width;</span><span class="ln" data-ln="6">double perimeter = 2 * (length &#x2B; width);</span><span class="ln" data-ln="7">Console.WriteLine($&quot;المساحة = {area}&quot;);</span><span class="ln" data-ln="8">Console.WriteLine($&quot;المحيط = {perimeter}&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يطلب البرنامج طول المستطيل وعرضه، ثم يحسب مساحته ومحيطه ويطبعهما. مثلًا مع طول 5 وعرض 3 يظهر: المساحة = 15 ثم المحيط = 16.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;الطول: &quot;);</code>
+                        <span>نطبع طلبًا للمستخدم ليكتب الطول، ويبقى المؤشر في نفس السطر لأننا استخدمنا Write وليس WriteLine.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">double length = double.Parse(Console.ReadLine());</code>
+                        <span>ReadLine يعيد نصًا، و double.Parse يحوّله إلى عدد عشري double حتى نستطيع إجراء الحساب عليه، ويقبل أعدادًا بكسور مثل 2.5. نحفظ النتيجة في المتغير length.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.Write(&quot;العرض: &quot;);</code>
+                        <span>نطلب من المستخدم إدخال العرض.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">double width = double.Parse(Console.ReadLine());</code>
+                        <span>نقرأ العرض ونحوّله إلى عدد عشري بنفس الطريقة ونحفظه في width.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">double area = length * width;</code>
+                        <span>العلامة * تعني الضرب في ⁦C#⁩. نضرب الطول في العرض للحصول على المساحة ونحفظ الناتج في متغير جديد اسمه area.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">double perimeter = 2 * (length &#x2B; width);</code>
+                        <span>الأقواس ( ) تجعل الجمع يُنفذ أولًا، ثم يُضرب الناتج في 2. بدون الأقواس كانت ⁦C#⁩ ستضرب 2 في length أولًا لأن الضرب يسبق الجمع، فتكون النتيجة خاطئة.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">Console.WriteLine($&quot;المساحة = {area}&quot;);</code>
+                        <span>نطبع المساحة بإدراج المتغير area داخل النص باستخدام $ والأقواس { }.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">Console.WriteLine($&quot;المحيط = {perimeter}&quot;);</code>
+                        <span>نطبع المحيط في سطر جديد بنفس الطريقة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 3: تحدٍّ: تحويل الحرارة</h4>
+                <span class="lvl">تحدٍّ</span>
+            </div>
+            <div class="prose">اقرأ درجة الحرارة بالمئوية وحوّلها إلى فهرنهايت بالمعادلة F = C × 9 / 5 &#x2B; 32.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;الحرارة بالمئوية: &quot;);</span><span class="ln" data-ln="1">double c = double.Parse(Console.ReadLine());</span><span class="ln" data-ln="2">double f = c * 9 / 5 &#x2B; 32;</span><span class="ln" data-ln="3">Console.WriteLine($&quot;{c}°C = {f}°F&quot;);</span></code></pre>
+            <div class="out">الحرارة بالمئوية: 30&#xA;30°C = 86°F</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يطلب البرنامج درجة الحرارة بالمئوية ويحوّلها إلى فهرنهايت. مثلًا إذا أدخل المستخدم 100 يظهر: 100°C = 212°F.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;الحرارة بالمئوية: &quot;);</code>
+                        <span>نطبع طلبًا للمستخدم ليكتب درجة الحرارة، ويبقى المؤشر بجانبه لأننا استخدمنا Write.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">double c = double.Parse(Console.ReadLine());</code>
+                        <span>نقرأ ما كتبه المستخدم كنص بـ ReadLine ثم نحوّله إلى عدد عشري بـ double.Parse، ونحفظه في المتغير c.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">double f = c * 9 / 5 &#x2B; 32;</code>
+                        <span>هذه معادلة التحويل: ⁦C#⁩ تنفذ الضرب * والقسمة / أولًا من اليسار إلى اليمين، ثم الجمع &#x2B; في الأخير. ولأن c من نوع double فالنتيجة تحتفظ بالكسور ولا تضيع.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.WriteLine($&quot;{c}°C = {f}°F&quot;);</code>
+                        <span>نطبع القيمتين داخل نص واحد باستخدام $ و { }، والرموز °C و °F مجرد نص عادي يُطبع كما هو.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. أي نوع يناسب تخزين السعر 12.5؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">int</button>
+                            <button type="button" class="opt" data-correct="1">double</button>
+                            <button type="button" class="opt" data-correct="0">bool</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. ماذا يُرجع Console.ReadLine()؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">رقمًا</button>
+                            <button type="button" class="opt" data-correct="1">نصًا string</button>
+                            <button type="button" class="opt" data-correct="0">قيمة bool</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. ما الذي ينقص هذا السطر؟  int x = 5</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">فاصلة منقوطة ;</button>
+                            <button type="button" class="opt" data-correct="0">قوسان ()</button>
+                            <button type="button" class="opt" data-correct="0">علامة $</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> اكتب برنامجًا يقرأ اسم منتج وسعره وكميته ويطبع الإجمالي.</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-3.html">→ اليوم 3</a>
+                <a class="btn primary trainer-only" href="day-5.html">اليوم 5 ←</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

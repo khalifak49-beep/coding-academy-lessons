@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 6: الحلقات والمصفوفات · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="true">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-cs">⁦C#⁩</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 6 · الأسبوع 2 · ساعتان</span>
+            </div>
+            <h1>الحلقات التكرارية والمصفوفات</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-6.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-6.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-6.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>يكرر الأوامر باستخدام for وwhile.</li>
+                <li>يميز متى يستخدم for ومتى يستخدم while.</li>
+                <li>يخزن مجموعة قيم في مصفوفة ويصل إليها بالفهرس.</li>
+                <li>يمر على المصفوفة بـ foreach ويحسب المجموع والمتوسط والأكبر.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:10</time><span>مراجعة سريعة لدرس الأمس وحل الواجب</span></div>
+                <div class="slot"><time>0:10 – 0:50</time><span>شرح الدرس مع أمثلة حيّة يكتبها المدرب والمتدربون معًا</span></div>
+                <div class="slot"><time>0:50 – 1:00</time><span>استراحة</span></div>
+                <div class="slot"><time>1:00 – 1:40</time><span>تمارين عملية فردية (المدرب يتنقل بين المتدربين الستة)</span></div>
+                <div class="slot"><time>1:40 – 1:55</time><span>تصحيح جماعي ومناقشة الأخطاء الشائعة</span></div>
+                <div class="slot"><time>1:55 – 2:00</time><span>ملخص الدرس &#x2B; اختبار ذاتي سريع &#x2B; الواجب</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. حلقة for</h3>
+            <div class="prose"><p>نستخدمها عندما نعرف عدد مرات التكرار مسبقًا. تتكون من: <b>البداية</b>؛ <b>شرط الاستمرار</b>؛ <b>الزيادة</b>.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">for (int i = 1; i &lt;= 5; i&#x2B;&#x2B;)</span><span class="ln" data-ln="1">{</span><span class="ln" data-ln="2">    Console.WriteLine($&quot;المحاولة رقم {i}&quot;);</span><span class="ln" data-ln="3">}</span></code></pre>
+            <div class="out">المحاولة رقم 1&#xA;المحاولة رقم 2&#xA;المحاولة رقم 3&#xA;المحاولة رقم 4&#xA;المحاولة رقم 5</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يكرر طباعة سطر واحد خمس مرات باستخدام حلقة for، فيرى الطالب: المحاولة رقم 1 حتى المحاولة رقم 5.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">for (int i = 1; i &lt;= 5; i&#x2B;&#x2B;)</code>
+                        <span>الكلمة for تبدأ حلقة تكرار لها ثلاثة أجزاء مفصولة بفاصلة منقوطة: البداية int i = 1 تنشئ عدّادًا قيمته 1، والشرط i &lt;= 5 يعني استمر ما دام العداد أصغر من أو يساوي 5، والخطوة i&#x2B;&#x2B; تزيد العداد بمقدار 1 بعد كل دورة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع مجموعة أسطر في كتلة واحدة، وهنا تحدد الأسطر التي ستتكرر في كل دورة من الحلقة.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.WriteLine($&quot;المحاولة رقم {i}&quot;);</code>
+                        <span>يطبع هذا السطر نصًا ثم ينتقل لسطر جديد. العلامة $ قبل النص تسمح بوضع متغير داخل أقواس { } فتظهر قيمته، لذلك يُطبع رقم الدورة الحالية: 1 ثم 2 ثم ... حتى 5.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>2. حلقة while</h3>
+            <div class="prose"><p>تستمر ما دام الشرط صحيحًا، وتناسب الحالات التي لا نعرف فيها عدد التكرارات، مثل قوائم البرامج.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">string password = &quot;&quot;;</span><span class="ln" data-ln="1">while (password != &quot;1234&quot;)</span><span class="ln" data-ln="2">{</span><span class="ln" data-ln="3">    Console.Write(&quot;أدخل كلمة المرور: &quot;);</span><span class="ln" data-ln="4">    password = Console.ReadLine();</span><span class="ln" data-ln="5">}</span><span class="ln" data-ln="6">Console.WriteLine(&quot;تم الدخول بنجاح&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يطلب كلمة المرور مرارًا حتى يكتب المستخدم 1234، ثم يطبع رسالة نجاح الدخول.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">string password = &quot;&quot;;</code>
+                        <span>ننشئ متغيرًا نصيًا من نوع string اسمه password ونعطيه قيمة فارغة &quot;&quot; في البداية، حتى يكون له قيمة يمكن فحصها في شرط الحلقة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">while (password != &quot;1234&quot;)</code>
+                        <span>الحلقة while تكرر الكتلة التي بعدها ما دام الشرط صحيحًا. المعامل != يعني «لا يساوي»، أي استمر في التكرار ما دامت كلمة المرور ليست &quot;1234&quot;. نستخدم while عندما لا نعرف مسبقًا عدد مرات التكرار.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع الأسطر التي تتكرر داخل الحلقة في كتلة واحدة.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.Write(&quot;أدخل كلمة المرور: &quot;);</code>
+                        <span>الأمر Console.Write يطبع النص دون أن ينتقل إلى سطر جديد، فيكتب المستخدم إجابته بجانب السؤال مباشرة.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">password = Console.ReadLine();</code>
+                        <span>الأمر Console.ReadLine ينتظر المستخدم حتى يكتب نصًا ويضغط Enter، ثم نخزّن ما كتبه في المتغير password لتُفحص قيمته الجديدة في شرط الحلقة مرة أخرى.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine(&quot;تم الدخول بنجاح&quot;);</code>
+                        <span>هذا السطر خارج الحلقة، فلا يُنفَّذ إلا بعد أن يصبح الشرط خاطئًا، أي بعد أن يكتب المستخدم 1234 فتنتهي الحلقة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">احذر الحلقة اللانهائية: تأكد أن شيئًا داخل الحلقة يغير الشرط في النهاية.</div>
+    </div>
+    <div class="sec">
+        <h3>3. المصفوفات</h3>
+            <div class="prose"><p>المصفوفة تخزن عدة قيم من نفس النوع. الفهرس يبدأ من <b>0</b>، وعدد العناصر <code>Length</code>.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">int[] grades = { 85, 92, 78, 95, 60, 88 };</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">Console.WriteLine(grades[0]);       // 85</span><span class="ln" data-ln="3">Console.WriteLine(grades.Length);   // 6</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">int sum = 0;</span><span class="ln" data-ln="6">int max = grades[0];</span><span class="ln" data-ln="7">foreach (int g in grades)</span><span class="ln" data-ln="8">{</span><span class="ln" data-ln="9">    sum &#x2B;= g;</span><span class="ln" data-ln="10">    if (g &gt; max) max = g;</span><span class="ln" data-ln="11">}</span><span class="ln" data-ln="12">double avg = (double)sum / grades.Length;</span><span class="ln" data-ln="13">Console.WriteLine($&quot;المتوسط: {avg:F1} - الأعلى: {max}&quot;);</span></code></pre>
+            <div class="out">85&#xA;6&#xA;المتوسط: 83.0 - الأعلى: 95</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يخزّن ست درجات في مصفوفة، ثم يطبع أول درجة وعدد الدرجات، ويحسب المتوسط وأعلى درجة ويطبعهما.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">int[] grades = { 85, 92, 78, 95, 60, 88 };</code>
+                        <span>int[] تعني مصفوفة (array) من الأعداد الصحيحة، والمصفوفة متغير واحد يحمل عدة قيم مرتبة. نضع القيم الست بين { } مفصولة بفواصل لتكون القيم الأولى للمصفوفة grades.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.WriteLine(grades[0]);       // 85</code>
+                        <span>نصل إلى عنصر في المصفوفة برقم موقعه بين أقواس مربعة [ ]، ويسمى الفهرس (index). الترقيم يبدأ من 0 لا من 1، لذلك grades[0] هو أول عنصر وقيمته 85. والنص بعد // تعليق يتجاهله الحاسوب.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.WriteLine(grades.Length);   // 6</code>
+                        <span>الخاصية .Length تعطي عدد عناصر المصفوفة، وهنا 6. لاحظ أن آخر فهرس يكون دائمًا Length - 1 أي 5.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">int sum = 0;</code>
+                        <span>ننشئ متغيرًا sum يبدأ بصفر لنجمع فيه الدرجات واحدة تلو الأخرى.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">int max = grades[0];</code>
+                        <span>نفترض في البداية أن أعلى درجة هي أول عنصر، ثم سنقارن بقية الدرجات بها ونحدّثها إذا وجدنا درجة أكبر.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">foreach (int g in grades)</code>
+                        <span>الحلقة foreach تمر على كل عنصر في المصفوفة بالترتيب دون الحاجة إلى عدّاد أو فهرس، وفي كل دورة يحمل المتغير g قيمة العنصر الحالي.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع الأسطر التي تُنفَّذ في كل دورة من الحلقة في كتلة واحدة.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">sum &#x2B;= g;</code>
+                        <span>المعامل &#x2B;= يعني «أضف إلى القيمة الحالية»، فهذا السطر يساوي sum = sum &#x2B; g، أي نضيف الدرجة الحالية إلى المجموع.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">if (g &gt; max) max = g;</code>
+                        <span>إذا كانت الدرجة الحالية g أكبر من أعلى درجة وجدناها حتى الآن، نجعلها هي الأعلى. وعندما يكون بعد if أمر واحد فقط يمكن كتابته دون أقواس { }.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">double avg = (double)sum / grades.Length;</code>
+                        <span>نحسب المتوسط بقسمة المجموع على عدد الدرجات. الكتابة (double) قبل sum تحوّله إلى عدد عشري (تحويل النوع أو cast)، لأن قسمة عددين صحيحين في ⁦C#⁩ تحذف الكسور، فنحتاج العشري لنحصل على نتيجة دقيقة.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">Console.WriteLine($&quot;المتوسط: {avg:F1} - الأعلى: {max}&quot;);</code>
+                        <span>نطبع المتوسط وأعلى درجة داخل نص واحد. الكتابة :F1 بعد avg تعني «اعرض الرقم برقم عشري واحد بعد الفاصلة»، فيظهر المتوسط 83.0 بدل رقم طويل.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+
+    <h2 class="h2">التمارين العملية</h2>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 1: جدول الضرب</h4>
+                <span class="lvl">سهل</span>
+            </div>
+            <div class="prose">اقرأ رقمًا واطبع جدول ضربه من 1 إلى 10.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;الرقم: &quot;);</span><span class="ln" data-ln="1">int n = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="2">for (int i = 1; i &lt;= 10; i&#x2B;&#x2B;)</span><span class="ln" data-ln="3">    Console.WriteLine($&quot;{n} × {i} = {n * i}&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يطلب رقمًا من المستخدم ثم يطبع جدول ضربه من 1 إلى 10، كل عملية في سطر.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;الرقم: &quot;);</code>
+                        <span>نطبع سؤالًا للمستخدم دون الانتقال إلى سطر جديد، ليكتب الرقم بجانبه.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">int n = int.Parse(Console.ReadLine());</code>
+                        <span>Console.ReadLine يقرأ ما يكتبه المستخدم كنص، ثم int.Parse يحوّل هذا النص إلى عدد صحيح لنتمكن من الحساب به، ونخزّنه في n. إذا كتب المستخدم شيئًا ليس رقمًا يتوقف البرنامج بخطأ.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">for (int i = 1; i &lt;= 10; i&#x2B;&#x2B;)</code>
+                        <span>حلقة for تبدأ العداد i من 1، وتستمر ما دام i &lt;= 10، وتزيده بواحد في كل دورة عبر i&#x2B;&#x2B;، فتتكرر 10 مرات. لا توجد أقواس { } لأن جسم الحلقة أمر واحد فقط هو السطر التالي.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.WriteLine($&quot;{n} × {i} = {n * i}&quot;);</code>
+                        <span>يطبع سطرًا من جدول الضرب مثل 7 × 3 = 21. داخل { } يمكن وضع عملية حسابية أيضًا، فالتعبير {n * i} يُحسب أولًا ثم تُعرض نتيجته؛ والرمز * هو الضرب في ⁦C#⁩، أما × فهو مجرد نص للعرض.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 2: درجات الطلاب الستة</h4>
+                <span class="lvl">متوسط</span>
+            </div>
+            <div class="prose">اقرأ درجات 6 طلاب في مصفوفة، ثم اطبع المتوسط وأعلى درجة وأقل درجة وعدد الناجحين (60 فأكثر).</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">int[] g = new int[6];</span><span class="ln" data-ln="1">for (int i = 0; i &lt; g.Length; i&#x2B;&#x2B;)</span><span class="ln" data-ln="2">{</span><span class="ln" data-ln="3">    Console.Write($&quot;درجة الطالب {i &#x2B; 1}: &quot;);</span><span class="ln" data-ln="4">    g[i] = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="5">}</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">int sum = 0, max = g[0], min = g[0], passed = 0;</span><span class="ln" data-ln="8">foreach (int x in g)</span><span class="ln" data-ln="9">{</span><span class="ln" data-ln="10">    sum &#x2B;= x;</span><span class="ln" data-ln="11">    if (x &gt; max) max = x;</span><span class="ln" data-ln="12">    if (x &lt; min) min = x;</span><span class="ln" data-ln="13">    if (x &gt;= 60) passed&#x2B;&#x2B;;</span><span class="ln" data-ln="14">}</span><span class="ln" data-ln="15">Console.WriteLine($&quot;المتوسط: {(double)sum / g.Length:F1}&quot;);</span><span class="ln" data-ln="16">Console.WriteLine($&quot;الأعلى: {max} - الأقل: {min} - الناجحون: {passed}&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يطلب درجات ستة طلاب ويخزّنها في مصفوفة، ثم يطبع المتوسط وأعلى درجة وأقل درجة وعدد الناجحين.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">int[] g = new int[6];</code>
+                        <span>ننشئ مصفوفة أعداد صحيحة اسمها g تتسع لـ6 عناصر. الكلمة new تحجز مكانًا جديدًا في الذاكرة، وتبدأ كل العناصر بقيمة 0 حتى نملأها.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">for (int i = 0; i &lt; g.Length; i&#x2B;&#x2B;)</code>
+                        <span>حلقة for يبدأ عدادها من 0 لأن فهارس المصفوفة تبدأ من 0، وتستمر ما دام i &lt; g.Length أي حتى 5، فتمر على المواقع الستة كلها.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع الأسطر التي تتكرر في كل دورة من الحلقة في كتلة واحدة.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.Write($&quot;درجة الطالب {i &#x2B; 1}: &quot;);</code>
+                        <span>نطبع سؤالًا يحمل رقم الطالب. نكتب i &#x2B; 1 لأن العداد يبدأ من 0، والناس يعدّون من 1، فيظهر «درجة الطالب 1» بدل 0.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">g[i] = int.Parse(Console.ReadLine());</code>
+                        <span>نقرأ ما يكتبه المستخدم ونحوّله إلى عدد صحيح بـ int.Parse، ثم نضعه في الموقع رقم i من المصفوفة.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">int sum = 0, max = g[0], min = g[0], passed = 0;</code>
+                        <span>نعرّف أربعة متغيرات من النوع int في سطر واحد مفصولة بفواصل: sum للمجموع، وmax وmin يبدآن بأول درجة لنقارن بها، وpassed لعدّ الناجحين.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">foreach (int x in g)</code>
+                        <span>الحلقة foreach تمر على كل درجة في المصفوفة g بالترتيب، ويحمل المتغير x الدرجة الحالية في كل دورة.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">sum &#x2B;= x;</code>
+                        <span>المعامل &#x2B;= يضيف x إلى قيمة sum الحالية، أي sum = sum &#x2B; x.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">if (x &gt; max) max = x;</code>
+                        <span>إذا كانت الدرجة الحالية أكبر من أعلى درجة حتى الآن، تصبح هي الأعلى الجديدة.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">if (x &lt; min) min = x;</code>
+                        <span>وبالمثل، إذا كانت الدرجة الحالية أصغر من أقل درجة حتى الآن، تصبح هي الأقل الجديدة.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">if (x &gt;= 60) passed&#x2B;&#x2B;;</code>
+                        <span>المعامل &gt;= يعني «أكبر من أو يساوي»؛ فإذا كانت الدرجة 60 أو أكثر نزيد عداد الناجحين بواحد باستخدام &#x2B;&#x2B;.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">Console.WriteLine($&quot;المتوسط: {(double)sum / g.Length:F1}&quot;);</code>
+                        <span>نحسب المتوسط مباشرة داخل النص: (double) تحوّل المجموع إلى عدد عشري حتى لا تُحذف الكسور عند القسمة، و:F1 تعرض النتيجة برقم عشري واحد بعد الفاصلة.</span>
+                    </li>
+                    <li data-ln="16">
+                        <code dir="ltr">Console.WriteLine($&quot;الأعلى: {max} - الأقل: {min} - الناجحون: {passed}&quot;);</code>
+                        <span>نطبع أعلى درجة وأقل درجة وعدد الناجحين في سطر واحد، كل قيمة داخل { } تُستبدل بقيمة متغيرها.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 3: تحدٍّ: لعبة تخمين الرقم</h4>
+                <span class="lvl">تحدٍّ</span>
+            </div>
+            <div class="prose">يختار البرنامج رقمًا عشوائيًا من 1 إلى 100، ويخمّن المستخدم حتى يصيب. بعد كل محاولة اطبع «أكبر» أو «أصغر»، وفي النهاية اطبع عدد المحاولات.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">int secret = Random.Shared.Next(1, 101);</span><span class="ln" data-ln="1">int guess = 0, tries = 0;</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">while (guess != secret)</span><span class="ln" data-ln="4">{</span><span class="ln" data-ln="5">    Console.Write(&quot;خمّن: &quot;);</span><span class="ln" data-ln="6">    guess = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="7">    tries&#x2B;&#x2B;;</span><span class="ln" data-ln="8">    if (guess &lt; secret) Console.WriteLine(&quot;أكبر ⬆&quot;);</span><span class="ln" data-ln="9">    else if (guess &gt; secret) Console.WriteLine(&quot;أصغر ⬇&quot;);</span><span class="ln" data-ln="10">}</span><span class="ln" data-ln="11">Console.WriteLine($&quot;أحسنت! عرفته في {tries} محاولات&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> لعبة تخمين: يختار البرنامج رقمًا سريًا عشوائيًا من 1 إلى 100، والمستخدم يخمّن ويحصل على تلميح «أكبر» أو «أصغر» حتى يصيب، ثم يرى عدد محاولاته.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">int secret = Random.Shared.Next(1, 101);</code>
+                        <span>Random.Shared مولّد أرقام عشوائية جاهز في .NET، والدالة Next(1, 101) تعطي عددًا صحيحًا عشوائيًا من 1 حتى 100؛ لأن الحد الثاني 101 غير داخل في النطاق. نخزّن الرقم في secret.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">int guess = 0, tries = 0;</code>
+                        <span>نعرّف متغيرين: guess لتخمين المستخدم ويبدأ بـ0 (رقم لا يمكن أن يكون هو السر)، وtries لعدّ المحاولات ويبدأ بـ0.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">while (guess != secret)</code>
+                        <span>الحلقة while تستمر ما دام التخمين لا يساوي (!=) الرقم السري، لأننا لا نعرف مسبقًا كم محاولة سيحتاج المستخدم.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع الأسطر التي تتكرر في كل محاولة في كتلة واحدة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Console.Write(&quot;خمّن: &quot;);</code>
+                        <span>نطلب من المستخدم أن يكتب تخمينه بجانب الكلمة دون سطر جديد.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">guess = int.Parse(Console.ReadLine());</code>
+                        <span>نقرأ ما كتبه المستخدم ونحوّله من نص إلى عدد صحيح بـ int.Parse، ونخزّنه في guess.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">tries&#x2B;&#x2B;;</code>
+                        <span>المعامل &#x2B;&#x2B; يزيد قيمة tries بمقدار 1، فنحسب هذه المحاولة.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">if (guess &lt; secret) Console.WriteLine(&quot;أكبر ⬆&quot;);</code>
+                        <span>إذا كان التخمين أصغر من الرقم السري، نخبر المستخدم أن الرقم المطلوب أكبر.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">else if (guess &gt; secret) Console.WriteLine(&quot;أصغر ⬇&quot;);</code>
+                        <span>else if تعني «وإلا، إذا...»: تُفحص فقط إذا لم يتحقق الشرط السابق؛ فإذا كان التخمين أكبر من السر نخبره أن الرقم أصغر. وإذا كان مساويًا لا يُطبع شيء وتنتهي الحلقة.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">Console.WriteLine($&quot;أحسنت! عرفته في {tries} محاولات&quot;);</code>
+                        <span>بعد الخروج من الحلقة، أي عند التخمين الصحيح، نطبع رسالة تهنئة مع عدد المحاولات المخزّن في tries.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. كم مرة تُنفذ: for (int i = 0; i &lt; 3; i&#x2B;&#x2B;)؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">2</button>
+                            <button type="button" class="opt" data-correct="1">3</button>
+                            <button type="button" class="opt" data-correct="0">4</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. ما فهرس أول عنصر في المصفوفة؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">0</button>
+                            <button type="button" class="opt" data-correct="0">1</button>
+                            <button type="button" class="opt" data-correct="0">-1</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. أي حلقة تناسب «كرر حتى يكتب المستخدم 0»؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">for</button>
+                            <button type="button" class="opt" data-correct="1">while</button>
+                            <button type="button" class="opt" data-correct="0">لا شيء</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> إعلان المشروع النهائي: اقرأ متطلبات المشروع وابدأ بصفحة HTML الخاصة بفكرتك.</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-5.html">→ اليوم 5</a>
+                <a class="btn primary trainer-only" href="day-7.html">اليوم 7 ←</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

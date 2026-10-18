@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 8: إنشاء الجداول وSELECT · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="true">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-sql">SQL Server</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 8 · الأسبوع 2 · ساعتان</span>
+            </div>
+            <h1>SQL Server: إنشاء قاعدة البيانات والاستعلام</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-8.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-8.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-8.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>يشرح مفاهيم قاعدة البيانات: الجدول، العمود، الصف، المفتاح الأساسي.</li>
+                <li>ينشئ قاعدة بيانات وجدولًا في SQL Server باستخدام SSMS.</li>
+                <li>يختار نوع البيانات المناسب لكل عمود.</li>
+                <li>يضيف بيانات بـ INSERT.</li>
+                <li>يسترجع البيانات بـ SELECT مع WHERE وORDER BY.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:10</time><span>مراجعة سريعة لدرس الأمس وحل الواجب</span></div>
+                <div class="slot"><time>0:10 – 0:50</time><span>شرح الدرس مع أمثلة حيّة يكتبها المدرب والمتدربون معًا</span></div>
+                <div class="slot"><time>0:50 – 1:00</time><span>استراحة</span></div>
+                <div class="slot"><time>1:00 – 1:40</time><span>تمارين عملية فردية (المدرب يتنقل بين المتدربين الستة)</span></div>
+                <div class="slot"><time>1:40 – 1:55</time><span>تصحيح جماعي ومناقشة الأخطاء الشائعة</span></div>
+                <div class="slot"><time>1:55 – 2:00</time><span>ملخص الدرس &#x2B; اختبار ذاتي سريع &#x2B; الواجب</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. ما هي قاعدة البيانات؟</h3>
+            <div class="prose"><p>قاعدة البيانات مكان منظم لحفظ البيانات بشكل دائم. البيانات توضع في <b>جداول</b>، والجدول له <b>أعمدة</b> (الحقول) و<b>صفوف</b> (السجلات). <b>المفتاح الأساسي</b> Primary Key عمود قيمته فريدة لكل صف، مثل رقم الطالب.</p><p>افتح <b>SSMS</b> ← اتصل بالخادم <code>localhost\SQLEXPRESS</code> ← New Query.</p></div>
+    </div>
+    <div class="sec">
+        <h3>2. إنشاء قاعدة البيانات والجدول</h3>
+            <div class="prose"><p>أهم الأنواع: <code>INT</code> عدد صحيح، <code>NVARCHAR(n)</code> نص يدعم العربية، <code>DECIMAL(5,2)</code> عدد عشري، <code>DATE</code> تاريخ، <code>BIT</code> صح/خطأ.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">CREATE DATABASE TrainingDB;</span><span class="ln" data-ln="1">GO</span><span class="ln" data-ln="2">USE TrainingDB;</span><span class="ln" data-ln="3">GO</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">CREATE TABLE Students (</span><span class="ln" data-ln="6">    Id        INT IDENTITY(1,1) PRIMARY KEY,</span><span class="ln" data-ln="7">    FullName  NVARCHAR(100) NOT NULL,</span><span class="ln" data-ln="8">    Email     NVARCHAR(100),</span><span class="ln" data-ln="9">    Age       INT,</span><span class="ln" data-ln="10">    Course    NVARCHAR(50),</span><span class="ln" data-ln="11">    Grade     DECIMAL(5,2),</span><span class="ln" data-ln="12">    JoinDate  DATE DEFAULT GETDATE()</span><span class="ln" data-ln="13">);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> ينشئ هذا الكود قاعدة بيانات جديدة اسمها TrainingDB، ثم ينشئ بداخلها جدولًا اسمه Students لحفظ بيانات الطلاب. عند التشغيل لن ترى بيانات، بل رسالة تفيد بنجاح الأوامر وسيظهر الجدول الفارغ في قاعدة البيانات.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">CREATE DATABASE TrainingDB;</code>
+                        <span>الأمر CREATE DATABASE ينشئ قاعدة بيانات جديدة فارغة اسمها TrainingDB. قاعدة البيانات مثل خزانة كبيرة سنضع فيها جداول البيانات.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">GO</code>
+                        <span>الكلمة GO ليست أمر SQL حقيقيًا، بل إشارة لبرنامج SSMS بأن ينفّذ الأوامر التي قبلها كدفعة مستقلة قبل الانتقال لما بعدها. نحتاجها هنا حتى تُنشأ قاعدة البيانات فعلًا قبل أن نحاول استخدامها.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">USE TrainingDB;</code>
+                        <span>الأمر USE يجعل TrainingDB هي قاعدة البيانات الحالية، فكل الأوامر التالية ستُنفّذ بداخلها وليس في قاعدة بيانات أخرى.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">CREATE TABLE Students (</code>
+                        <span>الأمر CREATE TABLE ينشئ جدولًا جديدًا اسمه Students. الجدول يشبه جدول Excel: له أعمدة (أنواع المعلومات) وصفوف (كل صف طالب). بين القوسين نكتب الأعمدة واحدًا تلو الآخر مفصولة بفواصل.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Id        INT IDENTITY(1,1) PRIMARY KEY,</code>
+                        <span>العمود Id رقم صحيح (INT). الخاصية IDENTITY(1,1) تجعل SQL Server يملؤه تلقائيًا بدءًا من 1 ويزيد 1 مع كل صف جديد، و PRIMARY KEY (المفتاح الأساسي) يعني أن قيمته لا تتكرر ولا تكون فارغة، فيُميّز كل طالب عن غيره.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">FullName  NVARCHAR(100) NOT NULL,</code>
+                        <span>العمود FullName نصّ من نوع NVARCHAR(100) أي حتى 100 حرف، وحرف N يعني أنه يدعم كل اللغات ومنها العربية. أما NOT NULL فتعني أن هذا العمود إلزامي ولا يمكن ترك الاسم فارغًا.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">Email     NVARCHAR(100),</code>
+                        <span>العمود Email نصّ حتى 100 حرف لحفظ البريد الإلكتروني. لم نكتب NOT NULL، لذلك يمكن تركه فارغًا (NULL) إذا لم يكن للطالب بريد.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">Age       INT,</code>
+                        <span>العمود Age يحفظ عمر الطالب كرقم صحيح INT (بدون كسور).</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">Course    NVARCHAR(50),</code>
+                        <span>العمود Course نصّ حتى 50 حرفًا لحفظ اسم الدورة التي يدرسها الطالب.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">Grade     DECIMAL(5,2),</code>
+                        <span>العمود Grade رقم عشري من نوع DECIMAL(5,2): مجموع خاناته 5 منها خانتان بعد الفاصلة، أي يمكنه حفظ قيم مثل 95.50 وحتى 999.99. نستخدمه لأن الدرجة قد تحتوي كسورًا.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">JoinDate  DATE DEFAULT GETDATE()</code>
+                        <span>العمود JoinDate من نوع DATE لحفظ تاريخ الانضمام. الكلمة DEFAULT تعني قيمة افتراضية، و GETDATE() تعيد تاريخ اليوم؛ فإن لم نُدخل تاريخًا يُحفظ تاريخ يوم الإضافة تلقائيًا. لاحظ أنه آخر عمود فلا فاصلة بعده.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">);</code>
+                        <span>القوس المغلق ينهي قائمة الأعمدة، والفاصلة المنقوطة تنهي أمر CREATE TABLE.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">IDENTITY(1,1) يجعل SQL Server يولد رقم Id تلقائيًا: 1، 2، 3... ونضع N قبل النص العربي: N&#x27;سارة&#x27;.</div>
+    </div>
+    <div class="sec">
+        <h3>3. إضافة البيانات INSERT</h3>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">INSERT INTO Students (FullName, Email, Age, Course, Grade)</span><span class="ln" data-ln="1">VALUES</span><span class="ln" data-ln="2"> (N&#x27;سارة أحمد&#x27;,  &#x27;sara@mail.com&#x27;,  22, N&#x27;C#&#x27;,   95),</span><span class="ln" data-ln="3"> (N&#x27;خالد سالم&#x27;,  &#x27;khaled@mail.com&#x27;,25, N&#x27;HTML&#x27;, 78),</span><span class="ln" data-ln="4"> (N&#x27;مريم يوسف&#x27;,  &#x27;maryam@mail.com&#x27;,20, N&#x27;SQL&#x27;,  88);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يضيف هذا الكود ثلاثة طلاب إلى جدول Students دفعة واحدة. عند التشغيل تظهر رسالة مثل (3 rows affected) أي تمت إضافة 3 صفوف.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">INSERT INTO Students (FullName, Email, Age, Course, Grade)</code>
+                        <span>الأمر INSERT INTO يضيف صفوفًا جديدة إلى الجدول Students، وبين القوسين نحدد الأعمدة التي سنعطيها قيمًا. لم نذكر Id لأن IDENTITY يملؤه تلقائيًا، ولا JoinDate لأن له قيمة افتراضية.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">VALUES</code>
+                        <span>الكلمة VALUES تعني: الآن تأتي القيم. كل مجموعة بين قوسين تمثل صفًا (طالبًا) واحدًا، وترتيب القيم يطابق ترتيب الأعمدة المذكورة أعلاه.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">(N&#x27;سارة أحمد&#x27;,  &#x27;sara@mail.com&#x27;,  22, N&#x27;C#&#x27;,   95),</code>
+                        <span>هذا السطر والسطران بعده يمثّل كل واحد منها طالبًا. النصوص توضع بين علامتي تنصيص مفردة &#x27; &#x27;، والبادئة N قبل النص تخبر SQL Server أنه نص Unicode حتى تُحفظ الحروف العربية صحيحة بدل علامات ؟؟؟. الأرقام تُكتب بلا علامات تنصيص، والصفوف تفصل بينها فاصلة.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">(N&#x27;مريم يوسف&#x27;,  &#x27;maryam@mail.com&#x27;,20, N&#x27;SQL&#x27;,  88);</code>
+                        <span>آخر صف لا تأتي بعده فاصلة، بل فاصلة منقوطة تنهي أمر INSERT كله.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>4. استرجاع البيانات SELECT</h3>
+            <div class="prose"><p><code>*</code> تعني كل الأعمدة. <code>WHERE</code> تصفّي الصفوف، و<code>ORDER BY</code> ترتّبها (<code>DESC</code> تنازليًا).</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">SELECT * FROM Students;</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">SELECT FullName, Grade FROM Students;</span><span class="ln" data-ln="3"> </span><span class="ln" data-ln="4">SELECT * FROM Students WHERE Grade &gt;= 80;</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">SELECT * FROM Students WHERE Course = N&#x27;C#&#x27; AND Age &lt; 25;</span><span class="ln" data-ln="7"> </span><span class="ln" data-ln="8">SELECT FullName, Grade FROM Students ORDER BY Grade DESC;</span><span class="ln" data-ln="9"> </span><span class="ln" data-ln="10">SELECT * FROM Students WHERE FullName LIKE N&#x27;م%&#x27;;  -- يبدأ بحرف م</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> مجموعة من استعلامات SELECT لقراءة البيانات من جدول Students بطرق مختلفة: كل البيانات، أعمدة محددة، مع شروط، مع ترتيب، ومع بحث نصي. كل استعلام يعرض نتيجته في جدول مستقل.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">SELECT * FROM Students;</code>
+                        <span>الأمر SELECT يقرأ البيانات ويعرضها، والنجمة * تعني كل الأعمدة، و FROM Students تحدد الجدول. النتيجة: كل الطلاب بكل معلوماتهم.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">SELECT FullName, Grade FROM Students;</code>
+                        <span>هنا بدل النجمة كتبنا أسماء الأعمدة التي نريدها فقط، فتظهر النتيجة بعمودين: الاسم والدرجة.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">SELECT * FROM Students WHERE Grade &gt;= 80;</code>
+                        <span>الكلمة WHERE تضع شرطًا لتصفية الصفوف، فلا يظهر إلا الطلاب الذين درجتهم أكبر من أو تساوي 80.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">SELECT * FROM Students WHERE Course = N&#x27;C#&#x27; AND Age &lt; 25;</code>
+                        <span>الكلمة AND تجمع شرطين ويجب أن يتحقق كلاهما: الدورة هي ⁦C#⁩ والعمر أقل من 25. في SQL نستخدم علامة = واحدة للمقارنة.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">SELECT FullName, Grade FROM Students ORDER BY Grade DESC;</code>
+                        <span>الكلمة ORDER BY ترتّب النتائج حسب عمود معيّن، و DESC تعني تنازليًا (من الأكبر إلى الأصغر)، فيظهر صاحب أعلى درجة أولًا. بدونها يكون الترتيب تصاعديًا (ASC).</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">SELECT * FROM Students WHERE FullName LIKE N&#x27;م%&#x27;;  -- يبدأ بحرف م</code>
+                        <span>الكلمة LIKE تبحث عن نمط في النص، والرمز % يعني: أي عدد من الحروف (أو لا شيء). إذن N&#x27;م%&#x27; تعني كل اسم يبدأ بحرف م. والجزء بعد -- تعليق للتوضيح يتجاهله SQL Server.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+
+    <h2 class="h2">التمارين العملية</h2>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 1: أنشئ القاعدة والجدول</h4>
+                <span class="lvl">سهل</span>
+            </div>
+            <div class="prose">أنشئ قاعدة TrainingDB وجدول Students كما في الشرح، ثم أدخل بيانات 6 طلاب (زملاؤك في الدورة).</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">INSERT INTO Students (FullName, Email, Age, Course, Grade) VALUES</span><span class="ln" data-ln="1"> (N&#x27;سارة&#x27;, &#x27;s@mail.com&#x27;, 22, N&#x27;C#&#x27;, 95),</span><span class="ln" data-ln="2"> (N&#x27;خالد&#x27;, &#x27;k@mail.com&#x27;, 25, N&#x27;HTML&#x27;, 78),</span><span class="ln" data-ln="3"> (N&#x27;مريم&#x27;, &#x27;m@mail.com&#x27;, 20, N&#x27;SQL&#x27;, 88),</span><span class="ln" data-ln="4"> (N&#x27;علي&#x27;, &#x27;a@mail.com&#x27;, 23, N&#x27;C#&#x27;, 55),</span><span class="ln" data-ln="5"> (N&#x27;نورة&#x27;, &#x27;n@mail.com&#x27;, 21, N&#x27;HTML&#x27;, 91),</span><span class="ln" data-ln="6"> (N&#x27;يوسف&#x27;, &#x27;y@mail.com&#x27;, 24, N&#x27;SQL&#x27;, 67);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> حل التمرين: إضافة ستة طلاب إلى جدول Students بأمر INSERT واحد. عند التشغيل تظهر رسالة (6 rows affected).</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">INSERT INTO Students (FullName, Email, Age, Course, Grade) VALUES</code>
+                        <span>الأمر INSERT INTO يضيف صفوفًا إلى الجدول Students في الأعمدة المذكورة بين القوسين، ثم تأتي VALUES وبعدها القيم. لا نكتب Id لأنه يُولّد تلقائيًا.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">(N&#x27;سارة&#x27;, &#x27;s@mail.com&#x27;, 22, N&#x27;C#&#x27;, 95),</code>
+                        <span>هذا السطر والسطران بعده ثلاثة طلاب، كل قوسين صف واحد بالترتيب: الاسم، البريد، العمر، الدورة، الدرجة. البادئة N قبل النصوص العربية ضرورية لحفظ الحروف العربية بشكل صحيح.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">(N&#x27;علي&#x27;, &#x27;a@mail.com&#x27;, 23, N&#x27;C#&#x27;, 55),</code>
+                        <span>هذا السطر والسطران بعده ثلاثة طلاب آخرون بنفس الترتيب. تفصل الفاصلة بين الصفوف، والصف الأخير ينتهي بفاصلة منقوطة لإنهاء الأمر.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 2: استعلامات</h4>
+                <span class="lvl">متوسط</span>
+            </div>
+            <div class="prose">اكتب استعلامات تعرض: (أ) أسماء الطلاب ودرجاتهم مرتبة من الأعلى، (ب) طلاب دورة ⁦C#⁩ فقط، (ج) الطلاب الراسبين (أقل من 60)، (د) الطلاب بين 20 و23 سنة.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">-- أ</span><span class="ln" data-ln="1">SELECT FullName, Grade FROM Students ORDER BY Grade DESC;</span><span class="ln" data-ln="2">-- ب</span><span class="ln" data-ln="3">SELECT * FROM Students WHERE Course = N&#x27;C#&#x27;;</span><span class="ln" data-ln="4">-- ج</span><span class="ln" data-ln="5">SELECT * FROM Students WHERE Grade &lt; 60;</span><span class="ln" data-ln="6">-- د</span><span class="ln" data-ln="7">SELECT * FROM Students WHERE Age BETWEEN 20 AND 23;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> حل التمرين: أربعة استعلامات SELECT، كل واحد يجيب عن سؤال (أ، ب، ج، د) ويعرض نتيجته في جدول مستقل.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">-- أ</code>
+                        <span>السطر الذي يبدأ بـ -- تعليق، أي ملاحظة للقارئ لا ينفذها SQL Server. استخدمناه هنا لترقيم أجزاء التمرين.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">SELECT FullName, Grade FROM Students ORDER BY Grade DESC;</code>
+                        <span>يعرض الاسم والدرجة لكل الطلاب مرتّبين بـ ORDER BY حسب الدرجة، و DESC تعني من الأعلى إلى الأدنى.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">SELECT * FROM Students WHERE Course = N&#x27;C#&#x27;;</code>
+                        <span>يعرض كل أعمدة الطلاب الذين دورتهم ⁦C#⁩ فقط، لأن WHERE تُبقي الصفوف التي يتحقق فيها الشرط. استخدمنا N&#x27;&#x27; لأنها مقارنة بعمود من نوع NVARCHAR.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">SELECT * FROM Students WHERE Grade &lt; 60;</code>
+                        <span>يعرض الطلاب الذين درجتهم أقل من 60، أي الراسبين.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">SELECT * FROM Students WHERE Age BETWEEN 20 AND 23;</code>
+                        <span>الكلمة BETWEEN تختار القيم الواقعة في مدى معيّن، وهي تشمل الحدّين؛ أي الأعمار 20 و21 و22 و23. هي اختصار لـ Age &gt;= 20 AND Age &lt;= 23.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 3: تحدٍّ: جدول الدورات</h4>
+                <span class="lvl">تحدٍّ</span>
+            </div>
+            <div class="prose">أنشئ جدول Courses (Id, Title, Hours) وأدخل 3 دورات. ثم اعرض الدورات التي تزيد ساعاتها على 6.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">CREATE TABLE Courses (</span><span class="ln" data-ln="1">    Id INT IDENTITY(1,1) PRIMARY KEY,</span><span class="ln" data-ln="2">    Title NVARCHAR(50) NOT NULL,</span><span class="ln" data-ln="3">    Hours INT</span><span class="ln" data-ln="4">);</span><span class="ln" data-ln="5">INSERT INTO Courses (Title, Hours) VALUES (N&#x27;HTML&#x27;, 6), (N&#x27;C#&#x27;, 8), (N&#x27;SQL&#x27;, 4);</span><span class="ln" data-ln="6">SELECT * FROM Courses WHERE Hours &gt; 6;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> حل التمرين: إنشاء جدول جديد للدورات Courses، وإضافة ثلاث دورات إليه، ثم عرض الدورات التي تزيد ساعاتها على 6. النتيجة ستكون صفًا واحدًا هو دورة ⁦C#⁩ (8 ساعات).</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">CREATE TABLE Courses (</code>
+                        <span>الأمر CREATE TABLE ينشئ جدولًا جديدًا اسمه Courses، وبين القوسين نعرّف أعمدته.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">Id INT IDENTITY(1,1) PRIMARY KEY,</code>
+                        <span>العمود Id رقم صحيح يُملأ تلقائيًا (IDENTITY يبدأ من 1 ويزيد 1)، وهو المفتاح الأساسي PRIMARY KEY الذي يميّز كل دورة ولا يتكرر.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Title NVARCHAR(50) NOT NULL,</code>
+                        <span>العمود Title اسم الدورة، نص يدعم العربية حتى 50 حرفًا، و NOT NULL تجعله إلزاميًا.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Hours INT</code>
+                        <span>العمود Hours عدد ساعات الدورة كرقم صحيح. هو آخر عمود لذلك لا فاصلة بعده.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">);</code>
+                        <span>القوس المغلق ينهي تعريف الأعمدة، والفاصلة المنقوطة تنهي أمر إنشاء الجدول.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">INSERT INTO Courses (Title, Hours) VALUES (N&#x27;HTML&#x27;, 6), (N&#x27;C#&#x27;, 8), (N&#x27;SQL&#x27;, 4);</code>
+                        <span>يضيف ثلاث دورات في سطر واحد، كل قوسين صف: اسم الدورة وعدد ساعاتها. العمود Id لا نكتبه لأنه يُولّد تلقائيًا.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">SELECT * FROM Courses WHERE Hours &gt; 6;</code>
+                        <span>يعرض الدورات التي ساعاتها أكبر من 6 فقط. لاحظ أن &gt; تعني أكبر تمامًا، لذلك دورة HTML (6 ساعات) لا تظهر.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. العمود الذي يميز كل صف بقيمة فريدة هو:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">Foreign Key</button>
+                            <button type="button" class="opt" data-correct="1">Primary Key</button>
+                            <button type="button" class="opt" data-correct="0">Index</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. أي أمر يضيف صفًا جديدًا؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">SELECT</button>
+                            <button type="button" class="opt" data-correct="1">INSERT</button>
+                            <button type="button" class="opt" data-correct="0">CREATE</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. لترتيب النتائج تنازليًا نكتب:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">ORDER BY Grade DESC</button>
+                            <button type="button" class="opt" data-correct="0">SORT Grade DOWN</button>
+                            <button type="button" class="opt" data-correct="0">WHERE DESC</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> أنشئ قاعدة بيانات مشروعك النهائي وجدولها الرئيسي، وأدخل 5 صفوف تجريبية.</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-7.html">→ اليوم 7</a>
+                <a class="btn primary trainer-only" href="day-9.html">اليوم 9 ←</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

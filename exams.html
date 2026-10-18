@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>الاختبارات · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-playground="editor.html" data-root="">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="false" href="index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="true" href="exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <section class="view">
+    <div class="panel stack">
+        <h1 class="h2">نماذج الاختبارات</h1>
+        <p class="muted">للمدرب فقط. اطبعها أو اعرضها على الشاشة وقت الاختبار.</p>
+    </div>
+
+    <div class="panel prose-block">
+        <h2 class="h2">اختبار المنتصف · اليوم 5 · 25 دقيقة · 15 درجة</h2>
+        <h3>أولًا: اختيار من متعدد (5 درجات، درجة لكل سؤال)</h3>
+        <ol class="clean">
+            <li>الوسم الذي يحتوي المحتوى الظاهر في الصفحة: (head / body / title)</li>
+            <li>لإنشاء رابط نستخدم الوسم: (link / a / href)</li>
+            <li>محدد الكلاس في CSS يبدأ بـ: (# / . / &#64;)</li>
+            <li>النوع المناسب لتخزين الاسم في ⁦C#⁩: (int / string / bool)</li>
+            <li>ناتج 17 % 5 في ⁦C#⁩: (3 / 2 / 3.4)</li>
+        </ol>
+        <h3>ثانيًا: اكتب كود HTML (5 درجات)</h3>
+        <p>لنموذج فيه حقل اسم، وحقل بريد، وقائمة منسدلة بثلاث دورات، وزر إرسال.</p>
+        <h3>ثالثًا: اكتب برنامج ⁦C#⁩ (5 درجات)</h3>
+        <p>يقرأ عمر المستخدم، ويطبع «قاصر» إن كان أقل من 18، و«بالغ» إن كان 18 فأكثر.</p>
+        <details class="sol"><summary>الإجابات</summary><p>1 body · 2 a · 3 النقطة · 4 string · 5 القيمة 2</p></details>
+    </div>
+
+    <div class="panel prose-block">
+        <h2 class="h2">الاختبار النهائي · اليوم 10 · 25 دقيقة · 20 درجة</h2>
+        <h3>أولًا: اختيار من متعدد (8 درجات)</h3>
+        <ol class="clean">
+            <li>كم مرة تتكرر: for (int i = 1; i &lt;= 4; i++)؟ (3 / 4 / 5)</li>
+            <li>فهرس العنصر الأول في المصفوفة: (0 / 1)</li>
+            <li>لإضافة عنصر إلى List: (Add / Push / Insert)</li>
+            <li>الدالة التي لا تُرجع قيمة نوعها: (int / void / string)</li>
+            <li>الأمر الذي يسترجع البيانات في SQL: (INSERT / SELECT / UPDATE)</li>
+            <li>المفتاح الأساسي يجب أن يكون: (فريدًا / نصيًا / فارغًا)</li>
+            <li>لحساب عدد الصفوف: (SUM / COUNT / AVG)</li>
+            <li>لتنفيذ INSERT من ⁦C#⁩: (ExecuteReader / ExecuteNonQuery)</li>
+        </ol>
+        <h3>ثانيًا: SQL (6 درجات)</h3>
+        <p>لجدول Products(Id, Name, Price, Qty) اكتب: (أ) استعلامًا يعرض المنتجات التي سعرها أكبر من 10 مرتبة تنازليًا حسب السعر، (ب) أمرًا يعدّل كمية المنتج رقم 3 إلى 50، (ج) استعلامًا يعرض متوسط الأسعار.</p>
+        <h3>ثالثًا: ⁦C#⁩ (6 درجات)</h3>
+        <p>اكتب دالة تستقبل مصفوفة درجات وتُرجع عدد الناجحين (60 فأكثر)، واستدعها لمصفوفة من 6 درجات.</p>
+        <details class="sol"><summary>الإجابات</summary><p>1 القيمة 4 · 2 القيمة 0 · 3 Add · 4 void · 5 SELECT · 6 فريدًا · 7 COUNT · 8 ExecuteNonQuery</p></details>
+    </div>
+</section>
+
+    </main>
+    <script src="js/site.js"></script>
+    <script src="js/static-site.js"></script>
+    
+</body>
+</html>

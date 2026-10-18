@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 3: أساسيات CSS · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="true">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-html">HTML وCSS</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 3 · الأسبوع 1 · ساعتان</span>
+            </div>
+            <h1>تنسيق الصفحات بـ CSS</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-3.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-3.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-3.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>يربط ملف CSS بصفحة HTML.</li>
+                <li>يستخدم المحددات: الوسم والكلاس class والمعرّف id.</li>
+                <li>يغير الألوان والخطوط والخلفيات.</li>
+                <li>يفهم نموذج الصندوق: margin وborder وpadding.</li>
+                <li>يرتب العناصر أفقيًا باستخدام Flexbox.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:10</time><span>مراجعة سريعة لدرس الأمس وحل الواجب</span></div>
+                <div class="slot"><time>0:10 – 0:50</time><span>شرح الدرس مع أمثلة حيّة يكتبها المدرب والمتدربون معًا</span></div>
+                <div class="slot"><time>0:50 – 1:00</time><span>استراحة</span></div>
+                <div class="slot"><time>1:00 – 1:40</time><span>تمارين عملية فردية (المدرب يتنقل بين المتدربين الستة)</span></div>
+                <div class="slot"><time>1:40 – 1:55</time><span>تصحيح جماعي ومناقشة الأخطاء الشائعة</span></div>
+                <div class="slot"><time>1:55 – 2:00</time><span>ملخص الدرس &#x2B; اختبار ذاتي سريع &#x2B; الواجب</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. ما هو CSS وكيف نربطه؟</h3>
+            <div class="prose"><p>HTML يحدد <b>المحتوى</b>، وCSS يحدد <b>الشكل</b>. نكتب CSS داخل وسم <code>style</code> أو في ملف مستقل <code>style.css</code> نربطه بالصفحة.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;head&gt;</span><span class="ln" data-ln="1">  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</span><span class="ln" data-ln="2">&lt;/head&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يوضح هذا المثال كيف نربط صفحة HTML بملف تنسيق خارجي اسمه style.css، فتأخذ الصفحة ألوانها وشكلها من هذا الملف. لا يظهر شيء جديد بنفسه، لكن التنسيقات المكتوبة في الملف تُطبَّق على الصفحة.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;head&gt;</code>
+                        <span>قسم head هو المكان المناسب لربط ملفات التنسيق، لأنه يحتوي معلومات الصفحة التي يقرؤها المتصفح قبل عرض المحتوى.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</code>
+                        <span>الوسم link يربط الصفحة بملف آخر. الخاصية rel=&quot;stylesheet&quot; تقول إن هذا الملف ملف تنسيق CSS، والخاصية href تحدد اسم الملف style.css، ويجب أن يكون في نفس مجلد صفحة HTML في هذا المثال.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;/head&gt;</code>
+                        <span>يغلق قسم head.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>2. المحددات والخصائص</h3>
+            <div class="prose"><p>القاعدة تتكون من <b>محدد</b> ثم خصائص بين أقواس. الكلاس يبدأ بنقطة <code>.</code> ويمكن تكراره، والمعرّف يبدأ بـ <code>#</code> ويُستخدم مرة واحدة.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;style&gt;</span><span class="ln" data-ln="1">  body { font-family: Tahoma; background: #f5f5f5; }</span><span class="ln" data-ln="2">  h1 { color: darkblue; text-align: center; }</span><span class="ln" data-ln="3">  .highlight { background: yellow; }</span><span class="ln" data-ln="4">  #intro { font-size: 20px; color: #444; }</span><span class="ln" data-ln="5">&lt;/style&gt;</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">&lt;h1&gt;مرحبًا بكم&lt;/h1&gt;</span><span class="ln" data-ln="8">&lt;p id=&quot;intro&quot;&gt;هذه فقرة تعريفية.&lt;/p&gt;</span><span class="ln" data-ln="9">&lt;p&gt;هذه فقرة فيها &lt;span class=&quot;highlight&quot;&gt;كلمة مميزة&lt;/span&gt;.&lt;/p&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يكتب هذا المثال تنسيق CSS داخل الصفحة نفسها: خلفية رمادية فاتحة وخط Tahoma للصفحة، وعنوان أزرق داكن في الوسط، وفقرة تعريفية أكبر بلون رمادي، وكلمة مميزة بخلفية صفراء.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;style&gt;</code>
+                        <span>الوسم style يسمح بكتابة تنسيقات CSS داخل ملف HTML نفسه. كل ما بين &lt;style&gt; و&lt;/style&gt; قواعد تحدد شكل العناصر، ولا يظهر كنص على الشاشة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">body { font-family: Tahoma; background: #f5f5f5; }</code>
+                        <span>هذه قاعدة CSS: كلمة body هي «المحدِّد» أي العنصر الذي نريد تنسيقه، وبين القوسين { } خصائص. font-family تجعل خط الصفحة Tahoma، وbackground تجعل الخلفية بلون #f5f5f5 وهو رمادي فاتح جدًا مكتوب بنظام الألوان السداسي (hex).</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">h1 { color: darkblue; text-align: center; }</code>
+                        <span>تنسيق كل عناوين h1: الخاصية color تجعل لون النص أزرق داكنًا (darkblue)، والخاصية text-align: center تضع النص في منتصف السطر. لاحظ أن كل خاصية تنتهي بفاصلة منقوطة ;.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">.highlight { background: yellow; }</code>
+                        <span>النقطة قبل الاسم تعني أن هذا محدِّد «كلاس» (class)، فيُطبَّق التنسيق على أي عنصر مكتوب فيه class=&quot;highlight&quot;. هنا يجعل خلفيته صفراء مثل قلم التظليل.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">#intro { font-size: 20px; color: #444; }</code>
+                        <span>علامة # تعني محدِّد «معرّف» (id)، فيُطبَّق على العنصر الذي يحمل id=&quot;intro&quot;، والمعرّف يُستخدم لعنصر واحد فقط في الصفحة. font-size: 20px تجعل حجم الخط 20 بكسل، وcolor: #444 لون رمادي غامق.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;/style&gt;</code>
+                        <span>يغلق وسم التنسيق، وبعده يبدأ محتوى الصفحة الذي سيتأثر بهذه القواعد.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;h1&gt;مرحبًا بكم&lt;/h1&gt;</code>
+                        <span>عنوان h1 سيظهر بلون أزرق داكن وفي منتصف الصفحة بسبب قاعدة h1 أعلاه.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">&lt;p id=&quot;intro&quot;&gt;هذه فقرة تعريفية.&lt;/p&gt;</code>
+                        <span>فقرة تحمل المعرّف id=&quot;intro&quot;، لذلك ستأخذ تنسيق #intro فتظهر بخط أكبر (20 بكسل) ولون رمادي غامق.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">&lt;p&gt;هذه فقرة فيها &lt;span class=&quot;highlight&quot;&gt;كلمة مميزة&lt;/span&gt;.&lt;/p&gt;</code>
+                        <span>الوسم span حاوية صغيرة تحيط بجزء من النص دون أن تنقله إلى سطر جديد. لأنه يحمل class=&quot;highlight&quot; ستظهر عبارة «كلمة مميزة» بخلفية صفراء وباقي الفقرة عادي.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>3. نموذج الصندوق (Box Model)</h3>
+            <div class="prose"><p>كل عنصر هو صندوق: <b>المحتوى</b> ثم <code>padding</code> (المسافة الداخلية) ثم <code>border</code> (الإطار) ثم <code>margin</code> (المسافة الخارجية).</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;style&gt;</span><span class="ln" data-ln="1">  .card {</span><span class="ln" data-ln="2">    background: white;</span><span class="ln" data-ln="3">    padding: 20px;</span><span class="ln" data-ln="4">    border: 2px solid #3b82f6;</span><span class="ln" data-ln="5">    border-radius: 12px;</span><span class="ln" data-ln="6">    margin: 20px;</span><span class="ln" data-ln="7">    width: 250px;</span><span class="ln" data-ln="8">  }</span><span class="ln" data-ln="9">&lt;/style&gt;</span><span class="ln" data-ln="10">&lt;div class=&quot;card&quot;&gt;</span><span class="ln" data-ln="11">  &lt;h3&gt;سارة أحمد&lt;/h3&gt;</span><span class="ln" data-ln="12">  &lt;p&gt;متدربة في دورة البرمجة&lt;/p&gt;</span><span class="ln" data-ln="13">&lt;/div&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يصنع هذا المثال «بطاقة» بخلفية بيضاء وإطار أزرق وزوايا دائرية، وبداخلها اسم المتدربة ووصف قصير.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;style&gt;</code>
+                        <span>بداية قسم تنسيقات CSS داخل الصفحة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">.card {</code>
+                        <span>بداية قاعدة للكلاس card؛ كل عنصر يحمل class=&quot;card&quot; سيأخذ الخصائص المكتوبة في الأسطر التالية. هنا كتبنا كل خاصية في سطر لتسهيل القراءة.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">background: white;</code>
+                        <span>الخاصية background تجعل خلفية البطاقة بيضاء.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">padding: 20px;</code>
+                        <span>الخاصية padding هي المسافة الداخلية بين حدود البطاقة ومحتواها، وهنا 20 بكسل من كل الجهات حتى لا يلتصق النص بالإطار.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">border: 2px solid #3b82f6;</code>
+                        <span>الخاصية border ترسم إطارًا حول البطاقة: سُمكه 2px، ونوعه solid أي خط متصل، ولونه #3b82f6 وهو أزرق.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">border-radius: 12px;</code>
+                        <span>الخاصية border-radius تجعل زوايا البطاقة دائرية بدل أن تكون حادة، وكلما زاد الرقم زاد انحناء الزوايا.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">margin: 20px;</code>
+                        <span>الخاصية margin هي المسافة الخارجية حول البطاقة، أي الفراغ بينها وبين ما حولها، وهنا 20 بكسل.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">width: 250px;</code>
+                        <span>الخاصية width تحدد عرض البطاقة بـ 250 بكسل، بدل أن تمتد على عرض الصفحة كلها.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">}</code>
+                        <span>القوس } يغلق قاعدة .card، فكل الخصائص بين القوسين تابعة لها.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">&lt;div class=&quot;card&quot;&gt;</code>
+                        <span>الوسم div حاوية عامة نجمع بداخلها عناصر أخرى. لأنه يحمل class=&quot;card&quot; سيظهر بشكل البطاقة الموصوف في التنسيق.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">&lt;h3&gt;سارة أحمد&lt;/h3&gt;</code>
+                        <span>عنوان h3 داخل البطاقة يعرض اسم المتدربة.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">&lt;p&gt;متدربة في دورة البرمجة&lt;/p&gt;</code>
+                        <span>فقرة داخل البطاقة تعرض وصفًا قصيرًا تحت الاسم.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">&lt;/div&gt;</code>
+                        <span>يغلق الحاوية div، فالعنوان والفقرة كلاهما داخل البطاقة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>4. ترتيب العناصر بـ Flexbox</h3>
+            <div class="prose"><p><code>display: flex</code> يضع العناصر الأبناء بجانب بعضها. <code>gap</code> يضع مسافة بينها، و<code>justify-content</code> يحدد توزيعها.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;style&gt;</span><span class="ln" data-ln="1">  nav { display: flex; gap: 16px; background: #1e293b; padding: 12px; }</span><span class="ln" data-ln="2">  nav a { color: white; text-decoration: none; }</span><span class="ln" data-ln="3">  nav a:hover { color: #fbbf24; }</span><span class="ln" data-ln="4">&lt;/style&gt;</span><span class="ln" data-ln="5">&lt;nav&gt;</span><span class="ln" data-ln="6">  &lt;a href=&quot;#&quot;&gt;الرئيسية&lt;/a&gt;</span><span class="ln" data-ln="7">  &lt;a href=&quot;#&quot;&gt;الطلاب&lt;/a&gt;</span><span class="ln" data-ln="8">  &lt;a href=&quot;#&quot;&gt;التسجيل&lt;/a&gt;</span><span class="ln" data-ln="9">&lt;/nav&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يصنع هذا المثال شريط تنقل داكنًا فيه ثلاثة روابط بيضاء متجاورة في صف واحد، ويتغير لون الرابط إلى الأصفر عند مرور الفأرة فوقه.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;style&gt;</code>
+                        <span>بداية قسم تنسيقات CSS.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">nav { display: flex; gap: 16px; background: #1e293b; padding: 12px; }</code>
+                        <span>تنسيق شريط nav: الخاصية display: flex ترتّب العناصر التي بداخله بجانب بعضها في صف واحد، وgap: 16px تضع مسافة 16 بكسل بين كل عنصر والذي يليه. background تعطيه لونًا كحليًا داكنًا، وpadding مسافة داخلية 12 بكسل.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">nav a { color: white; text-decoration: none; }</code>
+                        <span>المحدِّد nav a يعني «كل رابط a موجود داخل nav» فقط. color: white يجعل لون الروابط أبيض، وtext-decoration: none يزيل الخط الذي يظهر تحت الروابط عادةً.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">nav a:hover { color: #fbbf24; }</code>
+                        <span>الإضافة :hover تعني «عندما تمر الفأرة فوق العنصر». فعندما تضع الفأرة على أي رابط يتغير لونه إلى #fbbf24 وهو أصفر ذهبي، ويعود أبيض عند إبعادها.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;/style&gt;</code>
+                        <span>يغلق قسم التنسيقات.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;nav&gt;</code>
+                        <span>الوسم nav يمثل شريط التنقل، وسيأخذ الخلفية الداكنة وترتيب flex من التنسيق أعلاه.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;a href=&quot;#&quot;&gt;الرئيسية&lt;/a&gt;</code>
+                        <span>رابط a مؤقت (href=&quot;#&quot; لا ينقل لصفحة أخرى). هذا الرابط والرابطان بعده يظهرون بجانب بعضهم بلون أبيض بفضل display: flex.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">&lt;/nav&gt;</code>
+                        <span>يغلق شريط التنقل.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">:hover تنسيق يظهر عند مرور الفأرة فوق العنصر.</div>
+    </div>
+
+    <h2 class="h2">التمارين العملية</h2>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 1: نسّق صفحة التعريف</h4>
+                <span class="lvl">سهل</span>
+            </div>
+            <div class="prose">أضف CSS لصفحة يوم 1: لون خلفية فاتح، عنوان رئيسي بلون مختلف ومتوسط، خط Tahoma، وصورة بحواف دائرية (border-radius).</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;style&gt;</span><span class="ln" data-ln="1">  body { background: #eef2f7; font-family: Tahoma; }</span><span class="ln" data-ln="2">  h1 { color: #0f766e; text-align: center; }</span><span class="ln" data-ln="3">  img { border-radius: 50%; display: block; margin: auto; }</span><span class="ln" data-ln="4">&lt;/style&gt;</span><span class="ln" data-ln="5">&lt;h1&gt;أحمد علي&lt;/h1&gt;</span><span class="ln" data-ln="6">&lt;img src=&quot;https://placehold.co/150&quot; alt=&quot;صورتي&quot;&gt;</span><span class="ln" data-ln="7">&lt;p&gt;أنا طالب أحب البرمجة.&lt;/p&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الحل صفحة تعريف بخلفية زرقاء فاتحة، فيها اسم في الوسط بلون أخضر مزرق، وتحته صورة دائرية في منتصف الصفحة، ثم جملة تعريفية.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;style&gt;</code>
+                        <span>بداية قسم تنسيقات CSS.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">body { background: #eef2f7; font-family: Tahoma; }</code>
+                        <span>تنسيق الصفحة كلها: خلفية بلون #eef2f7 (أزرق رمادي فاتح جدًا)، والخط Tahoma.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">h1 { color: #0f766e; text-align: center; }</code>
+                        <span>العنوان h1 يظهر بلون #0f766e (أخضر مزرق) وفي منتصف السطر بفضل text-align: center.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">img { border-radius: 50%; display: block; margin: auto; }</code>
+                        <span>تنسيق الصورة: border-radius: 50% يجعل الصورة المربعة دائرة كاملة. display: block يجعل الصورة تأخذ سطرًا خاصًا بها، وmargin: auto يوزع المسافة الفارغة على الجانبين بالتساوي فتصبح الصورة في منتصف الصفحة أفقيًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;/style&gt;</code>
+                        <span>يغلق قسم التنسيقات.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;h1&gt;أحمد علي&lt;/h1&gt;</code>
+                        <span>عنوان h1 يعرض الاسم بالتنسيق المحدد أعلاه.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;img src=&quot;https://placehold.co/150&quot; alt=&quot;صورتي&quot;&gt;</code>
+                        <span>صورة تجريبية مربعة بحجم 150 بكسل، وستظهر دائرية وفي المنتصف بسبب قاعدة img.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;p&gt;أنا طالب أحب البرمجة.&lt;/p&gt;</code>
+                        <span>فقرة تعريفية تظهر تحت الصورة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 2: بطاقات الطلاب</h4>
+                <span class="lvl">متوسط</span>
+            </div>
+            <div class="prose">أنشئ 3 بطاقات طلاب (اسم &#x2B; دورة &#x2B; درجة) متجاورة باستخدام flex، لكل بطاقة إطار وحواف دائرية ومسافة داخلية.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;style&gt;</span><span class="ln" data-ln="1">  .cards { display: flex; gap: 16px; flex-wrap: wrap; }</span><span class="ln" data-ln="2">  .card { border: 1px solid #ccc; border-radius: 10px; padding: 16px; width: 180px; background: white; }</span><span class="ln" data-ln="3">  .card h3 { margin: 0; color: #6d3fc0; }</span><span class="ln" data-ln="4">&lt;/style&gt;</span><span class="ln" data-ln="5">&lt;div class=&quot;cards&quot;&gt;</span><span class="ln" data-ln="6">  &lt;div class=&quot;card&quot;&gt;&lt;h3&gt;سارة&lt;/h3&gt;&lt;p&gt;C#&lt;/p&gt;&lt;b&gt;95&lt;/b&gt;&lt;/div&gt;</span><span class="ln" data-ln="7">  &lt;div class=&quot;card&quot;&gt;&lt;h3&gt;خالد&lt;/h3&gt;&lt;p&gt;HTML&lt;/p&gt;&lt;b&gt;88&lt;/b&gt;&lt;/div&gt;</span><span class="ln" data-ln="8">  &lt;div class=&quot;card&quot;&gt;&lt;h3&gt;مريم&lt;/h3&gt;&lt;p&gt;SQL&lt;/p&gt;&lt;b&gt;91&lt;/b&gt;&lt;/div&gt;</span><span class="ln" data-ln="9">&lt;/div&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الحل ثلاث بطاقات طلاب متجاورة في صف، كل بطاقة فيها اسم الطالب ولغته ودرجته، وتنتقل البطاقات إلى سطر جديد إذا ضاقت الشاشة.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;style&gt;</code>
+                        <span>بداية قسم تنسيقات CSS.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">.cards { display: flex; gap: 16px; flex-wrap: wrap; }</code>
+                        <span>تنسيق الحاوية التي تحمل الكلاس cards: display: flex يضع البطاقات بجانب بعضها، وgap: 16px يترك مسافة بينها، وflex-wrap: wrap يسمح للبطاقات بالنزول إلى سطر جديد إذا لم يكفِ عرض الشاشة.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">.card { border: 1px solid #ccc; border-radius: 10px; padding: 16px; width: 180px; background: white; }</code>
+                        <span>تنسيق كل بطاقة: إطار رمادي فاتح رفيع (1px)، وزوايا دائرية 10 بكسل، ومسافة داخلية 16 بكسل، وعرض ثابت 180 بكسل، وخلفية بيضاء.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">.card h3 { margin: 0; color: #6d3fc0; }</code>
+                        <span>المحدِّد .card h3 يعني «كل عنوان h3 داخل عنصر له الكلاس card». margin: 0 يلغي المسافة الخارجية التي يضعها المتصفح للعناوين تلقائيًا، وcolor يجعل لونه بنفسجيًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;/style&gt;</code>
+                        <span>يغلق قسم التنسيقات.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;div class=&quot;cards&quot;&gt;</code>
+                        <span>حاوية div بالكلاس cards تجمع البطاقات الثلاث وترتبها في صف بفضل flex.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;div class=&quot;card&quot;&gt;&lt;h3&gt;سارة&lt;/h3&gt;&lt;p&gt;C#&lt;/p&gt;&lt;b&gt;95&lt;/b&gt;&lt;/div&gt;</code>
+                        <span>بطاقة واحدة: div بالكلاس card بداخلها عنوان h3 بالاسم، وفقرة p باللغة، والوسم b يعرض الدرجة 95 بخط عريض. السطران التاليان بطاقتان أخريان بنفس الشكل لخالد ومريم.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">&lt;/div&gt;</code>
+                        <span>يغلق الحاوية الخارجية cards.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 3: تحدٍّ: الصفحة الرئيسية للنظام</h4>
+                <span class="lvl">تحدٍّ</span>
+            </div>
+            <div class="prose">اجمع ما تعلمته: header فيه اسم النظام، nav بثلاثة روابط، main فيه فقرة ترحيب ونموذج التسجيل من يوم 2، وfooter. نسّقها بشكل مرتب. هذا هو الجزء الأول من مشروعك النهائي.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;style&gt;</span><span class="ln" data-ln="1">  body { margin: 0; font-family: Tahoma; background: #f4f6f8; }</span><span class="ln" data-ln="2">  header { background: #0f766e; color: white; padding: 16px; }</span><span class="ln" data-ln="3">  nav { display: flex; gap: 16px; background: #134e4a; padding: 10px 16px; }</span><span class="ln" data-ln="4">  nav a { color: white; text-decoration: none; }</span><span class="ln" data-ln="5">  main { padding: 20px; max-width: 600px; margin: auto; }</span><span class="ln" data-ln="6">  form { background: white; padding: 16px; border-radius: 10px; }</span><span class="ln" data-ln="7">  input, select { padding: 6px; width: 100%; margin-bottom: 10px; }</span><span class="ln" data-ln="8">  button { background: #0f766e; color: white; border: 0; padding: 8px 20px; border-radius: 6px; }</span><span class="ln" data-ln="9">  footer { text-align: center; color: #666; padding: 16px; }</span><span class="ln" data-ln="10">&lt;/style&gt;</span><span class="ln" data-ln="11">&lt;header&gt;&lt;h1&gt;نظام سجل الطلاب&lt;/h1&gt;&lt;/header&gt;</span><span class="ln" data-ln="12">&lt;nav&gt;&lt;a href=&quot;#&quot;&gt;الرئيسية&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;الطلاب&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;تسجيل&lt;/a&gt;&lt;/nav&gt;</span><span class="ln" data-ln="13">&lt;main&gt;</span><span class="ln" data-ln="14">  &lt;p&gt;مرحبًا بك في نظام تسجيل الطلاب.&lt;/p&gt;</span><span class="ln" data-ln="15">  &lt;form&gt;</span><span class="ln" data-ln="16">    &lt;label&gt;الاسم&lt;/label&gt;&lt;input type=&quot;text&quot;&gt;</span><span class="ln" data-ln="17">    &lt;label&gt;البريد&lt;/label&gt;&lt;input type=&quot;email&quot;&gt;</span><span class="ln" data-ln="18">    &lt;label&gt;الدورة&lt;/label&gt;&lt;select&gt;&lt;option&gt;C#&lt;/option&gt;&lt;option&gt;HTML&lt;/option&gt;&lt;/select&gt;</span><span class="ln" data-ln="19">    &lt;button&gt;تسجيل&lt;/button&gt;</span><span class="ln" data-ln="20">  &lt;/form&gt;</span><span class="ln" data-ln="21">&lt;/main&gt;</span><span class="ln" data-ln="22">&lt;footer&gt;© 2026&lt;/footer&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الحل صفحة كاملة منسقة لنظام سجل الطلاب: رأس ملوّن بالعنوان، وشريط روابط، ومحتوى في الوسط فيه نموذج تسجيل أبيض، وتذييل بحقوق النشر في الأسفل.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;style&gt;</code>
+                        <span>بداية قسم تنسيقات CSS للصفحة كلها.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">body { margin: 0; font-family: Tahoma; background: #f4f6f8; }</code>
+                        <span>margin: 0 يزيل المسافة الصغيرة التي يضعها المتصفح حول الصفحة تلقائيًا، فيلتصق الرأس بحواف النافذة. ونحدد الخط Tahoma وخلفية رمادية فاتحة.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">header { background: #0f766e; color: white; padding: 16px; }</code>
+                        <span>رأس الصفحة header يأخذ خلفية خضراء مزرقة ونصًا أبيض ومسافة داخلية 16 بكسل.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">nav { display: flex; gap: 16px; background: #134e4a; padding: 10px 16px; }</code>
+                        <span>شريط التنقل يرتب روابطه في صف بـ display: flex مع مسافة بينها. عندما نكتب قيمتين في padding مثل 10px 16px فالأولى للأعلى والأسفل والثانية لليمين واليسار.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">nav a { color: white; text-decoration: none; }</code>
+                        <span>روابط الشريط بيضاء وبدون خط تحتها.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">main { padding: 20px; max-width: 600px; margin: auto; }</code>
+                        <span>المحتوى الرئيسي main: الخاصية max-width: 600px تمنع عرضه من تجاوز 600 بكسل، وmargin: auto تضعه في منتصف الصفحة أفقيًا، وpadding يترك مسافة داخلية.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">form { background: white; padding: 16px; border-radius: 10px; }</code>
+                        <span>النموذج form يظهر كصندوق أبيض بمسافة داخلية وزوايا دائرية.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">input, select { padding: 6px; width: 100%; margin-bottom: 10px; }</code>
+                        <span>الفاصلة بين input وselect تعني تطبيق نفس التنسيق على النوعين معًا. width: 100% يجعل كل خانة بعرض النموذج كاملًا، وmargin-bottom: 10px يترك مسافة تحت كل خانة.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">button { background: #0f766e; color: white; border: 0; padding: 8px 20px; border-radius: 6px; }</code>
+                        <span>تنسيق الزر: خلفية خضراء مزرقة ونص أبيض، وborder: 0 يزيل الإطار الافتراضي للزر، مع مسافة داخلية وزوايا دائرية ليبدو أجمل.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">footer { text-align: center; color: #666; padding: 16px; }</code>
+                        <span>التذييل footer نصه في المنتصف وبلون رمادي مع مسافة داخلية.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">&lt;/style&gt;</code>
+                        <span>يغلق قسم التنسيقات، وبعده يبدأ محتوى الصفحة.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">&lt;header&gt;&lt;h1&gt;نظام سجل الطلاب&lt;/h1&gt;&lt;/header&gt;</code>
+                        <span>رأس الصفحة وبداخله العنوان الرئيسي، وسيظهر بشريط أخضر عريض في أعلى الصفحة.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">&lt;nav&gt;&lt;a href=&quot;#&quot;&gt;الرئيسية&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;الطلاب&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;تسجيل&lt;/a&gt;&lt;/nav&gt;</code>
+                        <span>شريط التنقل بثلاثة روابط مؤقتة. لم نكتب فواصل بينها لأن gap في CSS يضع المسافة بينها تلقائيًا.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">&lt;main&gt;</code>
+                        <span>بداية المحتوى الرئيسي الذي سيظهر في منتصف الصفحة.</span>
+                    </li>
+                    <li data-ln="14">
+                        <code dir="ltr">&lt;p&gt;مرحبًا بك في نظام تسجيل الطلاب.&lt;/p&gt;</code>
+                        <span>فقرة ترحيبية فوق النموذج.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">&lt;form&gt;</code>
+                        <span>بداية نموذج التسجيل الذي يظهر كصندوق أبيض.</span>
+                    </li>
+                    <li data-ln="16">
+                        <code dir="ltr">&lt;label&gt;الاسم&lt;/label&gt;&lt;input type=&quot;text&quot;&gt;</code>
+                        <span>نص وصفي «الاسم» ثم خانة نصية. لأن عرض الخانة 100% ستنزل تحت النص وتملأ عرض النموذج. والسطر التالي يفعل نفس الشيء لخانة البريد من نوع email.</span>
+                    </li>
+                    <li data-ln="18">
+                        <code dir="ltr">&lt;label&gt;الدورة&lt;/label&gt;&lt;select&gt;&lt;option&gt;C#&lt;/option&gt;&lt;option&gt;HTML&lt;/option&gt;&lt;/select&gt;</code>
+                        <span>نص وصفي ثم قائمة منسدلة select فيها خياران: ⁦C#⁩ وHTML، وتأخذ نفس تنسيق الخانات.</span>
+                    </li>
+                    <li data-ln="19">
+                        <code dir="ltr">&lt;button&gt;تسجيل&lt;/button&gt;</code>
+                        <span>زر «تسجيل» بالتنسيق الأخضر. الزر داخل form بدون type يكون من نوع submit تلقائيًا، أي يرسل النموذج عند الضغط.</span>
+                    </li>
+                    <li data-ln="20">
+                        <code dir="ltr">&lt;/form&gt;</code>
+                        <span>يغلق النموذج، والسطر التالي يغلق المحتوى الرئيسي main.</span>
+                    </li>
+                    <li data-ln="22">
+                        <code dir="ltr">&lt;footer&gt;© 2026&lt;/footer&gt;</code>
+                        <span>تذييل الصفحة يعرض رمز حقوق النشر © والسنة في منتصف أسفل الصفحة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. أي محدد يختار العناصر التي لها class=&quot;box&quot;؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">#box</button>
+                            <button type="button" class="opt" data-correct="1">.box</button>
+                            <button type="button" class="opt" data-correct="0">box</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. المسافة بين محتوى العنصر وإطاره هي:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">margin</button>
+                            <button type="button" class="opt" data-correct="1">padding</button>
+                            <button type="button" class="opt" data-correct="0">gap</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. لوضع العناصر بجانب بعضها نستخدم:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">display: flex</button>
+                            <button type="button" class="opt" data-correct="0">color: flex</button>
+                            <button type="button" class="opt" data-correct="0">text-align: flex</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> أكمل الصفحة الرئيسية لمشروعك (تحدي اليوم) وأحضرها يوم 5.</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-2.html">→ اليوم 2</a>
+                <a class="btn primary trainer-only" href="day-4.html">اليوم 4 ←</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

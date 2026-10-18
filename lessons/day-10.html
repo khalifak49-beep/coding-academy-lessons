@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 10: العروض والاختبار النهائي · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="true">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-proj">المشروع</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 10 · الأسبوع 2 · ساعتان</span>
+            </div>
+            <h1>المشروع النهائي: الإكمال والعرض والاختبار النهائي</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-10.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-10.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-10.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>يدمج HTML و⁦C#⁩ وSQL Server في مشروع واحد يعمل.</li>
+                <li>يشرح الكود الذي كتبه ويجيب عن أسئلة حوله.</li>
+                <li>يقيّم ما تعلمه ويعرف الخطوة التالية في رحلته.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:30</time><span>اللمسات الأخيرة على المشاريع وحل المشكلات مع المدرب</span></div>
+                <div class="slot"><time>0:30 – 1:15</time><span>عرض المشاريع: 6 متدربين × 7 دقائق (5 عرض &#x2B; 2 أسئلة)</span></div>
+                <div class="slot"><time>1:15 – 1:25</time><span>استراحة</span></div>
+                <div class="slot"><time>1:25 – 1:50</time><span>الاختبار النهائي (20 درجة)</span></div>
+                <div class="slot"><time>1:50 – 2:00</time><span>إعلان النتائج والتغذية الراجعة والخطوات التالية</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. قائمة التحقق قبل العرض</h3>
+            <div class="prose"><ul class="clean"><li>صفحة HTML تفتح وتعرض اسم النظام والنموذج والجدول بشكل منسق.</li><li>قاعدة البيانات موجودة وفيها 5 صفوف على الأقل.</li><li>برنامج ⁦C#⁩ يعمل بدون أخطاء، وكل خيارات القائمة تعمل.</li><li>جربت إدخال قيمة خاطئة (حروف بدل رقم) ولم يتوقف البرنامج.</li><li>جهزت 3 نقاط تريد أن تقولها: الفكرة، أصعب جزء، ماذا ستضيف لاحقًا.</li></ul></div>
+    </div>
+    <div class="sec">
+        <h3>2. طريقة العرض (5 دقائق)</h3>
+            <div class="prose"><ol class="clean"><li>الفكرة ولمن هذا النظام (30 ثانية).</li><li>صفحة HTML (دقيقة).</li><li>قاعدة البيانات وتصميم الجدول في SSMS (دقيقة).</li><li>تشغيل برنامج ⁦C#⁩ وتجربة: إضافة، عرض، تعديل، حذف، إحصائيات (دقيقتان).</li><li>ما تعلمته وأصعب مشكلة واجهتها (30 ثانية).</li></ol></div>
+    </div>
+    <div class="sec">
+        <h3>3. ماذا بعد الدورة؟</h3>
+            <div class="prose"><p>الخطوات المقترحة: JavaScript لجعل الصفحات تفاعلية، ثم ASP.NET Core لبناء مواقع تتصل بـ SQL Server مباشرة، ثم Entity Framework Core. المهم الآن: اكتب كودًا كل يوم ولو 30 دقيقة.</p></div>
+    </div>
+
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. لحماية الاستعلام من SQL Injection نستخدم:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">الباراميترات</button>
+                            <button type="button" class="opt" data-correct="0">تكبير الخط</button>
+                            <button type="button" class="opt" data-correct="0">حلقة for</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. أي لغة تُستخدم لبناء واجهة صفحة الويب؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">SQL</button>
+                            <button type="button" class="opt" data-correct="1">HTML</button>
+                            <button type="button" class="opt" data-correct="0">⁦C#⁩</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. List أفضل من المصفوفة عندما:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">يكون عدد العناصر متغيرًا</button>
+                            <button type="button" class="opt" data-correct="0">نريد رقمًا واحدًا</button>
+                            <button type="button" class="opt" data-correct="0">نكتب HTML</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> مبروك إتمام الدورة!</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-9.html">→ اليوم 9</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

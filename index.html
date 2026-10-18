@@ -6,38 +6,102 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>الدروس · أساسيات البرمجة</title>
     <script>
-        // شاشة الدخول الموحدة للطلاب
-        (function () {
-            try { if (localStorage.getItem("ca-auth") === "b3f90063cdaae099") return; } catch (e) { }
-            location.replace("login.html?next=" + encodeURIComponent(location.href));
-        })();
-    </script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
     <link rel="stylesheet" href="css/site.css" />
 </head>
-<body data-playground="editor.html">
+<body data-playground="editor.html" data-root="">
     <header class="top">
         <div class="wrap">
             <div class="row">
                 <a class="brand" href="index.html">
                     <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
-                    <span>دروس الدورة للمتدربين</span>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
                 </a>
                 <div class="tools">
-                    <button class="btn" id="presentBtn" type="button" aria-pressed="false">تكبير الخط</button>
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
                     <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
                 </div>
             </div>
             <nav class="tabs" aria-label="أقسام الموقع">
                 <a class="tab" aria-selected="true" href="index.html">الدروس</a>
                 <a class="tab" aria-selected="false" href="editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="settings.html">الإعدادات</a>
             </nav>
         </div>
     </header>
     <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
         <section class="view">
-    <div class="panel">
+    <div class="panel stack trainer-only">
+        <div class="flow-head">
+            <div>
+                <div class="eyebrow">لوحة المدرب</div>
+                <h1 class="h2" style="margin:0">
+الدرس الحالي: اليوم 1 · مدخل إلى البرمجة وأول صفحة HTML                </h1>
+            </div>
+                <div class="pills">
+                    <a class="btn" href="lessons/day-1.html">افتح الدرس</a>
+                    <a class="btn primary" href="present/day-1.html">▶ ابدأ العرض</a>
+                </div>
+        </div>
+        <div class="flowbar" aria-hidden="true">
+                <span class="step st-current"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+                <span class="step st-upcoming"></span>
+        </div>
+        <div class="control-row">
+                <button class="btn ok" type="button" data-set-completed="1" data-confirm="إكمال اليوم 1 وفتح الدرس التالي للمتدربين؟">✓ إكمال اليوم 1</button>
+            <label class="muted small" for="completedSelect">أو حدّد عدد الدروس المكتملة:</label>
+            <select id="completedSelect">
+                    <option value="0" selected="selected">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+            </select>
+            <button class="btn" type="button" id="applyCompleted">تطبيق</button>
+        </div>
+        <p class="muted small" style="margin:0">التغيير يظهر للمتدربين خلال دقيقتين تقريبًا. اكتمل 0 من 10. <span id="ghStatus"></span></p>
+    </div>
+
+    <div class="panel student-only">
         <div class="flow-head">
             <div>
                 <div class="eyebrow">مسار الدورة</div>
@@ -66,124 +130,211 @@
     <div>
         <div class="bar-row">
             <h2 class="h2">الدروس</h2>
-                <div class="pills">
-                    <span class="muted small">كل الدروس المنشورة في ملف واحد:</span>
-                    <a class="btn" href="downloads/all-lessons.pdf" download>PDF</a>
-                    <a class="btn" href="downloads/all-lessons.docx" download>Word</a>
-                </div>
+            <div class="pills">
+                    <span class="muted small student-only">كل الدروس المفتوحة في ملف واحد:</span>
+                    <a class="btn student-only" href="downloads/all-lessons.pdf" download>PDF</a>
+                    <a class="btn student-only" href="downloads/all-lessons.docx" download>Word</a>
+                <span class="muted small trainer-only">الدورة كاملة في ملف واحد:</span>
+                <a class="btn trainer-only" href="downloads/full-course.pdf" download>PDF</a>
+                <a class="btn trainer-only" href="downloads/full-course.docx" download>Word</a>
+            </div>
         </div>
         <div class="scroll">
             <table>
-                <thead><tr><th>اليوم</th><th>الحالة</th><th>المحور</th><th>الدرس</th><th>تحميل</th></tr></thead>
+                <thead><tr><th>اليوم</th><th>الحالة</th><th>المحور</th><th>الدرس</th><th>تحميل</th><th class="trainer-only">عرض</th></tr></thead>
                 <tbody>
-                        <tr class="">
+                        <tr>
                             <td class="num"><b>1</b><br><small class="muted">أسبوع 1</small></td>
-                            <td><span class="status-pill st-current">● الدرس الحالي</span></td>
+                            <td>
+                                <span class="status-pill st-current ">● الدرس الحالي</span>
+                            </td>
                             <td><span class="pill t-html">HTML وCSS</span></td>
                             <td>
-                                    <a href="lessons/day-1.html"><b>مدخل إلى البرمجة وأول صفحة HTML</b></a>
+                                <a class="" href="lessons/day-1.html"><b>مدخل إلى البرمجة وأول صفحة HTML</b></a>
                             </td>
                             <td>
-                                    <div class="pills">
-                                        <a class="btn" href="downloads/day-1.pdf" download>PDF</a>
-                                        <a class="btn" href="downloads/day-1.docx" download>Word</a>
-                                    </div>
+                                <div class="pills ">
+                                    <a class="btn" href="downloads/day-1.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-1.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-1.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>2</b><br><small class="muted">أسبوع 1</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-html">HTML وCSS</span></td>
                             <td>
-                                    <span class="muted">القوائم والجداول والنماذج</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-2.html"><b>القوائم والجداول والنماذج</b></a>
+                                    <span class="student-only"><span class="muted">القوائم والجداول والنماذج</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-2.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-2.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-2.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>3</b><br><small class="muted">أسبوع 1</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-html">HTML وCSS</span></td>
                             <td>
-                                    <span class="muted">تنسيق الصفحات بـ CSS</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-3.html"><b>تنسيق الصفحات بـ CSS</b></a>
+                                    <span class="student-only"><span class="muted">تنسيق الصفحات بـ CSS</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-3.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-3.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-3.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>4</b><br><small class="muted">أسبوع 1</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-cs">⁦C#⁩</span></td>
                             <td>
-                                    <span class="muted">أول برنامج بـ ⁦C#⁩: المتغيرات وأنواع البيانات</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-4.html"><b>أول برنامج بـ ⁦C#⁩: المتغيرات وأنواع البيانات</b></a>
+                                    <span class="student-only"><span class="muted">أول برنامج بـ ⁦C#⁩: المتغيرات وأنواع البيانات</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-4.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-4.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-4.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>5</b><br><small class="muted">أسبوع 1</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-cs">⁦C#⁩</span></td>
                             <td>
-                                    <span class="muted">العمليات والشروط &#x2B; اختبار منتصف الدورة</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-5.html"><b>العمليات والشروط &#x2B; اختبار منتصف الدورة</b></a>
+                                    <span class="student-only"><span class="muted">العمليات والشروط &#x2B; اختبار منتصف الدورة</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-5.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-5.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-5.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>6</b><br><small class="muted">أسبوع 2</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-cs">⁦C#⁩</span></td>
                             <td>
-                                    <span class="muted">الحلقات التكرارية والمصفوفات</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-6.html"><b>الحلقات التكرارية والمصفوفات</b></a>
+                                    <span class="student-only"><span class="muted">الحلقات التكرارية والمصفوفات</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-6.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-6.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-6.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>7</b><br><small class="muted">أسبوع 2</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-cs">⁦C#⁩</span></td>
                             <td>
-                                    <span class="muted">الدوال والقوائم List ومدخل للكائنات</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-7.html"><b>الدوال والقوائم List ومدخل للكائنات</b></a>
+                                    <span class="student-only"><span class="muted">الدوال والقوائم List ومدخل للكائنات</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-7.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-7.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-7.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>8</b><br><small class="muted">أسبوع 2</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-sql">SQL Server</span></td>
                             <td>
-                                    <span class="muted">SQL Server: إنشاء قاعدة البيانات والاستعلام</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-8.html"><b>SQL Server: إنشاء قاعدة البيانات والاستعلام</b></a>
+                                    <span class="student-only"><span class="muted">SQL Server: إنشاء قاعدة البيانات والاستعلام</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-8.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-8.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-8.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>9</b><br><small class="muted">أسبوع 2</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-sql">SQL Server</span></td>
                             <td>
-                                    <span class="muted">تعديل البيانات والتجميع وربط ⁦C#⁩ بـ SQL Server</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-9.html"><b>تعديل البيانات والتجميع وربط ⁦C#⁩ بـ SQL Server</b></a>
+                                    <span class="student-only"><span class="muted">تعديل البيانات والتجميع وربط ⁦C#⁩ بـ SQL Server</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-9.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-9.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-9.html">▶ عرض</a></td>
                         </tr>
-                        <tr class="row-locked">
+                        <tr>
                             <td class="num"><b>10</b><br><small class="muted">أسبوع 2</small></td>
-                            <td><span class="status-pill st-upcoming">&#x1F512; لم يبدأ</span></td>
+                            <td>
+                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
+                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                            </td>
                             <td><span class="pill t-proj">المشروع</span></td>
                             <td>
-                                    <span class="muted">المشروع النهائي: الإكمال والعرض والاختبار النهائي</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small>
+                                <a class="trainer-only" href="lessons/day-10.html"><b>المشروع النهائي: الإكمال والعرض والاختبار النهائي</b></a>
+                                    <span class="student-only"><span class="muted">المشروع النهائي: الإكمال والعرض والاختبار النهائي</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
                             </td>
                             <td>
+                                <div class="pills trainer-only">
+                                    <a class="btn" href="downloads/day-10.pdf" download>PDF</a>
+                                    <a class="btn" href="downloads/day-10.docx" download>Word</a>
+                                </div>
                             </td>
+                            <td class="trainer-only"><a class="btn" href="present/day-10.html">▶ عرض</a></td>
                         </tr>
                 </tbody>
             </table>
         </div>
-        <p class="muted small">آخر تحديث: 2026/10/18 19:51</p>
+        <p class="muted small">آخر تحديث للموقع: 2026/10/19 00:14</p>
     </div>
 </section>
 

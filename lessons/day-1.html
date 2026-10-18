@@ -6,77 +6,132 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>اليوم 1: أول صفحة HTML · أساسيات البرمجة</title>
     <script>
-        // شاشة الدخول الموحدة للطلاب
-        (function () {
-            try { if (localStorage.getItem("ca-auth") === "b3f90063cdaae099") return; } catch (e) { }
-            location.replace("../login.html?next=" + encodeURIComponent(location.href));
-        })();
-    </script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "1" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
     <link rel="stylesheet" href="../css/site.css" />
 </head>
-<body data-playground="../editor.html">
+<body data-playground="../editor.html" data-root="../">
     <header class="top">
         <div class="wrap">
             <div class="row">
                 <a class="brand" href="../index.html">
                     <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
-                    <span>دروس الدورة للمتدربين</span>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
                 </a>
                 <div class="tools">
-                    <button class="btn" id="presentBtn" type="button" aria-pressed="false">تكبير الخط</button>
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
                     <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
                 </div>
             </div>
             <nav class="tabs" aria-label="أقسام الموقع">
                 <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
                 <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
             </nav>
         </div>
     </header>
     <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
         <div class="lessons">
     <nav class="rail flow" aria-label="مسار الدورة">
             <div class="wk">الأسبوع 1</div>
-                    <a class="day st-current" href="day-1.html" aria-current="true">
-                        <span class="n">1</span>
-                        <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
-                    </a>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-current " href="day-1.html" aria-current="true">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
                     </span>
             <div class="wk">الأسبوع 2</div>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
                     </span>
-                    <span class="day locked st-upcoming" title="يُفتح عندما نصل إليه في الدورة">
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
                         <span class="n">🔒</span>
                         <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
                     </span>
@@ -91,6 +146,8 @@
             </div>
             <h1>مدخل إلى البرمجة وأول صفحة HTML</h1>
             <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-1.html">▶ ابدأ عرض الدرس</a>
+                    <button class="btn ok trainer-only" type="button" data-set-completed="1" data-confirm="إكمال اليوم 1 وفتح الدرس التالي للمتدربين؟">✓ إكمال الدرس</button>
                 <a class="btn" href="../downloads/day-1.pdf" download>تحميل PDF</a>
                 <a class="btn" href="../downloads/day-1.docx" download>تحميل Word</a>
             </div>
@@ -460,6 +517,7 @@
 
         <div class="pager">
                 <span></span>
+                <a class="btn primary trainer-only" href="day-2.html">اليوم 2 ←</a>
         </div>
     </article>
 </div>

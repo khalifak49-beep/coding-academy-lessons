@@ -15,7 +15,7 @@
             <div class="login-intro">
                 <span class="eyebrow">دورة أساسيات البرمجة</span>
                 <h1>HTML و&#x2066;C#&#x2069; وSQL Server</h1>
-                <p class="muted">دروس الدورة، والمحرر لتجربة الأكواد، وتحميل الدروس PDF وWord.</p>
+                <p class="muted">أسبوعان من التدريب العملي: دروس يومية، تمارين بحلول، محرر HTML، ومشروع نهائي.</p>
                 <div class="pills">
                     <span class="pill t-html">HTML وCSS</span>
                     <span class="pill t-cs">&#x2066;C#&#x2069;</span>
@@ -29,27 +29,34 @@
                 <label for="p">كلمة المرور</label>
                 <input id="p" type="password" autocomplete="current-password" dir="ltr" required />
                 <span class="field-error" id="err" role="alert"></span>
-                <button class="btn primary" type="submit">دخول</button>
+                <button class="btn primary" type="submit" id="loginBtn">دخول</button>
                 <p class="muted small">اسم المستخدم وكلمة المرور من المدرب.</p>
             </form>
         </div>
     </main>
     <script>
         (function () {
-            const expected = "b3f90063cdaae099787824384a99437b06b356bdb2c9ff13c6168cf555ddf8eb";
-            const form = document.getElementById("loginForm"), err = document.getElementById("err");
-            async function sha256(text) {
-                const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-                return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+            const ACC = {"trainer":"1d1960c2ab54c250b70ab454354db0594945b05ce5810f7dc63eab61e07a3dcd","student1":"73fe0bb89e5afd7e13c42a7c07a004bbb6fc3f5802305b8fcd692e4b0bb5694d","student2":"412fda9187c199453470f9aa8449b2f2d0082c00f494763b715412df891d75e3","student3":"c0bb846f3ccc87be5b9fbea0b3000b01f0a5f0041c75cd7bc9f31b38c47c5350","student4":"9c760debed2944090ccb54042cef71fac7d382b977431b36f1457a148b83cf6f","student5":"d5e3fe1353917766ae53c38d3a42d04a82584de794844e5cd67e67284de0e42c","student6":"9d1d1ee2858371ac5e0110fcf2ef66a659912da77afe32a96eb235dc9ffa3c63"};
+            const form = document.getElementById("loginForm"), err = document.getElementById("err"), btn = document.getElementById("loginBtn");
+            const enc = s => new TextEncoder().encode(s);
+            async function hash(user, pass) {
+                const key = await crypto.subtle.importKey("raw", enc(pass), "PBKDF2", false, ["deriveBits"]);
+                const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: enc("ca:" + user), iterations: 100000, hash: "SHA-256" }, key, 256);
+                return [...new Uint8Array(bits)].map(b => b.toString(16).padStart(2, "0")).join("");
             }
             form.addEventListener("submit", async e => {
                 e.preventDefault();
-                const hash = await sha256("ca:" + document.getElementById("u").value.trim() + ":" + document.getElementById("p").value);
-                if (hash !== expected) { err.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة"; return; }
-                try { localStorage.setItem("ca-auth", expected.slice(0, 16)); } catch (x) { }
+                err.textContent = "";
+                const user = document.getElementById("u").value.trim().toLowerCase();
+                const expected = ACC[user];
+                btn.disabled = true;
+                const h = expected ? await hash(user, document.getElementById("p").value) : "";
+                btn.disabled = false;
+                if (!expected || h !== expected) { err.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة"; return; }
+                try { localStorage.setItem("ca-session", JSON.stringify({ u: user, t: expected.slice(0, 16) })); } catch (x) { }
                 const next = new URLSearchParams(location.search).get("next");
                 let target = "index.html";
-                try { if (next && new URL(next).origin === location.origin) target = next; } catch (x) { }
+                try { if (next && new URL(next).origin === location.origin && !next.includes("login.html")) target = next; } catch (x) { }
                 location.replace(target);
             });
         })();

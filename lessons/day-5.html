@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 5: الشروط &#x2B; اختبار المنتصف · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="true">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="false">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-cs">⁦C#⁩</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 5 · الأسبوع 1 · ساعتان</span>
+            </div>
+            <h1>العمليات والشروط &#x2B; اختبار منتصف الدورة</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-5.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-5.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-5.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>يستخدم العمليات الحسابية &#x2B; − * / % بشكل صحيح.</li>
+                <li>يقارن القيم بـ == و!= و&gt; و&lt;.</li>
+                <li>يجمع الشروط بـ &amp;&amp; و|| و!.</li>
+                <li>يكتب قرارات بـ if / else if / else.</li>
+                <li>يستخدم switch لاختيار من عدة حالات.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:10</time><span>مراجعة المتغيرات والإدخال</span></div>
+                <div class="slot"><time>0:10 – 0:45</time><span>شرح العمليات الحسابية والمنطقية وif وswitch</span></div>
+                <div class="slot"><time>0:45 – 1:20</time><span>تمارين عملية على الشروط</span></div>
+                <div class="slot"><time>1:20 – 1:30</time><span>استراحة</span></div>
+                <div class="slot"><time>1:30 – 1:55</time><span>اختبار منتصف الدورة (HTML &#x2B; أساسيات ⁦C#⁩)</span></div>
+                <div class="slot"><time>1:55 – 2:00</time><span>ملاحظات ختام الأسبوع الأول</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. العمليات الحسابية</h3>
+            <div class="prose"><p><code>%</code> يعطي <b>باقي القسمة</b>، ومفيد لمعرفة الزوجي والفردي. انتبه: قسمة عددين صحيحين تعطي عددًا صحيحًا: <code>7 / 2 = 3</code>.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">int a = 17, b = 5;</span><span class="ln" data-ln="1">Console.WriteLine(a &#x2B; b);   // 22</span><span class="ln" data-ln="2">Console.WriteLine(a - b);   // 12</span><span class="ln" data-ln="3">Console.WriteLine(a * b);   // 85</span><span class="ln" data-ln="4">Console.WriteLine(a / b);   // 3</span><span class="ln" data-ln="5">Console.WriteLine(a % b);   // 2</span><span class="ln" data-ln="6">Console.WriteLine(7.0 / 2); // 3.5</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يجرب البرنامج العمليات الحسابية الأساسية على العددين 17 و 5 ويطبع ناتج كل عملية في سطر. يرى الطالب: 22 ثم 12 ثم 85 ثم 3 ثم 2 ثم 3.5.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">int a = 17, b = 5;</code>
+                        <span>نُنشئ متغيرين من نوع int (عدد صحيح) في سطر واحد، ونفصل بينهما بفاصلة: a قيمته 17 و b قيمته 5.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">Console.WriteLine(a &#x2B; b);   // 22</code>
+                        <span>العلامة &#x2B; تجمع العددين، و WriteLine يطبع الناتج 22. النص بعد // تعليق يوضح النتيجة المتوقعة ولا يُنفذ.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.WriteLine(a - b);   // 12</code>
+                        <span>العلامة - للطرح، فيُطبع 12.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.WriteLine(a * b);   // 85</code>
+                        <span>العلامة * للضرب في ⁦C#⁩ (وليس ×)، فيُطبع 85.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">Console.WriteLine(a / b);   // 3</code>
+                        <span>العلامة / للقسمة. لكن عندما يكون العددان صحيحين int تكون القسمة «صحيحة»: يُحذف الكسر وتبقى النتيجة 3 بدلًا من 3.4.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Console.WriteLine(a % b);   // 2</code>
+                        <span>العلامة % تعطي «باقي القسمة»: 17 مقسومة على 5 تساوي 3 والباقي 2، فيُطبع 2. هذه العملية مفيدة جدًا، مثلًا لمعرفة هل العدد زوجي أم فردي.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine(7.0 / 2); // 3.5</code>
+                        <span>كتبنا 7.0 بفاصلة عشرية فأصبح عددًا عشريًا double، وعندما يكون أحد طرفي القسمة عشريًا تحتفظ النتيجة بالكسر فيُطبع 3.5.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>2. المقارنة والمنطق</h3>
+            <div class="prose"><table><thead><tr><th>العملية</th><th>المعنى</th></tr></thead><tbody><tr><td><code>==</code></td><td>يساوي</td></tr><tr><td><code>!=</code></td><td>لا يساوي</td></tr><tr><td><code>&gt; &lt; &gt;= &lt;=</code></td><td>أكبر، أصغر، أكبر أو يساوي، أصغر أو يساوي</td></tr><tr><td><code>&amp;&amp;</code></td><td>و (الشرطان صحيحان)</td></tr><tr><td><code>||</code></td><td>أو (أحدهما صحيح)</td></tr><tr><td><code>!</code></td><td>نفي</td></tr></tbody></table></div>
+    </div>
+    <div class="sec">
+        <h3>3. الجملة الشرطية if</h3>
+            <div class="prose"><p>ينفذ البرنامج الجزء الأول الذي يتحقق شرطه فقط، ويتجاهل الباقي.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;أدخل الدرجة: &quot;);</span><span class="ln" data-ln="1">int score = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">if (score &gt;= 90)</span><span class="ln" data-ln="4">    Console.WriteLine(&quot;ممتاز&quot;);</span><span class="ln" data-ln="5">else if (score &gt;= 80)</span><span class="ln" data-ln="6">    Console.WriteLine(&quot;جيد جدًا&quot;);</span><span class="ln" data-ln="7">else if (score &gt;= 60)</span><span class="ln" data-ln="8">    Console.WriteLine(&quot;ناجح&quot;);</span><span class="ln" data-ln="9">else</span><span class="ln" data-ln="10">    Console.WriteLine(&quot;راسب&quot;);</span></code></pre>
+            <div class="out">أدخل الدرجة: 85&#xA;جيد جدًا</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يطلب البرنامج درجة الطالب ثم يطبع تقديرًا واحدًا حسبها: ممتاز أو جيد جدًا أو ناجح أو راسب. مثلًا الدرجة 85 تطبع «جيد جدًا».</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;أدخل الدرجة: &quot;);</code>
+                        <span>نطبع طلبًا للمستخدم ليكتب الدرجة، ويبقى المؤشر في نفس السطر.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">int score = int.Parse(Console.ReadLine());</code>
+                        <span>ReadLine يعيد ما كتبه المستخدم كنص، و int.Parse يحوّله إلى عدد صحيح حتى نستطيع مقارنته بأعداد أخرى. نحفظه في score.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">if (score &gt;= 90)</code>
+                        <span>الكلمة if تعني «إذا»: تفحص الشرط بين القوسين، فإن كان صحيحًا تُنفذ التعليمة التي تحته. العلامة &gt;= تعني «أكبر من أو يساوي».</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">Console.WriteLine(&quot;ممتاز&quot;);</code>
+                        <span>هذا السطر يُنفذ فقط إذا كانت الدرجة 90 أو أكثر. عندما لا نستخدم الأقواس { } يتبع if سطر واحد فقط هو الذي بعده مباشرة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">else if (score &gt;= 80)</code>
+                        <span>else if تعني «وإلا، إذا...»: لا يُفحص هذا الشرط إلا إذا كان الشرط السابق خاطئًا. أي أننا نصل هنا فقط إذا كانت الدرجة أقل من 90.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine(&quot;جيد جدًا&quot;);</code>
+                        <span>يُطبع «جيد جدًا» إذا كانت الدرجة من 80 إلى 89.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">else if (score &gt;= 60)</code>
+                        <span>شرط ثالث يُفحص فقط إذا فشل الشرطان السابقان، أي الدرجة أقل من 80.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">Console.WriteLine(&quot;ناجح&quot;);</code>
+                        <span>يُطبع «ناجح» إذا كانت الدرجة من 60 إلى 79.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">else</code>
+                        <span>else وحدها تعني «في كل الحالات الأخرى» ولا تحتاج شرطًا. تُنفذ فقط إذا كانت كل الشروط السابقة خاطئة، أي الدرجة أقل من 60.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">Console.WriteLine(&quot;راسب&quot;);</code>
+                        <span>يُطبع «راسب». لاحظ أن البرنامج ينفذ فرعًا واحدًا فقط من السلسلة: أول شرط صحيح ثم يتجاهل الباقي.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">خطأ شائع: كتابة = (إسناد) بدل == (مقارنة) داخل الشرط.</div>
+    </div>
+    <div class="sec">
+        <h3>4. الجملة switch</h3>
+            <div class="prose"><p>تناسب الاختيار من قيم محددة، مثل قوائم البرامج.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;اختر (1 إضافة، 2 عرض، 0 خروج): &quot;);</span><span class="ln" data-ln="1">string choice = Console.ReadLine();</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">switch (choice)</span><span class="ln" data-ln="4">{</span><span class="ln" data-ln="5">    case &quot;1&quot;:</span><span class="ln" data-ln="6">        Console.WriteLine(&quot;إضافة طالب...&quot;);</span><span class="ln" data-ln="7">        break;</span><span class="ln" data-ln="8">    case &quot;2&quot;:</span><span class="ln" data-ln="9">        Console.WriteLine(&quot;عرض الطلاب...&quot;);</span><span class="ln" data-ln="10">        break;</span><span class="ln" data-ln="11">    case &quot;0&quot;:</span><span class="ln" data-ln="12">        Console.WriteLine(&quot;وداعًا&quot;);</span><span class="ln" data-ln="13">        break;</span><span class="ln" data-ln="14">    default:</span><span class="ln" data-ln="15">        Console.WriteLine(&quot;اختيار غير صحيح&quot;);</span><span class="ln" data-ln="16">        break;</span><span class="ln" data-ln="17">}</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض البرنامج قائمة اختيارات ويقرأ اختيار المستخدم، ثم يطبع رسالة مناسبة: إضافة أو عرض أو وداع، أو «اختيار غير صحيح» إذا كتب شيئًا آخر.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;اختر (1 إضافة، 2 عرض، 0 خروج): &quot;);</code>
+                        <span>نطبع قائمة الاختيارات المتاحة ليعرف المستخدم ماذا يكتب، ويبقى المؤشر في نفس السطر.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">string choice = Console.ReadLine();</code>
+                        <span>نقرأ اختيار المستخدم كنص ونحفظه في choice. لم نحوّله إلى عدد لأننا سنقارنه بنصوص مثل &quot;1&quot;.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">switch (choice)</code>
+                        <span>الكلمة switch تعني «بدّل حسب»: تأخذ قيمة choice وتقارنها بعدة قيم محتملة، وتنفذ الجزء المطابق. هي بديل أوضح لسلسلة طويلة من if و else if.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوفة { } تجمع مجموعة من التعليمات في «كتلة» واحدة، وهنا تحدد بداية ونهاية جسم الـ switch.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">case &quot;1&quot;:</code>
+                        <span>case تعني «حالة»: إذا كانت قيمة choice تساوي النص &quot;1&quot; يبدأ التنفيذ من هنا. لاحظ علامة النقطتين : في نهاية السطر.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine(&quot;إضافة طالب...&quot;);</code>
+                        <span>هذه التعليمة تُنفذ عندما يختار المستخدم 1.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">break;</code>
+                        <span>break تعني «اخرج من الـ switch الآن». في ⁦C#⁩ يجب أن ينتهي كل case بـ break (أو ما يشبهها) حتى لا ينتقل التنفيذ إلى الحالة التالية، وإلا يرفض المترجم البرنامج.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">case &quot;2&quot;:</code>
+                        <span>الحالة الثانية: إذا كتب المستخدم &quot;2&quot; تُنفذ التعليمات التي تحتها.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">Console.WriteLine(&quot;عرض الطلاب...&quot;);</code>
+                        <span>يُطبع «عرض الطلاب...» ثم تأتي break للخروج.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">case &quot;0&quot;:</code>
+                        <span>الحالة الثالثة: إذا كتب المستخدم &quot;0&quot; للخروج.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">Console.WriteLine(&quot;وداعًا&quot;);</code>
+                        <span>يُطبع «وداعًا» ثم break تُنهي الـ switch.</span>
+                    </li>
+                    <li data-ln="14">
+                        <code dir="ltr">default:</code>
+                        <span>default تعني «الحالة الافتراضية»: تُنفذ إذا لم تطابق القيمة أي case من الحالات السابقة، مثل أن يكتب المستخدم 5 أو حرفًا.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">Console.WriteLine(&quot;اختيار غير صحيح&quot;);</code>
+                        <span>يُطبع تنبيه للمستخدم بأن ما كتبه ليس من الاختيارات المتاحة، ثم break الأخيرة تُنهي الـ switch.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+
+    <h2 class="h2">التمارين العملية</h2>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 1: زوجي أم فردي</h4>
+                <span class="lvl">سهل</span>
+            </div>
+            <div class="prose">اقرأ عددًا واطبع هل هو زوجي أم فردي.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;أدخل عددًا: &quot;);</span><span class="ln" data-ln="1">int n = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="2">if (n % 2 == 0)</span><span class="ln" data-ln="3">    Console.WriteLine(&quot;زوجي&quot;);</span><span class="ln" data-ln="4">else</span><span class="ln" data-ln="5">    Console.WriteLine(&quot;فردي&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يطلب البرنامج عددًا صحيحًا ثم يطبع «زوجي» إذا كان يقبل القسمة على 2، أو «فردي» إذا لم يكن كذلك.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;أدخل عددًا: &quot;);</code>
+                        <span>نطبع طلبًا للمستخدم ليكتب عددًا.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">int n = int.Parse(Console.ReadLine());</code>
+                        <span>نقرأ ما كتبه كنص بـ ReadLine، ثم نحوّله إلى عدد صحيح بـ int.Parse ونحفظه في n.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">if (n % 2 == 0)</code>
+                        <span>n % 2 يحسب باقي قسمة العدد على 2، والعلامة == تعني «هل يساوي؟» للمقارنة، وهي تختلف عن = التي تضع قيمة في متغير. فإذا كان الباقي صفرًا فالعدد زوجي.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">Console.WriteLine(&quot;زوجي&quot;);</code>
+                        <span>يُطبع «زوجي» فقط عندما يكون الشرط صحيحًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">else</code>
+                        <span>else تعني «وإلا»: تُنفذ عندما يكون شرط if خاطئًا، أي عندما يكون الباقي 1 (أو -1 للأعداد السالبة).</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Console.WriteLine(&quot;فردي&quot;);</code>
+                        <span>يُطبع «فردي» في هذه الحالة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 2: تقدير الطالب</h4>
+                <span class="lvl">متوسط</span>
+            </div>
+            <div class="prose">اقرأ درجة من 100. إن كانت أقل من 0 أو أكبر من 100 اطبع «درجة غير صالحة»، وإلا اطبع التقدير: ممتاز (90&#x2B;)، جيد جدًا (80&#x2B;)، جيد (70&#x2B;)، مقبول (60&#x2B;)، راسب.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;الدرجة: &quot;);</span><span class="ln" data-ln="1">int s = int.Parse(Console.ReadLine());</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">if (s &lt; 0 || s &gt; 100) Console.WriteLine(&quot;درجة غير صالحة&quot;);</span><span class="ln" data-ln="4">else if (s &gt;= 90) Console.WriteLine(&quot;ممتاز&quot;);</span><span class="ln" data-ln="5">else if (s &gt;= 80) Console.WriteLine(&quot;جيد جدًا&quot;);</span><span class="ln" data-ln="6">else if (s &gt;= 70) Console.WriteLine(&quot;جيد&quot;);</span><span class="ln" data-ln="7">else if (s &gt;= 60) Console.WriteLine(&quot;مقبول&quot;);</span><span class="ln" data-ln="8">else Console.WriteLine(&quot;راسب&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يطلب البرنامج درجة من 0 إلى 100 ويطبع تقديرها (ممتاز، جيد جدًا، جيد، مقبول، راسب)، ويطبع «درجة غير صالحة» إذا كانت الدرجة خارج هذا المدى.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;الدرجة: &quot;);</code>
+                        <span>نطبع طلبًا للمستخدم ليكتب الدرجة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">int s = int.Parse(Console.ReadLine());</code>
+                        <span>نقرأ النص الذي كتبه ونحوّله إلى عدد صحيح بـ int.Parse، ونحفظه في المتغير s.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">if (s &lt; 0 || s &gt; 100) Console.WriteLine(&quot;درجة غير صالحة&quot;);</code>
+                        <span>العلامة || تعني «أو»: يكون الشرط صحيحًا إذا تحقق أحد الجزأين على الأقل، أي الدرجة أقل من 0 أو أكبر من 100. نفحص هذا أولًا لنرفض الدرجات غير المنطقية، ويمكن كتابة التعليمة في نفس سطر if.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">else if (s &gt;= 90) Console.WriteLine(&quot;ممتاز&quot;);</code>
+                        <span>نصل إلى هنا فقط إذا كانت الدرجة صالحة. إذا كانت 90 أو أكثر يُطبع «ممتاز».</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">else if (s &gt;= 80) Console.WriteLine(&quot;جيد جدًا&quot;);</code>
+                        <span>إذا فشلت الشروط السابقة وكانت الدرجة 80 أو أكثر (أي 80 إلى 89) يُطبع «جيد جدًا».</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">else if (s &gt;= 70) Console.WriteLine(&quot;جيد&quot;);</code>
+                        <span>الدرجات من 70 إلى 79 تعطي «جيد». ترتيب الشروط من الأعلى إلى الأدنى مهم لأن أول شرط صحيح هو الذي يُنفذ.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">else if (s &gt;= 60) Console.WriteLine(&quot;مقبول&quot;);</code>
+                        <span>الدرجات من 60 إلى 69 تعطي «مقبول».</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">else Console.WriteLine(&quot;راسب&quot;);</code>
+                        <span>else الأخيرة تلتقط كل ما تبقى، أي الدرجات من 0 إلى 59، فيُطبع «راسب».</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 3: تحدٍّ: آلة حاسبة</h4>
+                <span class="lvl">تحدٍّ</span>
+            </div>
+            <div class="prose">اقرأ عددين وعملية (&#x2B; أو - أو * أو /) واستخدم switch لطباعة الناتج. لا تسمح بالقسمة على صفر.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;العدد الأول: &quot;);</span><span class="ln" data-ln="1">double x = double.Parse(Console.ReadLine());</span><span class="ln" data-ln="2">Console.Write(&quot;العملية (&#x2B; - * /): &quot;);</span><span class="ln" data-ln="3">string op = Console.ReadLine();</span><span class="ln" data-ln="4">Console.Write(&quot;العدد الثاني: &quot;);</span><span class="ln" data-ln="5">double y = double.Parse(Console.ReadLine());</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">switch (op)</span><span class="ln" data-ln="8">{</span><span class="ln" data-ln="9">    case &quot;&#x2B;&quot;: Console.WriteLine(x &#x2B; y); break;</span><span class="ln" data-ln="10">    case &quot;-&quot;: Console.WriteLine(x - y); break;</span><span class="ln" data-ln="11">    case &quot;*&quot;: Console.WriteLine(x * y); break;</span><span class="ln" data-ln="12">    case &quot;/&quot;:</span><span class="ln" data-ln="13">        if (y == 0) Console.WriteLine(&quot;لا يمكن القسمة على صفر&quot;);</span><span class="ln" data-ln="14">        else Console.WriteLine(x / y);</span><span class="ln" data-ln="15">        break;</span><span class="ln" data-ln="16">    default: Console.WriteLine(&quot;عملية غير معروفة&quot;); break;</span><span class="ln" data-ln="17">}</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> آلة حاسبة بسيطة: يطلب البرنامج عددين وعملية حسابية (&#x2B; أو - أو * أو /) ثم يطبع النتيجة، ويرفض القسمة على صفر أو أي عملية غير معروفة.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;العدد الأول: &quot;);</code>
+                        <span>نطبع طلبًا للمستخدم ليكتب العدد الأول.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">double x = double.Parse(Console.ReadLine());</code>
+                        <span>نقرأ النص ونحوّله إلى عدد عشري بـ double.Parse حتى نقبل أعدادًا بكسور، ونحفظه في x.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.Write(&quot;العملية (&#x2B; - * /): &quot;);</code>
+                        <span>نطلب من المستخدم أن يكتب رمز العملية التي يريدها.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">string op = Console.ReadLine();</code>
+                        <span>نحفظ رمز العملية كنص في المتغير op، ولا نحوّله لأنه رمز وليس عددًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">Console.Write(&quot;العدد الثاني: &quot;);</code>
+                        <span>نطلب العدد الثاني.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">double y = double.Parse(Console.ReadLine());</code>
+                        <span>نقرأ العدد الثاني ونحوّله إلى double ونحفظه في y.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">switch (op)</code>
+                        <span>switch يقارن قيمة op بكل حالة case، وينفذ الحالة التي تطابق رمز العملية.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوفة { } تجمع التعليمات في كتلة واحدة، وهنا تحدد بداية ونهاية جسم الـ switch.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">case &quot;&#x2B;&quot;: Console.WriteLine(x &#x2B; y); break;</code>
+                        <span>إذا كان op هو &quot;&#x2B;&quot; نطبع ناتج الجمع ثم break للخروج من الـ switch. يمكن كتابة case وتعليماتها و break في سطر واحد.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">case &quot;-&quot;: Console.WriteLine(x - y); break;</code>
+                        <span>إذا كان op هو &quot;-&quot; نطبع ناتج الطرح ثم نخرج.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">case &quot;*&quot;: Console.WriteLine(x * y); break;</code>
+                        <span>إذا كان op هو &quot;*&quot; نطبع ناتج الضرب ثم نخرج.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">case &quot;/&quot;:</code>
+                        <span>حالة القسمة تحتاج عدة أسطر لأننا نريد فحص شيء قبل القسمة.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">if (y == 0) Console.WriteLine(&quot;لا يمكن القسمة على صفر&quot;);</code>
+                        <span>نستخدم == للمقارنة: إذا كان العدد الثاني صفرًا نطبع رسالة تحذير. مع النوع double لا يتوقف البرنامج عند القسمة على صفر بل يعطي قيمة غريبة مثل ∞ (Infinity)، لذلك نمنعها بأنفسنا.</span>
+                    </li>
+                    <li data-ln="14">
+                        <code dir="ltr">else Console.WriteLine(x / y);</code>
+                        <span>إذا لم يكن y صفرًا نقسم ونطبع النتيجة بأمان.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">break;</code>
+                        <span>break تُنهي حالة القسمة وتخرج من الـ switch، وهي ضرورية في ⁦C#⁩ في نهاية كل case.</span>
+                    </li>
+                    <li data-ln="16">
+                        <code dir="ltr">default: Console.WriteLine(&quot;عملية غير معروفة&quot;); break;</code>
+                        <span>default تُنفذ إذا كتب المستخدم رمزًا لا يطابق أي حالة، مثل % أو حرف، فنخبره أن العملية غير معروفة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. ما ناتج 10 % 3 ؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">3</button>
+                            <button type="button" class="opt" data-correct="1">1</button>
+                            <button type="button" class="opt" data-correct="0">0</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. لكي يتحقق الشرط يجب أن يكون الشرطان صحيحين، نستخدم:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">||</button>
+                            <button type="button" class="opt" data-correct="1">&amp;&amp;</button>
+                            <button type="button" class="opt" data-correct="0">!</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. ما الكلمة التي تنهي كل حالة case؟</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">stop</button>
+                            <button type="button" class="opt" data-correct="0">end</button>
+                            <button type="button" class="opt" data-correct="1">break</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> راجع دروس الأسبوع الأول، واختر فكرة مشروعك النهائي من قائمة المشروع.</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-4.html">→ اليوم 4</a>
+                <a class="btn primary trainer-only" href="day-6.html">اليوم 6 ←</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

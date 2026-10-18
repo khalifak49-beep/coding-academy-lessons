@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>اليوم 7: الدوال وList والكلاسات · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body data-playground="../editor.html" data-root="../">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="../index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="../login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="true" href="../index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="../editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="false" href="../project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="../grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="../exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="../settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <div class="lessons">
+    <nav class="rail flow" aria-label="مسار الدورة">
+            <div class="wk">الأسبوع 1</div>
+                <a class="day st-current " href="day-1.html" aria-current="false">
+                    <span class="n">1</span>
+                    <span class="lbl">أول صفحة HTML<small>اليوم 1 · الدرس الحالي</small></span>
+                </a>
+                <a class="day st-upcoming trainer-only" href="day-2.html" aria-current="false">
+                    <span class="n">2</span>
+                    <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">قوائم وجداول ونماذج<small>اليوم 2 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-3.html" aria-current="false">
+                    <span class="n">3</span>
+                    <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">أساسيات CSS<small>اليوم 3 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-4.html" aria-current="false">
+                    <span class="n">4</span>
+                    <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">المتغيرات والإدخال<small>اليوم 4 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-5.html" aria-current="false">
+                    <span class="n">5</span>
+                    <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · لم يبدأ</small></span>
+                    </span>
+            <div class="wk">الأسبوع 2</div>
+                <a class="day st-upcoming trainer-only" href="day-6.html" aria-current="false">
+                    <span class="n">6</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="true">
+                    <span class="n">7</span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
+                    <span class="n">8</span>
+                    <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-9.html" aria-current="false">
+                    <span class="n">9</span>
+                    <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">UPDATE وربط ⁦C#⁩ بالقاعدة<small>اليوم 9 · لم يبدأ</small></span>
+                    </span>
+                <a class="day st-upcoming trainer-only" href="day-10.html" aria-current="false">
+                    <span class="n">10</span>
+                    <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                </a>
+                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
+                        <span class="n">🔒</span>
+                        <span class="lbl">العروض والاختبار النهائي<small>اليوم 10 · لم يبدأ</small></span>
+                    </span>
+    </nav>
+
+    <article class="lesson">
+        <div class="lesson-head">
+            <div class="pills">
+                <span class="pill t-cs">⁦C#⁩</span>
+                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="eyebrow">اليوم 7 · الأسبوع 2 · ساعتان</span>
+            </div>
+            <h1>الدوال والقوائم List ومدخل للكائنات</h1>
+            <div class="lesson-actions">
+                <a class="btn primary trainer-only" href="../present/day-7.html">▶ ابدأ عرض الدرس</a>
+                <a class="btn" href="../downloads/day-7.pdf" download>تحميل PDF</a>
+                <a class="btn" href="../downloads/day-7.docx" download>تحميل Word</a>
+            </div>
+        </div>
+
+        <div class="grid g2">
+    <div class="panel">
+        <h3>أهداف التعلم</h3>
+        <p class="muted small">في نهاية الدرس يستطيع المتدرب أن:</p>
+        <ul class="clean">
+                <li>يقسّم البرنامج إلى دوال (Methods) تستقبل مدخلات وتُرجع نتيجة.</li>
+                <li>يستخدم List لإضافة العناصر وحذفها بمرونة.</li>
+                <li>يعرّف كلاسًا بسيطًا Student بخصائص وينشئ منه كائنات.</li>
+                <li>يتعامل مع الإدخال الخاطئ باستخدام int.TryParse.</li>
+        </ul>
+    </div>
+    <div class="panel">
+        <h3>توزيع وقت الحصة</h3>
+        <div class="timeline">
+                <div class="slot"><time>0:00 – 0:10</time><span>مراجعة سريعة لدرس الأمس وحل الواجب</span></div>
+                <div class="slot"><time>0:10 – 0:50</time><span>شرح الدرس مع أمثلة حيّة يكتبها المدرب والمتدربون معًا</span></div>
+                <div class="slot"><time>0:50 – 1:00</time><span>استراحة</span></div>
+                <div class="slot"><time>1:00 – 1:40</time><span>تمارين عملية فردية (المدرب يتنقل بين المتدربين الستة)</span></div>
+                <div class="slot"><time>1:40 – 1:55</time><span>تصحيح جماعي ومناقشة الأخطاء الشائعة</span></div>
+                <div class="slot"><time>1:55 – 2:00</time><span>ملخص الدرس &#x2B; اختبار ذاتي سريع &#x2B; الواجب</span></div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h2">شرح الدرس</h2>
+    <div class="sec">
+        <h3>1. الدوال (Methods)</h3>
+            <div class="prose"><p>الدالة مجموعة أوامر لها اسم، نكتبها مرة ونستدعيها كثيرًا. <code>void</code> تعني أنها لا تُرجع قيمة.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">static void Greet(string name)</span><span class="ln" data-ln="1">{</span><span class="ln" data-ln="2">    Console.WriteLine($&quot;أهلًا يا {name}&quot;);</span><span class="ln" data-ln="3">}</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">static bool IsPassed(int score)</span><span class="ln" data-ln="6">{</span><span class="ln" data-ln="7">    return score &gt;= 60;</span><span class="ln" data-ln="8">}</span><span class="ln" data-ln="9"> </span><span class="ln" data-ln="10">Greet(&quot;مريم&quot;);</span><span class="ln" data-ln="11">Console.WriteLine(IsPassed(75));   // True</span><span class="ln" data-ln="12">Console.WriteLine(IsPassed(40));   // False</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يعرّف دالتين: الأولى تطبع ترحيبًا بالاسم، والثانية تفحص هل الدرجة ناجحة. يرى الطالب «أهلًا يا مريم» ثم True ثم False.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">static void Greet(string name)</code>
+                        <span>هنا نعرّف دالة (method) اسمها Greet، والدالة مجموعة أوامر لها اسم نستدعيها متى شئنا. void تعني أنها لا تُرجع أي نتيجة، وما بين القوسين (string name) هو مُدخَل (parameter) نصي تستقبله. وstatic تعني أنها دالة مستقلة لا تستخدم متغيرات من خارجها.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع أوامر الدالة في كتلة واحدة، فكل ما بينها هو جسم الدالة.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.WriteLine($&quot;أهلًا يا {name}&quot;);</code>
+                        <span>هذا هو عمل الدالة: تطبع ترحيبًا يحتوي على الاسم الذي أُرسل إليها في name.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">static bool IsPassed(int score)</code>
+                        <span>دالة ثانية اسمها IsPassed تستقبل عددًا صحيحًا score. النوع bool قبل اسمها يعني أنها تُرجع نتيجة منطقية: true (صحيح) أو false (خطأ).</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">return score &gt;= 60;</code>
+                        <span>الكلمة return تُنهي الدالة وتُعيد النتيجة لمن استدعاها. هنا نُرجع ناتج المقارنة score &gt;= 60 مباشرة، فيكون true إذا كانت الدرجة 60 أو أكثر وإلا false.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">Greet(&quot;مريم&quot;);</code>
+                        <span>نستدعي (نشغّل) الدالة Greet ونرسل لها النص &quot;مريم&quot;، فيصبح name داخلها يساوي مريم ويُطبع «أهلًا يا مريم».</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">Console.WriteLine(IsPassed(75));   // True</code>
+                        <span>نستدعي IsPassed بالدرجة 75، فتُرجع true لأن 75 &gt;= 60، ثم نطبع النتيجة فتظهر True.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">Console.WriteLine(IsPassed(40));   // False</code>
+                        <span>هذه المرة الدرجة 40 أقل من 60، فتُرجع الدالة false ويظهر False. هكذا نعيد استخدام الدالة نفسها بقيم مختلفة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>2. القوائم List</h3>
+            <div class="prose"><p>المصفوفة حجمها ثابت، أما <code>List</code> فتكبر وتصغر. أهم العمليات: <code>Add</code> و<code>Remove</code> و<code>Count</code>.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">List&lt;string&gt; names = new List&lt;string&gt;();</span><span class="ln" data-ln="1">names.Add(&quot;سارة&quot;);</span><span class="ln" data-ln="2">names.Add(&quot;خالد&quot;);</span><span class="ln" data-ln="3">names.Add(&quot;مريم&quot;);</span><span class="ln" data-ln="4">names.Remove(&quot;خالد&quot;);</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">Console.WriteLine($&quot;عدد الطلاب: {names.Count}&quot;);</span><span class="ln" data-ln="7">foreach (string n in names)</span><span class="ln" data-ln="8">    Console.WriteLine(&quot;- &quot; &#x2B; n);</span></code></pre>
+            <div class="out">عدد الطلاب: 2&#xA;- سارة&#xA;- مريم</div>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج ينشئ قائمة أسماء، يضيف إليها ثلاثة أسماء ثم يحذف واحدًا، ويطبع عدد الطلاب (2) والأسماء المتبقية.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">List&lt;string&gt; names = new List&lt;string&gt;();</code>
+                        <span>List&lt;string&gt; قائمة من النصوص، وتختلف عن المصفوفة بأن حجمها يكبر ويصغر عند الإضافة والحذف. ما بين &lt; &gt; هو نوع العناصر، والكلمة new تنشئ قائمة جديدة فارغة.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">names.Add(&quot;سارة&quot;);</code>
+                        <span>الدالة Add تضيف عنصرًا إلى آخر القائمة؛ وهذا السطر والسطران التاليان يضيفون سارة ثم خالد ثم مريم بالترتيب.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">names.Remove(&quot;خالد&quot;);</code>
+                        <span>الدالة Remove تبحث عن العنصر &quot;خالد&quot; وتحذفه من القائمة، فتتقدم العناصر التي بعده مكانه.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine($&quot;عدد الطلاب: {names.Count}&quot;);</code>
+                        <span>الخاصية Count تعطي عدد العناصر الموجودة الآن في القائمة، وهي 2 بعد الحذف. (في المصفوفة نستخدم Length، وفي List نستخدم Count).</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">foreach (string n in names)</code>
+                        <span>foreach تمر على كل اسم في القائمة بالترتيب، ويحمل المتغير n الاسم الحالي. جسم الحلقة هو السطر التالي فقط لذلك لا نحتاج { }.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">Console.WriteLine(&quot;- &quot; &#x2B; n);</code>
+                        <span>المعامل &#x2B; مع النصوص يلصقها معًا، فيُطبع كل اسم مسبوقًا بشرطة مثل «- سارة».</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>3. الكلاس والكائن</h3>
+            <div class="prose"><p>الكلاس <b>قالب</b> يصف شيئًا (مثل الطالب)، والكائن <b>نسخة</b> فعلية منه. هذا هو أساس البرمجة الكائنية، وسنستخدمه لتمثيل صفوف قاعدة البيانات.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">var list = new List&lt;Student&gt;</span><span class="ln" data-ln="1">{</span><span class="ln" data-ln="2">    new Student { Name = &quot;سارة&quot;, Grade = 95 },</span><span class="ln" data-ln="3">    new Student { Name = &quot;خالد&quot;, Grade = 55 }</span><span class="ln" data-ln="4">};</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">foreach (var s in list)</span><span class="ln" data-ln="7">    Console.WriteLine($&quot;{s.Name}: {s.Grade} - {(s.Grade &gt;= 60 ? &quot;ناجح&quot; : &quot;راسب&quot;)}&quot;);</span><span class="ln" data-ln="8"> </span><span class="ln" data-ln="9">class Student</span><span class="ln" data-ln="10">{</span><span class="ln" data-ln="11">    public string Name { get; set; }</span><span class="ln" data-ln="12">    public int Grade { get; set; }</span><span class="ln" data-ln="13">}</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يعرّف صنفًا Student له اسم ودرجة، وينشئ قائمة بطالبين، ثم يطبع لكل طالب اسمه ودرجته وهل هو ناجح أم راسب.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">var list = new List&lt;Student&gt;</code>
+                        <span>ننشئ قائمة عناصرها من النوع Student (صنف سنعرّفه في آخر الملف). الكلمة var تجعل ⁦C#⁩ يستنتج نوع المتغير تلقائيًا من الجهة اليمنى، فلا نحتاج كتابة List&lt;Student&gt; مرتين.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة هنا تجمع العناصر الأولى التي نضعها في القائمة لحظة إنشائها، مفصولة بفواصل.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">new Student { Name = &quot;سارة&quot;, Grade = 95 },</code>
+                        <span>new Student ينشئ كائنًا (object) جديدًا من الصنف Student، أي طالبًا فعليًا، وما بين { } يعطي خصائصه قيمها الأولى: الاسم سارة والدرجة 95.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">new Student { Name = &quot;خالد&quot;, Grade = 55 }</code>
+                        <span>ننشئ طالبًا ثانيًا اسمه خالد ودرجته 55. لا توجد فاصلة بعده لأنه آخر عنصر في القائمة.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">foreach (var s in list)</code>
+                        <span>نمر على كل طالب في القائمة، ويحمل المتغير s الطالب الحالي؛ وvar هنا تعني أن نوعه Student.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">Console.WriteLine($&quot;{s.Name}: {s.Grade} - {(s.Grade &gt;= 60 ? &quot;ناجح&quot; : &quot;راسب&quot;)}&quot;);</code>
+                        <span>النقطة في s.Name تعني «خاصية Name الخاصة بهذا الطالب». أما الشرط المختصر ? : فيعمل هكذا: إذا كان s.Grade &gt;= 60 صحيحًا يعطي &quot;ناجح&quot; وإلا يعطي &quot;راسب&quot;، ونضعه بين أقواس ( ) داخل { } لأنه يحتوي على النقطتين :.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">class Student</code>
+                        <span>الكلمة class تعرّف صنفًا، وهو قالب أو مخطط يصف شكل نوع جديد من البيانات؛ هنا كل طالب له اسم ودرجة. في ⁦C#⁩ يجب أن تأتي تعريفات الأصناف بعد أوامر البرنامج الرئيسية في الملف.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">public string Name { get; set; }</code>
+                        <span>هذه خاصية (property) اسمها Name من النوع string. الكلمة public تعني أنه يمكن الوصول إليها من خارج الصنف، و{ get; set; } تعني أنه يمكن قراءة قيمتها (get) وتغييرها (set).</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">public int Grade { get; set; }</code>
+                        <span>خاصية ثانية اسمها Grade من النوع int لتخزين درجة الطالب، ويمكن قراءتها وتغييرها أيضًا.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+            <div class="note">في مشاريع top-level statements يكون تعريف الكلاس في نهاية الملف بعد الأوامر.</div>
+    </div>
+    <div class="sec">
+        <h3>4. حماية البرنامج من الإدخال الخاطئ</h3>
+            <div class="prose"><p>إذا كتب المستخدم حروفًا بدل رقم، فإن <code>int.Parse</code> يوقف البرنامج بخطأ. <code>int.TryParse</code> يحاول التحويل ويُرجع true أو false.</p></div>
+            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;العمر: &quot;);</span><span class="ln" data-ln="1">if (int.TryParse(Console.ReadLine(), out int age))</span><span class="ln" data-ln="2">    Console.WriteLine($&quot;عمرك {age}&quot;);</span><span class="ln" data-ln="3">else</span><span class="ln" data-ln="4">    Console.WriteLine(&quot;الرجاء إدخال رقم صحيح&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يطلب العمر ويتأكد أن المدخل رقم صحيح بأمان: إن كان رقمًا يطبع «عمرك ...»، وإلا يطبع رسالة تطلب إدخال رقم صحيح بدل أن يتوقف بخطأ.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;العمر: &quot;);</code>
+                        <span>نطبع سؤال العمر دون الانتقال إلى سطر جديد.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">if (int.TryParse(Console.ReadLine(), out int age))</code>
+                        <span>int.TryParse «تحاول» تحويل النص إلى عدد صحيح: تُرجع true إذا نجحت وfalse إذا فشلت، دون أن يتوقف البرنامج كما يحدث مع int.Parse. والكلمة out int age تعني أن الدالة ستضع الرقم الناتج في متغير جديد اسمه age ننشئه في المكان نفسه.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.WriteLine($&quot;عمرك {age}&quot;);</code>
+                        <span>هذا السطر يُنفَّذ فقط إذا نجح التحويل، فنطبع العمر المخزّن في age.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">else</code>
+                        <span>else تعني «وإلا»: الأمر الذي بعدها يُنفَّذ عندما يكون شرط if خاطئًا، أي عندما يكتب المستخدم شيئًا ليس رقمًا صحيحًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">Console.WriteLine(&quot;الرجاء إدخال رقم صحيح&quot;);</code>
+                        <span>نطبع رسالة لطيفة تخبر المستخدم بالخطأ بدلًا من أن ينهار البرنامج.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+
+    <h2 class="h2">التمارين العملية</h2>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 1: دالة المساحة</h4>
+                <span class="lvl">سهل</span>
+            </div>
+            <div class="prose">اكتب دالة CircleArea تستقبل نصف القطر وتُرجع مساحة الدائرة (Math.PI × r × r)، واستدعها لثلاث قيم.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">static double CircleArea(double r)</span><span class="ln" data-ln="1">{</span><span class="ln" data-ln="2">    return Math.PI * r * r;</span><span class="ln" data-ln="3">}</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">Console.WriteLine(CircleArea(1).ToString(&quot;F2&quot;));</span><span class="ln" data-ln="6">Console.WriteLine(CircleArea(2.5).ToString(&quot;F2&quot;));</span><span class="ln" data-ln="7">Console.WriteLine(CircleArea(10).ToString(&quot;F2&quot;));</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يعرّف دالة تحسب مساحة الدائرة من نصف قطرها، ثم يطبع مساحة ثلاث دوائر مقرّبة إلى رقمين عشريين: 3.14 و19.63 و314.16.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">static double CircleArea(double r)</code>
+                        <span>نعرّف دالة اسمها CircleArea تستقبل نصف القطر r كعدد عشري (double)، وتُرجع نتيجة من النوع double أيضًا. الكلمة static تعني أنها دالة مستقلة لا تعتمد على متغيرات خارجها.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع أوامر الدالة في كتلة واحدة هي جسم الدالة.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">return Math.PI * r * r;</code>
+                        <span>Math.PI ثابت جاهز في ⁦C#⁩ قيمته π تقريبًا 3.14159، ومساحة الدائرة = π × نصف القطر × نصف القطر. الكلمة return تُرجع هذه النتيجة لمن استدعى الدالة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Console.WriteLine(CircleArea(1).ToString(&quot;F2&quot;));</code>
+                        <span>نستدعي الدالة بنصف قطر 1، ثم الدالة ToString(&quot;F2&quot;) تحوّل الرقم الناتج إلى نص برقمين بعد الفاصلة العشرية، فيظهر 3.14.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine(CircleArea(2.5).ToString(&quot;F2&quot;));</code>
+                        <span>نعيد استخدام الدالة نفسها بنصف قطر 2.5، فيظهر 19.63. هذه فائدة الدوال: نكتب الحساب مرة ونستخدمه مرات.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">Console.WriteLine(CircleArea(10).ToString(&quot;F2&quot;));</code>
+                        <span>ومرة ثالثة بنصف قطر 10، فيظهر 314.16.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 2: قائمة طلاب تفاعلية</h4>
+                <span class="lvl">متوسط</span>
+            </div>
+            <div class="prose">برنامج بقائمة: 1 إضافة اسم، 2 عرض الأسماء، 3 حذف اسم، 0 خروج. استخدم while وswitch وList.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">var names = new List&lt;string&gt;();</span><span class="ln" data-ln="1">string choice = &quot;&quot;;</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">while (choice != &quot;0&quot;)</span><span class="ln" data-ln="4">{</span><span class="ln" data-ln="5">    Console.WriteLine(&quot;\n1 إضافة | 2 عرض | 3 حذف | 0 خروج&quot;);</span><span class="ln" data-ln="6">    choice = Console.ReadLine();</span><span class="ln" data-ln="7">    switch (choice)</span><span class="ln" data-ln="8">    {</span><span class="ln" data-ln="9">        case &quot;1&quot;:</span><span class="ln" data-ln="10">            Console.Write(&quot;الاسم: &quot;);</span><span class="ln" data-ln="11">            names.Add(Console.ReadLine());</span><span class="ln" data-ln="12">            break;</span><span class="ln" data-ln="13">        case &quot;2&quot;:</span><span class="ln" data-ln="14">            for (int i = 0; i &lt; names.Count; i&#x2B;&#x2B;)</span><span class="ln" data-ln="15">                Console.WriteLine($&quot;{i &#x2B; 1}. {names[i]}&quot;);</span><span class="ln" data-ln="16">            break;</span><span class="ln" data-ln="17">        case &quot;3&quot;:</span><span class="ln" data-ln="18">            Console.Write(&quot;الاسم المراد حذفه: &quot;);</span><span class="ln" data-ln="19">            if (names.Remove(Console.ReadLine())) Console.WriteLine(&quot;تم الحذف&quot;);</span><span class="ln" data-ln="20">            else Console.WriteLine(&quot;غير موجود&quot;);</span><span class="ln" data-ln="21">            break;</span><span class="ln" data-ln="22">    }</span><span class="ln" data-ln="23">}</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج قائمة أسماء تفاعلي يعرض قائمة خيارات متكررة: إضافة اسم، عرض الأسماء مرقّمة، حذف اسم، أو الخروج بكتابة 0.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">var names = new List&lt;string&gt;();</code>
+                        <span>ننشئ قائمة نصوص فارغة باسم names لتخزين الأسماء، وvar تجعل ⁦C#⁩ يستنتج أن نوعها List&lt;string&gt;.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">string choice = &quot;&quot;;</code>
+                        <span>متغير نصي يحفظ اختيار المستخدم من القائمة، ونبدؤه بنص فارغ حتى تدخل الحلقة أول مرة.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">while (choice != &quot;0&quot;)</code>
+                        <span>الحلقة while تستمر في عرض القائمة ما دام المستخدم لم يختر &quot;0&quot; (الخروج).</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة { و } تجمع الأسطر التي تتكرر داخل الحلقة في كتلة واحدة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Console.WriteLine(&quot;\n1 إضافة | 2 عرض | 3 حذف | 0 خروج&quot;);</code>
+                        <span>نطبع قائمة الخيارات. الرمز \n داخل النص يعني «سطر جديد»، فيترك سطرًا فارغًا قبل القائمة لتكون أوضح.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">choice = Console.ReadLine();</code>
+                        <span>نقرأ اختيار المستخدم كنص ونخزّنه في choice.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">switch (choice)</code>
+                        <span>switch يقارن قيمة choice بعدة احتمالات، وكل احتمال يبدأ بالكلمة case؛ وهو بديل أوضح من كتابة if و else if كثيرة.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">case &quot;1&quot;:</code>
+                        <span>هذا الجزء يُنفَّذ إذا كانت قيمة choice تساوي &quot;1&quot; أي اختيار الإضافة.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">Console.Write(&quot;الاسم: &quot;);</code>
+                        <span>نطلب من المستخدم كتابة الاسم المراد إضافته.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">names.Add(Console.ReadLine());</code>
+                        <span>نقرأ الاسم ونضيفه مباشرة إلى آخر القائمة باستخدام Add.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">break;</code>
+                        <span>break تُنهي هذا الـcase وتخرج من switch. في ⁦C#⁩ يجب أن ينتهي كل case بأمر مثل break حتى لا يكمل التنفيذ إلى الحالة التالية.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">case &quot;2&quot;:</code>
+                        <span>هذا الجزء للاختيار &quot;2&quot; أي عرض الأسماء.</span>
+                    </li>
+                    <li data-ln="14">
+                        <code dir="ltr">for (int i = 0; i &lt; names.Count; i&#x2B;&#x2B;)</code>
+                        <span>حلقة for تمر على مواقع القائمة من 0 حتى names.Count - 1، وCount هو عدد الأسماء الحالي.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">Console.WriteLine($&quot;{i &#x2B; 1}. {names[i]}&quot;);</code>
+                        <span>نطبع رقم الاسم i &#x2B; 1 (لنبدأ العدّ من 1 للمستخدم) ثم الاسم نفسه names[i]، فالقائمة مثل المصفوفة نصل إلى عناصرها بالفهرس بين [ ].</span>
+                    </li>
+                    <li data-ln="17">
+                        <code dir="ltr">case &quot;3&quot;:</code>
+                        <span>هذا الجزء للاختيار &quot;3&quot; أي حذف اسم.</span>
+                    </li>
+                    <li data-ln="18">
+                        <code dir="ltr">Console.Write(&quot;الاسم المراد حذفه: &quot;);</code>
+                        <span>نطلب من المستخدم كتابة الاسم الذي يريد حذفه.</span>
+                    </li>
+                    <li data-ln="19">
+                        <code dir="ltr">if (names.Remove(Console.ReadLine())) Console.WriteLine(&quot;تم الحذف&quot;);</code>
+                        <span>الدالة Remove تحاول حذف الاسم وتُرجع true إذا وجدته وحذفته، وfalse إذا لم يكن موجودًا؛ لذلك نضعها مباشرة داخل if ونطبع «تم الحذف» عند النجاح.</span>
+                    </li>
+                    <li data-ln="20">
+                        <code dir="ltr">else Console.WriteLine(&quot;غير موجود&quot;);</code>
+                        <span>وإذا أرجعت Remove القيمة false، أي أن الاسم ليس في القائمة، نطبع «غير موجود».</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+        <div class="ex">
+            <div class="ex-head">
+                <h4>تمرين 3: تحدٍّ: كلاس المنتج</h4>
+                <span class="lvl">تحدٍّ</span>
+            </div>
+            <div class="prose">عرّف كلاس Product (Name, Price, Qty) ودالة Total تُرجع Price × Qty. أنشئ 3 منتجات في List واطبع إجمالي قيمة المخزون.</div>
+                    <details class="sol">
+                        <summary>اعرض الحل المقترح</summary>
+                        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">var items = new List&lt;Product&gt;</span><span class="ln" data-ln="1">{</span><span class="ln" data-ln="2">    new Product { Name = &quot;قلم&quot;, Price = 0.5, Qty = 100 },</span><span class="ln" data-ln="3">    new Product { Name = &quot;دفتر&quot;, Price = 1.2, Qty = 40 },</span><span class="ln" data-ln="4">    new Product { Name = &quot;حقيبة&quot;, Price = 8, Qty = 5 }</span><span class="ln" data-ln="5">};</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">double all = 0;</span><span class="ln" data-ln="8">foreach (var p in items)</span><span class="ln" data-ln="9">{</span><span class="ln" data-ln="10">    Console.WriteLine($&quot;{p.Name}: {p.Total()}&quot;);</span><span class="ln" data-ln="11">    all &#x2B;= p.Total();</span><span class="ln" data-ln="12">}</span><span class="ln" data-ln="13">Console.WriteLine($&quot;الإجمالي: {all}&quot;);</span><span class="ln" data-ln="14"> </span><span class="ln" data-ln="15">class Product</span><span class="ln" data-ln="16">{</span><span class="ln" data-ln="17">    public string Name { get; set; }</span><span class="ln" data-ln="18">    public double Price { get; set; }</span><span class="ln" data-ln="19">    public int Qty { get; set; }</span><span class="ln" data-ln="20">    public double Total() =&gt; Price * Qty;</span><span class="ln" data-ln="21">}</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج مخزن صغير: يعرّف صنف منتج له اسم وسعر وكمية ودالة تحسب قيمته الكلية، ثم يطبع قيمة كل منتج والإجمالي لكل المنتجات.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">var items = new List&lt;Product&gt;</code>
+                        <span>ننشئ قائمة عناصرها من النوع Product (صنف معرَّف في آخر الملف)، وvar تجعل ⁦C#⁩ يستنتج نوع المتغير تلقائيًا.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">{</code>
+                        <span>الأقواس المعقوصة هنا تجمع المنتجات الأولى التي نضعها في القائمة لحظة إنشائها، مفصولة بفواصل.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">new Product { Name = &quot;قلم&quot;, Price = 0.5, Qty = 100 },</code>
+                        <span>new Product ينشئ كائنًا جديدًا من الصنف Product، ونعطي خصائصه قيمها بين { }: الاسم قلم والسعر 0.5 والكمية 100. والسطران التاليان ينشئان الدفتر والحقيبة بالطريقة نفسها.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">double all = 0;</code>
+                        <span>متغير عشري all يبدأ بصفر لنجمع فيه قيمة كل المنتجات.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">foreach (var p in items)</code>
+                        <span>نمر على كل منتج في القائمة، ويحمل المتغير p المنتج الحالي.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">Console.WriteLine($&quot;{p.Name}: {p.Total()}&quot;);</code>
+                        <span>نطبع اسم المنتج ثم نستدعي دالته Total() التي تحسب قيمته الكلية. الأقواس () بعد Total ضرورية لأنها دالة تُستدعى وليست خاصية.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">all &#x2B;= p.Total();</code>
+                        <span>نضيف قيمة هذا المنتج إلى الإجمالي باستخدام &#x2B;= أي all = all &#x2B; p.Total().</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">Console.WriteLine($&quot;الإجمالي: {all}&quot;);</code>
+                        <span>بعد انتهاء الحلقة نطبع مجموع قيم كل المنتجات.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">class Product</code>
+                        <span>نعرّف الصنف Product، وهو قالب يصف كل منتج: ما يحمله من بيانات (خصائص) وما يستطيع فعله (دوال). تأتي الأصناف بعد أوامر البرنامج الرئيسية في الملف.</span>
+                    </li>
+                    <li data-ln="17">
+                        <code dir="ltr">public string Name { get; set; }</code>
+                        <span>خاصية نصية Name لاسم المنتج؛ public تعني أنها متاحة من خارج الصنف، و{ get; set; } تعني أنها قابلة للقراءة والتغيير.</span>
+                    </li>
+                    <li data-ln="18">
+                        <code dir="ltr">public double Price { get; set; }</code>
+                        <span>خاصية Price لسعر الوحدة، ونوعها double لأن السعر قد يحتوي على كسور مثل 0.5.</span>
+                    </li>
+                    <li data-ln="19">
+                        <code dir="ltr">public int Qty { get; set; }</code>
+                        <span>خاصية Qty للكمية، ونوعها int لأن الكمية عدد صحيح.</span>
+                    </li>
+                    <li data-ln="20">
+                        <code dir="ltr">public double Total() =&gt; Price * Qty;</code>
+                        <span>دالة داخل الصنف اسمها Total تُرجع double. السهم =&gt; طريقة مختصرة تعني «أرجِع هذه النتيجة»، بدل كتابة { return Price * Qty; }، فتحسب السعر مضروبًا في الكمية لهذا المنتج.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </details>
+        </div>
+
+    <div class="panel">
+        <h3>اختبر نفسك (3 أسئلة)</h3>
+        <div class="quiz">
+                <div class="q">
+                    <div>1. الكلمة void تعني أن الدالة:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="1">لا تُرجع قيمة</button>
+                            <button type="button" class="opt" data-correct="0">تُرجع رقمًا</button>
+                            <button type="button" class="opt" data-correct="0">فارغة من الأوامر</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>2. لإضافة عنصر إلى List نستخدم:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">Push</button>
+                            <button type="button" class="opt" data-correct="1">Add</button>
+                            <button type="button" class="opt" data-correct="0">Insert فقط</button>
+                    </div>
+                </div>
+                <div class="q">
+                    <div>3. الكلاس بالنسبة للكائن هو:</div>
+                    <div class="opts">
+                            <button type="button" class="opt" data-correct="0">نسخة منه</button>
+                            <button type="button" class="opt" data-correct="1">القالب الذي يُصنع منه</button>
+                            <button type="button" class="opt" data-correct="0">متغير عادي</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+<div class="note"><b>الواجب:</b> جهّز تثبيت SQL Server Express وSSMS على جهازك قبل يوم 8 (الرابط في قسم الخطة).</div>
+
+
+        <div class="pager">
+                <a class="btn" href="day-6.html">→ اليوم 6</a>
+                <a class="btn primary trainer-only" href="day-8.html">اليوم 8 ←</a>
+        </div>
+    </article>
+</div>
+
+    </main>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    
+</body>
+</html>

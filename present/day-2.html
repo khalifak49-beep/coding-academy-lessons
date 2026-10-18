@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>عرض اليوم 2: قوائم وجداول ونماذج</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body class="presenting" data-playground="../editor.html" data-root="../">
+    <div class="deck" id="deck">
+        <div class="deck-controls deck-top">
+            <a class="deck-btn" href="../lessons/day-2.html" title="الخروج من العرض (Esc)">✕ خروج</a>
+            <button class="deck-btn" type="button" id="fsBtn" title="ملء الشاشة (F)">⛶ ملء الشاشة</button>
+        </div>
+
+        <main class="slides">
+            <section class="slide slide-title">
+                <div class="slide-inner">
+                    <span class="pill t-html">HTML وCSS</span>
+                    <div class="eyebrow big">اليوم 2 · الأسبوع 1</div>
+                    <h1>القوائم والجداول والنماذج</h1>
+                    <h3>في نهاية الدرس ستستطيع أن:</h3>
+                    <ul class="goals">
+                            <li>ينشئ قوائم مرقمة ol وغير مرقمة ul.</li>
+                            <li>يبني جدولًا بصفوف وأعمدة وعناوين.</li>
+                            <li>يصمم نموذج إدخال بأنواع حقول مختلفة.</li>
+                            <li>يقسّم الصفحة بوسوم header وmain وfooter.</li>
+                    </ul>
+                </div>
+            </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 1 من 4</div>
+                        <h2>القوائم</h2>
+                            <div class="prose"><p><code>ul</code> قائمة نقطية، و<code>ol</code> قائمة مرقمة، وكل عنصر يوضع داخل <code>li</code>.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;h3&gt;أدوات الدورة&lt;/h3&gt;</span><span class="ln" data-ln="1">&lt;ul&gt;</span><span class="ln" data-ln="2">  &lt;li&gt;Visual Studio Community&lt;/li&gt;</span><span class="ln" data-ln="3">  &lt;li&gt;المتصفح&lt;/li&gt;</span><span class="ln" data-ln="4">  &lt;li&gt;SQL Server&lt;/li&gt;</span><span class="ln" data-ln="5">&lt;/ul&gt;</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">&lt;h3&gt;خطوات حفظ الملف&lt;/h3&gt;</span><span class="ln" data-ln="8">&lt;ol&gt;</span><span class="ln" data-ln="9">  &lt;li&gt;اكتب الكود&lt;/li&gt;</span><span class="ln" data-ln="10">  &lt;li&gt;اضغط Ctrl &#x2B; S&lt;/li&gt;</span><span class="ln" data-ln="11">  &lt;li&gt;حدّث المتصفح&lt;/li&gt;</span><span class="ln" data-ln="12">&lt;/ol&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا المثال نوعين من القوائم: قائمة نقطية (بدون ترتيب) لأدوات الدورة، وقائمة مرقمة لخطوات حفظ الملف.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;h3&gt;أدوات الدورة&lt;/h3&gt;</code>
+                        <span>الوسم h3 عنوان من المستوى الثالث، أصغر من h1 وh2، ويظهر فوق القائمة الأولى.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;ul&gt;</code>
+                        <span>الوسم ul اختصار unordered list أي «قائمة غير مرتبة»، وتظهر عناصرها مع نقطة صغيرة أمام كل عنصر بدل الأرقام.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;li&gt;Visual Studio Community&lt;/li&gt;</code>
+                        <span>الوسم li اختصار list item أي «عنصر في القائمة». كل li يظهر في سطر خاص به مع نقطة أمامه، والسطران التاليان عنصران آخران بنفس الطريقة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;/ul&gt;</code>
+                        <span>يغلق القائمة غير المرتبة؛ كل عناصر li يجب أن تكون بين وسم الفتح ووسم الإغلاق.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;h3&gt;خطوات حفظ الملف&lt;/h3&gt;</code>
+                        <span>عنوان h3 ثانٍ يبدأ القائمة الثانية.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">&lt;ol&gt;</code>
+                        <span>الوسم ol اختصار ordered list أي «قائمة مرتبة»، فيضع المتصفح أرقامًا تلقائيًا أمام العناصر: 1، 2، 3. نستخدمها عندما يكون الترتيب مهمًا مثل الخطوات.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">&lt;li&gt;اكتب الكود&lt;/li&gt;</code>
+                        <span>أول عنصر في القائمة المرتبة، سيظهر بجانبه الرقم 1، ثم يأتي العنصران التاليان بالرقمين 2 و3 تلقائيًا دون أن نكتب الأرقام بأنفسنا.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">&lt;/ol&gt;</code>
+                        <span>يغلق القائمة المرتبة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 2 من 4</div>
+                        <h2>الجداول</h2>
+                            <div class="prose"><p>الجدول <code>table</code> يتكون من صفوف <code>tr</code>، وكل صف فيه خلايا عنوان <code>th</code> أو خلايا بيانات <code>td</code>.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;table border=&quot;1&quot;&gt;</span><span class="ln" data-ln="1">  &lt;tr&gt;</span><span class="ln" data-ln="2">    &lt;th&gt;الاسم&lt;/th&gt;</span><span class="ln" data-ln="3">    &lt;th&gt;الدرجة&lt;/th&gt;</span><span class="ln" data-ln="4">  &lt;/tr&gt;</span><span class="ln" data-ln="5">  &lt;tr&gt;</span><span class="ln" data-ln="6">    &lt;td&gt;سارة&lt;/td&gt;</span><span class="ln" data-ln="7">    &lt;td&gt;95&lt;/td&gt;</span><span class="ln" data-ln="8">  &lt;/tr&gt;</span><span class="ln" data-ln="9">  &lt;tr&gt;</span><span class="ln" data-ln="10">    &lt;td&gt;خالد&lt;/td&gt;</span><span class="ln" data-ln="11">    &lt;td&gt;88&lt;/td&gt;</span><span class="ln" data-ln="12">  &lt;/tr&gt;</span><span class="ln" data-ln="13">&lt;/table&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الكود جدولًا صغيرًا بإطار، فيه صف عناوين (الاسم، الدرجة) وتحته صفان لطالبين ودرجاتهما.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;table border=&quot;1&quot;&gt;</code>
+                        <span>الوسم table يبدأ جدولًا. الخاصية border=&quot;1&quot; ترسم خطوطًا حول الخلايا حتى يظهر الجدول بإطار؛ وهي طريقة قديمة سهلة، وفي الدروس القادمة سنرسم الإطارات باستخدام CSS.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;tr&gt;</code>
+                        <span>الوسم tr اختصار table row أي «صف في الجدول». كل ما بين &lt;tr&gt; و&lt;/tr&gt; يظهر في صف أفقي واحد.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;th&gt;الاسم&lt;/th&gt;</code>
+                        <span>الوسم th اختصار table header أي «خلية عنوان»، ويظهر نصها عريضًا وفي الوسط عادةً. هذه الخلية والتي تليها تكوّنان صف العناوين.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;/tr&gt;</code>
+                        <span>يغلق الصف الحالي، وبعده يبدأ صف جديد في سطر جديد من الجدول.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;td&gt;سارة&lt;/td&gt;</code>
+                        <span>الوسم td اختصار table data أي «خلية بيانات» عادية. هنا تظهر «سارة» تحت عمود الاسم، والسطر التالي يضع درجتها 95 تحت عمود الدرجة.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">&lt;td&gt;خالد&lt;/td&gt;</code>
+                        <span>صف ثالث بنفس الطريقة: خلية لاسم «خالد» وخلية لدرجته 88.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">&lt;/table&gt;</code>
+                        <span>يغلق الجدول كاملًا.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 3 من 4</div>
+                        <h2>النماذج (Forms)</h2>
+                            <div class="prose"><p>النموذج <code>form</code> يجمع بيانات المستخدم. الحقل <code>input</code> يتغير شكله حسب <code>type</code>، و<code>label</code> يصف الحقل، و<code>select</code> قائمة منسدلة، و<code>textarea</code> نص طويل.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;form&gt;</span><span class="ln" data-ln="1">  &lt;label&gt;الاسم:&lt;/label&gt;</span><span class="ln" data-ln="2">  &lt;input type=&quot;text&quot; placeholder=&quot;اكتب اسمك&quot;&gt;&lt;br&gt;&lt;br&gt;</span><span class="ln" data-ln="3"> </span><span class="ln" data-ln="4">  &lt;label&gt;البريد:&lt;/label&gt;</span><span class="ln" data-ln="5">  &lt;input type=&quot;email&quot;&gt;&lt;br&gt;&lt;br&gt;</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">  &lt;label&gt;العمر:&lt;/label&gt;</span><span class="ln" data-ln="8">  &lt;input type=&quot;number&quot; min=&quot;15&quot; max=&quot;60&quot;&gt;&lt;br&gt;&lt;br&gt;</span><span class="ln" data-ln="9"> </span><span class="ln" data-ln="10">  &lt;label&gt;الجنس:&lt;/label&gt;</span><span class="ln" data-ln="11">  &lt;input type=&quot;radio&quot; name=&quot;g&quot;&gt; ذكر</span><span class="ln" data-ln="12">  &lt;input type=&quot;radio&quot; name=&quot;g&quot;&gt; أنثى&lt;br&gt;&lt;br&gt;</span><span class="ln" data-ln="13"> </span><span class="ln" data-ln="14">  &lt;label&gt;الدورة:&lt;/label&gt;</span><span class="ln" data-ln="15">  &lt;select&gt;</span><span class="ln" data-ln="16">    &lt;option&gt;HTML&lt;/option&gt;</span><span class="ln" data-ln="17">    &lt;option&gt;C#&lt;/option&gt;</span><span class="ln" data-ln="18">  &lt;/select&gt;&lt;br&gt;&lt;br&gt;</span><span class="ln" data-ln="19"> </span><span class="ln" data-ln="20">  &lt;input type=&quot;checkbox&quot;&gt; أوافق على الشروط&lt;br&gt;&lt;br&gt;</span><span class="ln" data-ln="21">  &lt;button type=&quot;submit&quot;&gt;تسجيل&lt;/button&gt;</span><span class="ln" data-ln="22">&lt;/form&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الكود نموذج تسجيل (فورم) فيه خانات لكتابة الاسم والبريد والعمر، واختيار الجنس والدورة، ومربع موافقة، وزر «تسجيل».</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;form&gt;</code>
+                        <span>الوسم form يصنع نموذجًا، أي مجموعة خانات يملؤها المستخدم ثم يرسلها. كل عناصر الإدخال توضع داخله.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;label&gt;الاسم:&lt;/label&gt;</code>
+                        <span>الوسم label يعرض نصًا وصفيًا بجانب الخانة ليعرف المستخدم ماذا يكتب فيها.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;input type=&quot;text&quot; placeholder=&quot;اكتب اسمك&quot;&gt;&lt;br&gt;&lt;br&gt;</code>
+                        <span>الوسم input يصنع خانة إدخال، وtype=&quot;text&quot; تعني أنها لكتابة نص عادي. الخاصية placeholder تعرض نصًا باهتًا داخل الخانة يختفي عند الكتابة، والوسمان br يتركان سطرًا فارغًا قبل الخانة التالية.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;label&gt;البريد:&lt;/label&gt;</code>
+                        <span>نص وصفي لخانة البريد الإلكتروني.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;input type=&quot;email&quot;&gt;&lt;br&gt;&lt;br&gt;</code>
+                        <span>خانة من نوع email مخصصة للبريد الإلكتروني؛ عند الإرسال يتحقق المتصفح أن النص المكتوب يشبه بريدًا صحيحًا (فيه @ مثلًا).</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;label&gt;العمر:&lt;/label&gt;</code>
+                        <span>نص وصفي لخانة العمر.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">&lt;input type=&quot;number&quot; min=&quot;15&quot; max=&quot;60&quot;&gt;&lt;br&gt;&lt;br&gt;</code>
+                        <span>خانة من نوع number لا تقبل إلا الأرقام، وتظهر بجانبها أسهم صغيرة للزيادة والنقصان. الخاصيتان min وmax تحددان أصغر قيمة مسموحة (15) وأكبر قيمة (60).</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">&lt;label&gt;الجنس:&lt;/label&gt;</code>
+                        <span>نص وصفي لخيارات الجنس.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">&lt;input type=&quot;radio&quot; name=&quot;g&quot;&gt; ذكر</code>
+                        <span>النوع radio يصنع دائرة اختيار صغيرة. هذا السطر والذي بعده لهما نفس الاسم name=&quot;g&quot;، لذلك يعتبرهما المتصفح مجموعة واحدة ولا يسمح إلا باختيار واحد منهما: ذكر أو أنثى.</span>
+                    </li>
+                    <li data-ln="14">
+                        <code dir="ltr">&lt;label&gt;الدورة:&lt;/label&gt;</code>
+                        <span>نص وصفي لقائمة اختيار الدورة.</span>
+                    </li>
+                    <li data-ln="15">
+                        <code dir="ltr">&lt;select&gt;</code>
+                        <span>الوسم select يصنع قائمة منسدلة، أي مربعًا تضغط عليه فتظهر خيارات تختار منها واحدًا.</span>
+                    </li>
+                    <li data-ln="16">
+                        <code dir="ltr">&lt;option&gt;HTML&lt;/option&gt;</code>
+                        <span>الوسم option يمثل خيارًا واحدًا داخل القائمة المنسدلة. هنا خياران: HTML وفي السطر التالي ⁦C#⁩.</span>
+                    </li>
+                    <li data-ln="18">
+                        <code dir="ltr">&lt;/select&gt;&lt;br&gt;&lt;br&gt;</code>
+                        <span>يغلق القائمة المنسدلة، ثم يترك سطرًا فارغًا بالوسمين br.</span>
+                    </li>
+                    <li data-ln="20">
+                        <code dir="ltr">&lt;input type=&quot;checkbox&quot;&gt; أوافق على الشروط&lt;br&gt;&lt;br&gt;</code>
+                        <span>النوع checkbox يصنع مربعًا صغيرًا يمكن تحديده بعلامة صح أو إلغاء تحديده، وبجانبه النص «أوافق على الشروط».</span>
+                    </li>
+                    <li data-ln="21">
+                        <code dir="ltr">&lt;button type=&quot;submit&quot;&gt;تسجيل&lt;/button&gt;</code>
+                        <span>الوسم button يصنع زرًا مكتوبًا عليه «تسجيل»، وtype=&quot;submit&quot; تعني أن الضغط عليه يرسل النموذج. بما أننا لم نحدد إلى أين يُرسل، ستُعاد تحميل الصفحة نفسها فقط.</span>
+                    </li>
+                    <li data-ln="22">
+                        <code dir="ltr">&lt;/form&gt;</code>
+                        <span>يغلق النموذج؛ كل الخانات التي بين وسم الفتح والإغلاق تنتمي لهذا النموذج.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            <div class="note">أزرار radio التي لها نفس name تسمح باختيار واحد فقط من بينها.</div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 4 من 4</div>
+                        <h2>تقسيم الصفحة</h2>
+                            <div class="prose"><p>نستخدم وسومًا ذات معنى: <code>header</code> لرأس الصفحة، <code>nav</code> للقائمة، <code>main</code> للمحتوى، <code>footer</code> للتذييل، و<code>div</code> كصندوق عام للتجميع.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;header&gt;&lt;h1&gt;معهد البرمجة&lt;/h1&gt;&lt;/header&gt;</span><span class="ln" data-ln="1">&lt;nav&gt;&lt;a href=&quot;#&quot;&gt;الرئيسية&lt;/a&gt; | &lt;a href=&quot;#&quot;&gt;الدورات&lt;/a&gt;&lt;/nav&gt;</span><span class="ln" data-ln="2">&lt;main&gt;</span><span class="ln" data-ln="3">  &lt;p&gt;مرحبًا بكم في دورة أساسيات البرمجة.&lt;/p&gt;</span><span class="ln" data-ln="4">&lt;/main&gt;</span><span class="ln" data-ln="5">&lt;footer&gt;&lt;p&gt;جميع الحقوق محفوظة 2026&lt;/p&gt;&lt;/footer&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يقسم هذا الكود الصفحة إلى أجزاء ذات معنى: رأس فيه اسم المعهد، وشريط روابط، ومحتوى رئيسي، وتذييل في الأسفل لحقوق النشر.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;header&gt;&lt;h1&gt;معهد البرمجة&lt;/h1&gt;&lt;/header&gt;</code>
+                        <span>الوسم header يمثل رأس الصفحة أو الجزء العلوي منها، وبداخله عنوان h1 باسم المعهد. هذه الوسوم تسمى «دلالية» لأنها توضح معنى كل جزء دون أن تغير شكله كثيرًا.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;nav&gt;&lt;a href=&quot;#&quot;&gt;الرئيسية&lt;/a&gt; | &lt;a href=&quot;#&quot;&gt;الدورات&lt;/a&gt;&lt;/nav&gt;</code>
+                        <span>الوسم nav اختصار navigation ويضم روابط التنقل في الموقع. بداخله رابطان a، والقيمة href=&quot;#&quot; تعني رابطًا مؤقتًا لا ينقل إلى صفحة أخرى، والعلامة | مجرد نص يفصل بين الرابطين.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;main&gt;</code>
+                        <span>الوسم main يضم المحتوى الرئيسي والأهم في الصفحة.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;p&gt;مرحبًا بكم في دورة أساسيات البرمجة.&lt;/p&gt;</code>
+                        <span>فقرة ترحيبية داخل المحتوى الرئيسي.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;/main&gt;</code>
+                        <span>يغلق قسم المحتوى الرئيسي.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;footer&gt;&lt;p&gt;جميع الحقوق محفوظة 2026&lt;/p&gt;&lt;/footer&gt;</code>
+                        <span>الوسم footer يمثل تذييل الصفحة، أي الجزء السفلي الذي يحتوي عادة على حقوق النشر ومعلومات التواصل.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </div>
+                </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 1 من 3 · سهل</div>
+                        <h2>قائمة مهامي</h2>
+                        <p class="lead">أنشئ قائمة مرقمة بخمس مهام يومية، وقائمة نقطية بثلاث لغات برمجة تعرفها.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;h2&gt;مهامي اليوم&lt;/h2&gt;</span><span class="ln" data-ln="1">&lt;ol&gt;</span><span class="ln" data-ln="2">  &lt;li&gt;حضور الدورة&lt;/li&gt;&lt;li&gt;حل التمارين&lt;/li&gt;&lt;li&gt;مراجعة الدرس&lt;/li&gt;&lt;li&gt;الرياضة&lt;/li&gt;&lt;li&gt;القراءة&lt;/li&gt;</span><span class="ln" data-ln="3">&lt;/ol&gt;</span><span class="ln" data-ln="4">&lt;h2&gt;لغات أعرفها&lt;/h2&gt;</span><span class="ln" data-ln="5">&lt;ul&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;li&gt;C#&lt;/li&gt;&lt;li&gt;SQL&lt;/li&gt;&lt;/ul&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الحل قائمة مرقمة بخمس مهام لليوم، وتحتها قائمة نقطية باللغات التي يعرفها الطالب.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;h2&gt;مهامي اليوم&lt;/h2&gt;</code>
+                        <span>عنوان فرعي h2 يظهر فوق قائمة المهام.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;ol&gt;</code>
+                        <span>الوسم ol يبدأ قائمة مرتبة، فتظهر المهام مرقمة تلقائيًا من 1 إلى 5.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;li&gt;حضور الدورة&lt;/li&gt;&lt;li&gt;حل التمارين&lt;/li&gt;&lt;li&gt;مراجعة الدرس&lt;/li&gt;&lt;li&gt;الرياضة&lt;/li&gt;&lt;li&gt;القراءة&lt;/li&gt;</code>
+                        <span>خمسة عناصر li مكتوبة في سطر واحد. رغم ذلك سيعرض المتصفح كل عنصر في سطر مستقل برقمه، لأن شكل الكود لا يؤثر على العرض بل الوسوم هي التي تحدده.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;/ol&gt;</code>
+                        <span>يغلق القائمة المرتبة.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;h2&gt;لغات أعرفها&lt;/h2&gt;</code>
+                        <span>عنوان فرعي ثانٍ فوق قائمة اللغات.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;ul&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;li&gt;C#&lt;/li&gt;&lt;li&gt;SQL&lt;/li&gt;&lt;/ul&gt;</code>
+                        <span>قائمة غير مرتبة ul كاملة في سطر واحد، فيها ثلاثة عناصر li، وستظهر كل لغة في سطر مع نقطة أمامها.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 2 من 3 · متوسط</div>
+                        <h2>جدول درجات</h2>
+                        <p class="lead">صمم جدولًا لثلاثة طلاب بأعمدة: الرقم، الاسم، HTML، ⁦C#⁩، المجموع.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;table border=&quot;1&quot; cellpadding=&quot;8&quot;&gt;</span><span class="ln" data-ln="1">  &lt;tr&gt;&lt;th&gt;#&lt;/th&gt;&lt;th&gt;الاسم&lt;/th&gt;&lt;th&gt;HTML&lt;/th&gt;&lt;th&gt;C#&lt;/th&gt;&lt;th&gt;المجموع&lt;/th&gt;&lt;/tr&gt;</span><span class="ln" data-ln="2">  &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;سارة&lt;/td&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;48&lt;/td&gt;&lt;td&gt;93&lt;/td&gt;&lt;/tr&gt;</span><span class="ln" data-ln="3">  &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;خالد&lt;/td&gt;&lt;td&gt;40&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;</span><span class="ln" data-ln="4">  &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;مريم&lt;/td&gt;&lt;td&gt;47&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;91&lt;/td&gt;&lt;/tr&gt;</span><span class="ln" data-ln="5">&lt;/table&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الحل جدول درجات بإطار، فيه صف عناوين وثلاثة طلاب مع درجاتهم في HTML و⁦C#⁩ ومجموعهم.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;table border=&quot;1&quot; cellpadding=&quot;8&quot;&gt;</code>
+                        <span>الوسم table يبدأ الجدول؛ border=&quot;1&quot; يرسم خطوطًا حول الخلايا، وcellpadding=&quot;8&quot; يضع مسافة 8 بكسل بين نص الخلية وحدودها حتى لا يبدو مزدحمًا. هاتان خاصيتان قديمتان، ولاحقًا نستخدم CSS بدلًا منهما.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;tr&gt;&lt;th&gt;#&lt;/th&gt;&lt;th&gt;الاسم&lt;/th&gt;&lt;th&gt;HTML&lt;/th&gt;&lt;th&gt;C#&lt;/th&gt;&lt;th&gt;المجموع&lt;/th&gt;&lt;/tr&gt;</code>
+                        <span>صف tr كامل في سطر واحد يحتوي خمس خلايا عنوان th، فتظهر عناوين الأعمدة بخط عريض في أعلى الجدول.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;سارة&lt;/td&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;48&lt;/td&gt;&lt;td&gt;93&lt;/td&gt;&lt;/tr&gt;</code>
+                        <span>صف بيانات يحتوي خمس خلايا td: رقم الطالب واسمه ودرجتاه ومجموعه، وكل خلية تقع تحت العنوان المقابل لها.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;خالد&lt;/td&gt;&lt;td&gt;40&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;</code>
+                        <span>صف بيانات الطالب الثاني بنفس الترتيب. والسطر التالي صف الطالبة الثالثة مريم بنفس الطريقة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;/table&gt;</code>
+                        <span>يغلق الجدول.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 3 من 3 · تحدٍّ</div>
+                        <h2>نموذج تسجيل طالب</h2>
+                        <p class="lead">صمم نموذج تسجيل فيه: الاسم الكامل، البريد، رقم الهاتف، العمر، الجنس (radio)، الدورة (select)، ملاحظات (textarea)، وزر «تسجيل». هذا النموذج سيدخل في مشروعك النهائي.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">HTML</span>
+            <span class="acts">
+                    <button type="button" data-try>جرّب في المحرر</button>
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">&lt;h2&gt;تسجيل طالب جديد&lt;/h2&gt;</span><span class="ln" data-ln="1">&lt;form&gt;</span><span class="ln" data-ln="2">  &lt;p&gt;&lt;label&gt;الاسم الكامل: &lt;input type=&quot;text&quot; required&gt;&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="3">  &lt;p&gt;&lt;label&gt;البريد: &lt;input type=&quot;email&quot;&gt;&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="4">  &lt;p&gt;&lt;label&gt;الهاتف: &lt;input type=&quot;tel&quot;&gt;&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="5">  &lt;p&gt;&lt;label&gt;العمر: &lt;input type=&quot;number&quot; min=&quot;15&quot;&gt;&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="6">  &lt;p&gt;الجنس:</span><span class="ln" data-ln="7">    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;g&quot;&gt; ذكر&lt;/label&gt;</span><span class="ln" data-ln="8">    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;g&quot;&gt; أنثى&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="9">  &lt;p&gt;&lt;label&gt;الدورة:</span><span class="ln" data-ln="10">    &lt;select&gt;&lt;option&gt;HTML&lt;/option&gt;&lt;option&gt;C#&lt;/option&gt;&lt;option&gt;SQL&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="11">  &lt;p&gt;&lt;label&gt;ملاحظات:&lt;br&gt;&lt;textarea rows=&quot;3&quot; cols=&quot;30&quot;&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;/p&gt;</span><span class="ln" data-ln="12">  &lt;button type=&quot;submit&quot;&gt;تسجيل&lt;/button&gt;</span><span class="ln" data-ln="13">&lt;/form&gt;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يعرض هذا الحل نموذج تسجيل طالب جديد فيه خانات للاسم والبريد والهاتف والعمر، واختيار الجنس والدورة، ومربع ملاحظات، وزر تسجيل.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">&lt;h2&gt;تسجيل طالب جديد&lt;/h2&gt;</code>
+                        <span>عنوان فرعي h2 يظهر فوق النموذج.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">&lt;form&gt;</code>
+                        <span>الوسم form يبدأ النموذج الذي يضم كل خانات الإدخال.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">&lt;p&gt;&lt;label&gt;الاسم الكامل: &lt;input type=&quot;text&quot; required&gt;&lt;/label&gt;&lt;/p&gt;</code>
+                        <span>وضعنا الخانة input داخل الوسم label، فإذا ضغط المستخدم على النص «الاسم الكامل» ينتقل المؤشر إلى الخانة. الخاصية required تجعل الخانة إجبارية، فلا يرسل المتصفح النموذج إذا كانت فارغة. والوسم p يضع كل خانة في سطر خاص.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">&lt;p&gt;&lt;label&gt;البريد: &lt;input type=&quot;email&quot;&gt;&lt;/label&gt;&lt;/p&gt;</code>
+                        <span>خانة من نوع email يتحقق المتصفح عند الإرسال أن ما كُتب فيها يشبه بريدًا إلكترونيًا.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">&lt;p&gt;&lt;label&gt;الهاتف: &lt;input type=&quot;tel&quot;&gt;&lt;/label&gt;&lt;/p&gt;</code>
+                        <span>خانة من نوع tel مخصصة لرقم الهاتف، وعلى الجوال تظهر لوحة أرقام لتسهيل الكتابة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">&lt;p&gt;&lt;label&gt;العمر: &lt;input type=&quot;number&quot; min=&quot;15&quot;&gt;&lt;/label&gt;&lt;/p&gt;</code>
+                        <span>خانة أرقام number، والخاصية min=&quot;15&quot; تجعل أقل عمر مقبول هو 15.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">&lt;p&gt;الجنس:</code>
+                        <span>فقرة تبدأ بالنص «الجنس:» وتضم خياري الجنس في السطرين التاليين.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">&lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;g&quot;&gt; ذكر&lt;/label&gt;</code>
+                        <span>دائرة اختيار radio داخل label، فالضغط على كلمة «ذكر» يختار الدائرة. هذا الخيار والخيار التالي «أنثى» لهما نفس name=&quot;g&quot; فلا يمكن اختيار الاثنين معًا.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">&lt;p&gt;&lt;label&gt;الدورة:</code>
+                        <span>فقرة فيها label بعنوان «الدورة:» تحيط بالقائمة المنسدلة في السطر التالي.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">&lt;select&gt;&lt;option&gt;HTML&lt;/option&gt;&lt;option&gt;C#&lt;/option&gt;&lt;option&gt;SQL&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/p&gt;</code>
+                        <span>الوسم select يصنع قائمة منسدلة، وبداخلها ثلاثة خيارات option: HTML و⁦C#⁩ وSQL. ثم نغلق label والفقرة p.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">&lt;p&gt;&lt;label&gt;ملاحظات:&lt;br&gt;&lt;textarea rows=&quot;3&quot; cols=&quot;30&quot;&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;/p&gt;</code>
+                        <span>الوسم textarea يصنع مربع نص كبير يسمح بكتابة عدة أسطر. الخاصية rows=&quot;3&quot; تجعل ارتفاعه 3 أسطر، وcols=&quot;30&quot; تجعل عرضه يتسع لحوالي 30 حرفًا، والوسم br يضع المربع تحت كلمة «ملاحظات».</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">&lt;button type=&quot;submit&quot;&gt;تسجيل&lt;/button&gt;</code>
+                        <span>زر مكتوب عليه «تسجيل»، وtype=&quot;submit&quot; تعني أنه يرسل النموذج عند الضغط عليه بعد التحقق من الخانات الإجبارية.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">&lt;/form&gt;</code>
+                        <span>يغلق النموذج.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">مراجعة سريعة</div>
+                        <h2>اختبر نفسك</h2>
+                        <ol class="deck-quiz" id="deckQuiz">
+                                <li>
+                                    <div>أي وسم يُستخدم لعنصر داخل قائمة؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="1">li</span>
+                                            <span class="opt" data-correct="0">td</span>
+                                            <span class="opt" data-correct="0">ul</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>خلية العنوان في الجدول هي:</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">td</span>
+                                            <span class="opt" data-correct="1">th</span>
+                                            <span class="opt" data-correct="0">tr</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>لاختيار خيار واحد فقط من عدة خيارات نستخدم:</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">checkbox</span>
+                                            <span class="opt" data-correct="1">radio</span>
+                                            <span class="opt" data-correct="0">textarea</span>
+                                    </div>
+                                </li>
+                        </ol>
+                        <button class="btn" type="button" id="revealQuiz">أظهر الإجابات</button>
+                    </div>
+                </section>
+
+            <section class="slide slide-end" hidden>
+                <div class="slide-inner">
+                    <div class="eyebrow">نهاية اليوم 2</div>
+                    <h2>الواجب</h2>
+                    <p class="lead">أضف إلى صفحتك جدولًا لجدولك الدراسي الأسبوعي.</p>
+                    <div class="lesson-actions">
+                        <a class="btn big" href="../lessons/day-2.html">العودة لصفحة الدرس</a>
+                    </div>
+                    <div class="flash ok" id="caFlash" role="status" hidden></div>
+                </div>
+            </section>
+        </main>
+
+        <div class="deck-controls deck-bar">
+            <button class="deck-btn" type="button" id="prevBtn" title="السابق (→)">→ السابق</button>
+            <span class="deck-count" id="deckCount"></span>
+            <button class="deck-btn" type="button" id="nextBtn" title="التالي (← أو المسافة)">التالي ←</button>
+        </div>
+        <div class="deck-progress"><i id="deckProgress"></i></div>
+    </div>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    <script src="../js/present.js"></script>
+</body>
+</html>

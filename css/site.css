@@ -324,3 +324,12 @@ body.print details.explain{padding:6px 10px}
 body.print .grid.g2{grid-template-columns:1fr 1fr}
 body.print .panel,body.print .ex{padding:12px}
 body.print .sol-print{margin-top:4px;color:var(--accent)}
+
+/* ---------- Trainer controls on the course site ---------- */
+.control-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.control-row select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px}
+.gh-status{padding:8px 12px;border-radius:8px;background:var(--sunk);font-size:.92rem}
+.gh-status.ok{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good)}
+.gh-status.bad{background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+.ok-text{color:var(--good);font-weight:600}
+.slide .flash{margin-top:12px}

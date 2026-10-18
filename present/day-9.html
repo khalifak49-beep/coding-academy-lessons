@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>عرض اليوم 9: UPDATE وربط ⁦C#⁩ بالقاعدة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "../";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="../css/site.css" />
+</head>
+<body class="presenting" data-playground="../editor.html" data-root="../">
+    <div class="deck" id="deck">
+        <div class="deck-controls deck-top">
+            <a class="deck-btn" href="../lessons/day-9.html" title="الخروج من العرض (Esc)">✕ خروج</a>
+            <button class="deck-btn" type="button" id="fsBtn" title="ملء الشاشة (F)">⛶ ملء الشاشة</button>
+        </div>
+
+        <main class="slides">
+            <section class="slide slide-title">
+                <div class="slide-inner">
+                    <span class="pill t-sql">SQL Server</span>
+                    <div class="eyebrow big">اليوم 9 · الأسبوع 2</div>
+                    <h1>تعديل البيانات والتجميع وربط ⁦C#⁩ بـ SQL Server</h1>
+                    <h3>في نهاية الدرس ستستطيع أن:</h3>
+                    <ul class="goals">
+                            <li>يعدّل البيانات بـ UPDATE ويحذفها بـ DELETE مع WHERE دائمًا.</li>
+                            <li>يحسب الإحصائيات بـ COUNT وAVG وMAX وMIN وGROUP BY.</li>
+                            <li>يتصل بقاعدة البيانات من برنامج ⁦C#⁩ باستخدام Microsoft.Data.SqlClient.</li>
+                            <li>يقرأ الصفوف بـ SqlDataReader ويضيف صفوفًا باستعلام ذي باراميترات.</li>
+                    </ul>
+                </div>
+            </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 1 من 4</div>
+                        <h2>التعديل والحذف</h2>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">UPDATE Students SET Grade = 82 WHERE Id = 2;</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">UPDATE Students SET Course = N&#x27;C#&#x27;, Age = 24 WHERE FullName = N&#x27;علي&#x27;;</span><span class="ln" data-ln="3"> </span><span class="ln" data-ln="4">DELETE FROM Students WHERE Id = 6;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> أوامر لتعديل بيانات موجودة (UPDATE) وحذف صف (DELETE) من جدول Students. عند التشغيل تظهر رسالة بعدد الصفوف التي تأثرت مثل (1 row affected).</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">UPDATE Students SET Grade = 82 WHERE Id = 2;</code>
+                        <span>الأمر UPDATE يعدّل بيانات موجودة، و SET تحدد العمود وقيمته الجديدة، و WHERE تحدد أي صف سيتعدّل (الطالب صاحب Id = 2). تحذير: لو نسيت WHERE ستتغير درجة كل الطلاب في الجدول!</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">UPDATE Students SET Course = N&#x27;C#&#x27;, Age = 24 WHERE FullName = N&#x27;علي&#x27;;</code>
+                        <span>يمكن تعديل أكثر من عمود في أمر واحد بفصلها بفاصلة بعد SET. هنا نغيّر دورة وعمر الطالب الذي اسمه علي، والبادئة N ضرورية لأن الاسم عربي.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">DELETE FROM Students WHERE Id = 6;</code>
+                        <span>الأمر DELETE FROM يحذف صفوفًا من الجدول، و WHERE تحدد الطالب صاحب Id = 6 فقط. تحذير مهم: DELETE بدون WHERE يحذف كل الصفوف، ولا يوجد زر تراجع، لذلك تأكد دائمًا من الشرط.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            <div class="note">تحذير مهم: UPDATE أو DELETE بدون WHERE يغيّر أو يحذف كل صفوف الجدول! اكتب SELECT بنفس الشرط أولًا لتتأكد.</div>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 2 من 4</div>
+                        <h2>دوال التجميع</h2>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">SELECT COUNT(*) AS StudentsCount FROM Students;</span><span class="ln" data-ln="1">SELECT AVG(Grade) AS Average, MAX(Grade) AS Highest, MIN(Grade) AS Lowest FROM Students;</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">-- عدد الطلاب ومتوسطهم لكل دورة</span><span class="ln" data-ln="4">SELECT Course, COUNT(*) AS Total, AVG(Grade) AS Avg</span><span class="ln" data-ln="5">FROM Students</span><span class="ln" data-ln="6">GROUP BY Course;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> يستخدم الدوال التجميعية لحساب إحصائيات عن الطلاب: العدد، والمتوسط، وأعلى وأدنى درجة، ثم نفس الإحصائيات لكل دورة على حدة باستخدام GROUP BY.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">SELECT COUNT(*) AS StudentsCount FROM Students;</code>
+                        <span>الدالة COUNT(*) تعدّ صفوف الجدول وتعيد رقمًا واحدًا هو عدد الطلاب. الكلمة AS تعطي عمود النتيجة اسمًا مستعارًا (StudentsCount) ليظهر بعنوان واضح بدل عمود بلا اسم.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">SELECT AVG(Grade) AS Average, MAX(Grade) AS Highest, MIN(Grade) AS Lowest FROM Students;</code>
+                        <span>الدالة AVG تحسب متوسط الدرجات، و MAX تعيد أعلى درجة، و MIN أدنى درجة. النتيجة صف واحد فيه ثلاثة أعمدة، ولكل عمود اسم أعطيناه بـ AS.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">-- عدد الطلاب ومتوسطهم لكل دورة</code>
+                        <span>تعليق يبدأ بـ -- لشرح الاستعلام التالي، ولا ينفذه SQL Server.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">SELECT Course, COUNT(*) AS Total, AVG(Grade) AS Avg</code>
+                        <span>نختار اسم الدورة، وعدد الطلاب (Total)، ومتوسط الدرجات (Avg). هذا الاستعلام مكتوب على عدة أسطر لسهولة القراءة، وهو أمر واحد ينتهي عند الفاصلة المنقوطة.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">FROM Students</code>
+                        <span>نأخذ البيانات من جدول Students.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">GROUP BY Course;</code>
+                        <span>الكلمة GROUP BY تقسّم الطلاب إلى مجموعات حسب الدورة، ثم تُحسب COUNT و AVG لكل مجموعة على حدة. النتيجة صف لكل دورة. قاعدة: أي عمود عادي في SELECT (مثل Course) يجب أن يكون مذكورًا في GROUP BY.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 3 من 4</div>
+                        <h2>ربط ⁦C#⁩ بـ SQL Server</h2>
+                            <div class="prose"><p>1) في Visual Studio: Project ← Manage NuGet Packages ← ابحث عن <code>Microsoft.Data.SqlClient</code> وثبّته.<br>2) جهّز <b>نص الاتصال</b> Connection String.<br>3) افتح الاتصال، نفذ الأمر، اقرأ النتائج.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">using Microsoft.Data.SqlClient;</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">string cs = @&quot;Server=localhost\SQLEXPRESS;Database=TrainingDB;Trusted_Connection=True;TrustServerCertificate=True;&quot;;</span><span class="ln" data-ln="3"> </span><span class="ln" data-ln="4">using var conn = new SqlConnection(cs);</span><span class="ln" data-ln="5">conn.Open();</span><span class="ln" data-ln="6"> </span><span class="ln" data-ln="7">var cmd = new SqlCommand(&quot;SELECT Id, FullName, Grade FROM Students ORDER BY Grade DESC&quot;, conn);</span><span class="ln" data-ln="8">using var reader = cmd.ExecuteReader();</span><span class="ln" data-ln="9"> </span><span class="ln" data-ln="10">while (reader.Read())</span><span class="ln" data-ln="11">{</span><span class="ln" data-ln="12">    Console.WriteLine($&quot;{reader[&quot;Id&quot;]}. {reader[&quot;FullName&quot;]} - {reader[&quot;Grade&quot;]}&quot;);</span><span class="ln" data-ln="13">}</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج ⁦C#⁩ يتصل بقاعدة البيانات TrainingDB ويقرأ الطلاب مرتبين حسب الدرجة من الأعلى، ثم يطبع كل طالب في سطر بالشكل: الرقم. الاسم - الدرجة.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">using Microsoft.Data.SqlClient;</code>
+                        <span>توجيه using في أول الملف يستورد مكتبة Microsoft.Data.SqlClient حتى نستخدم أصنافها مثل SqlConnection و SqlCommand بأسمائها المختصرة. يجب أولًا إضافة حزمة NuGet بنفس الاسم إلى المشروع.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">string cs = @&quot;Server=localhost\SQLEXPRESS;Database=TrainingDB;Trusted_Connection=True;TrustServerCertificate=True;&quot;;</code>
+                        <span>هذا نص الاتصال (connection string) ويخبر البرنامج كيف يصل لقاعدة البيانات: Server هو اسم الخادم (localhost\SQLEXPRESS أي نسخة SQLEXPRESS على جهازك)، و Database اسم القاعدة، و Trusted_Connection=True يعني الدخول بحساب Windows بلا كلمة مرور، و TrustServerCertificate=True يقبل شهادة الأمان المحلية للخادم دون تحقق. علامة @ قبل النص تجعل \ حرفًا عاديًا وليس بداية رمز خاص.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">using var conn = new SqlConnection(cs);</code>
+                        <span>ننشئ كائن اتصال SqlConnection باستخدام نص الاتصال. كلمة using var (تختلف عن توجيه using في أول الملف) تضمن إغلاق الاتصال وتحرير موارده تلقائيًا عند انتهاء البرنامج أو الجزء الذي هو فيه، حتى لو حدث خطأ.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">conn.Open();</code>
+                        <span>الدالة Open تفتح الاتصال فعليًا بالخادم. لا يمكن تنفيذ أي أمر قبل فتح الاتصال، وإن كانت بيانات الاتصال خاطئة سيظهر الخطأ هنا.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">var cmd = new SqlCommand(&quot;SELECT Id, FullName, Grade FROM Students ORDER BY Grade DESC&quot;, conn);</code>
+                        <span>الكائن SqlCommand يحمل أمر SQL الذي نريد تنفيذه (هنا استعلام SELECT مرتّب تنازليًا بالدرجة) والاتصال الذي سيُنفّذ عليه.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">using var reader = cmd.ExecuteReader();</code>
+                        <span>الدالة ExecuteReader تنفّذ الاستعلام وتعيد قارئًا (SqlDataReader) نقرأ به النتائج صفًا صفًا. نستخدم using var لإغلاق القارئ تلقائيًا عند الانتهاء.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">while (reader.Read())</code>
+                        <span>الدالة Read تنتقل إلى الصف التالي وتعيد true إن وُجد صف، و false عندما تنتهي الصفوف. لذلك نضعها في حلقة while لتكرار القراءة حتى آخر صف.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">{</code>
+                        <span>القوس المعقوص { يبدأ جسم الحلقة، أي الأوامر التي تتكرر لكل صف، والقوس } ينهيه.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">Console.WriteLine($&quot;{reader[&quot;Id&quot;]}. {reader[&quot;FullName&quot;]} - {reader[&quot;Grade&quot;]}&quot;);</code>
+                        <span>نطبع الصف الحالي. reader[&quot;Id&quot;] يجلب قيمة العمود Id من الصف الحالي بكتابة اسم العمود، وكذلك FullName و Grade. علامة $ قبل النص تسمح بوضع القيم داخل { } مباشرة في النص.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">شرح الدرس · 4 من 4</div>
+                        <h2>الإضافة باستخدام الباراميترات</h2>
+                            <div class="prose"><p>لا تدمج مدخلات المستخدم مباشرة في نص الاستعلام، بل استخدم <b>باراميترات</b> مثل <code>@name</code>. هذا يحمي من ثغرة SQL Injection ويتعامل مع العربية بشكل صحيح.</p></div>
+                            <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">Console.Write(&quot;الاسم: &quot;);</span><span class="ln" data-ln="1">string name = Console.ReadLine();</span><span class="ln" data-ln="2">Console.Write(&quot;الدرجة: &quot;);</span><span class="ln" data-ln="3">decimal grade = decimal.Parse(Console.ReadLine());</span><span class="ln" data-ln="4"> </span><span class="ln" data-ln="5">using var conn = new SqlConnection(cs);</span><span class="ln" data-ln="6">conn.Open();</span><span class="ln" data-ln="7">var cmd = new SqlCommand(</span><span class="ln" data-ln="8">    &quot;INSERT INTO Students (FullName, Grade) VALUES (@name, @grade)&quot;, conn);</span><span class="ln" data-ln="9">cmd.Parameters.AddWithValue(&quot;@name&quot;, name);</span><span class="ln" data-ln="10">cmd.Parameters.AddWithValue(&quot;@grade&quot;, grade);</span><span class="ln" data-ln="11"> </span><span class="ln" data-ln="12">int rows = cmd.ExecuteNonQuery();</span><span class="ln" data-ln="13">Console.WriteLine($&quot;تمت إضافة {rows} صف&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> برنامج يطلب من المستخدم اسم طالب ودرجته، ثم يضيفه إلى جدول Students بأمان باستخدام المعاملات (parameters)، ويطبع عدد الصفوف التي أضيفت: تمت إضافة 1 صف.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">Console.Write(&quot;الاسم: &quot;);</code>
+                        <span>نطبع سؤالًا للمستخدم. Write تبقي المؤشر على نفس السطر ليكتب المستخدم الإجابة بجانب السؤال.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">string name = Console.ReadLine();</code>
+                        <span>ReadLine تنتظر المستخدم حتى يكتب نصًا ويضغط Enter، ثم نحفظ ما كتبه في المتغير name.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">Console.Write(&quot;الدرجة: &quot;);</code>
+                        <span>نطلب من المستخدم إدخال الدرجة.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">decimal grade = decimal.Parse(Console.ReadLine());</code>
+                        <span>ما يكتبه المستخدم يصل دائمًا كنص، لذلك نحوّله إلى رقم عشري بـ decimal.Parse. إن كتب المستخدم شيئًا ليس رقمًا سيتوقف البرنامج بخطأ.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">using var conn = new SqlConnection(cs);</code>
+                        <span>ننشئ اتصالًا بقاعدة البيانات باستخدام نص الاتصال cs المعرّف في المثال السابق، و using var تغلقه تلقائيًا عند الانتهاء.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">conn.Open();</code>
+                        <span>نفتح الاتصال بالخادم قبل تنفيذ أي أمر.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">var cmd = new SqlCommand(</code>
+                        <span>ننشئ أمر SqlCommand، وقد كتبناه على سطرين لأن النص طويل.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">&quot;INSERT INTO Students (FullName, Grade) VALUES (@name, @grade)&quot;, conn);</code>
+                        <span>هذا أمر الإضافة، لكن بدل وضع القيم مباشرة كتبنا @name و @grade، وهي معاملات (parameters): أماكن محجوزة ستُملأ بالقيم لاحقًا بشكل منفصل عن نص الأمر.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">cmd.Parameters.AddWithValue(&quot;@name&quot;, name);</code>
+                        <span>AddWithValue تربط المعامل @name بقيمة المتغير name. القيمة تُرسل للخادم كبيانات فقط وليست كجزء من أمر SQL، فلو كتب المستخدم نصًا خبيثًا لن يُنفّذ كأمر، وهذا يحمينا من هجوم SQL Injection (حقن أوامر ضارة).</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">cmd.Parameters.AddWithValue(&quot;@grade&quot;, grade);</code>
+                        <span>نربط المعامل @grade بقيمة المتغير grade بنفس الطريقة الآمنة. لا تبنِ أوامر SQL أبدًا بلصق مدخلات المستخدم داخل النص.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">int rows = cmd.ExecuteNonQuery();</code>
+                        <span>ExecuteNonQuery تستخدم للأوامر التي لا تعيد جدول نتائج مثل INSERT و UPDATE و DELETE، وتعيد عدد الصفوف التي تأثرت، فنحفظه في rows.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">Console.WriteLine($&quot;تمت إضافة {rows} صف&quot;);</code>
+                        <span>نطبع رسالة تأكيد فيها عدد الصفوف المضافة، وسيكون 1 عند النجاح.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            <div class="note">ExecuteReader للقراءة (SELECT)، وExecuteNonQuery للإضافة والتعديل والحذف، وExecuteScalar لقيمة واحدة مثل COUNT.</div>
+                    </div>
+                </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 1 من 3 · سهل</div>
+                        <h2>تعديل وإحصاء</h2>
+                        <p class="lead">ارفع درجة كل طلاب دورة HTML بمقدار 5، ثم اعرض عدد الطلاب ومتوسط الدرجات لكل دورة.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">UPDATE Students SET Grade = Grade &#x2B; 5 WHERE Course = N&#x27;HTML&#x27;;</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">SELECT Course, COUNT(*) AS Total, AVG(Grade) AS Avg</span><span class="ln" data-ln="3">FROM Students GROUP BY Course;</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> حل التمرين: زيادة درجة كل طلاب دورة HTML بمقدار 5، ثم عرض عدد الطلاب ومتوسط الدرجات لكل دورة للتأكد من التغيير.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">UPDATE Students SET Grade = Grade &#x2B; 5 WHERE Course = N&#x27;HTML&#x27;;</code>
+                        <span>الأمر UPDATE مع SET Grade = Grade &#x2B; 5 يأخذ الدرجة الحالية لكل صف ويضيف لها 5. الشرط WHERE يحصر التعديل في طلاب دورة HTML فقط؛ وبدونه ستزيد درجات الجميع.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">SELECT Course, COUNT(*) AS Total, AVG(Grade) AS Avg</code>
+                        <span>نختار اسم الدورة، وعدد طلابها بـ COUNT(*)، ومتوسط درجاتها بـ AVG، ونعطي الأعمدة أسماء واضحة بـ AS.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">FROM Students GROUP BY Course;</code>
+                        <span>نأخذ البيانات من Students ونجمّعها بـ GROUP BY حسب الدورة، فتظهر نتيجة واحدة لكل دورة، وسترى أن متوسط HTML ارتفع بمقدار 5.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 2 من 3 · متوسط</div>
+                        <h2>عرض الطلاب من ⁦C#⁩</h2>
+                        <p class="lead">اكتب برنامج ⁦C#⁩ يتصل بـ TrainingDB ويعرض كل الطلاب الناجحين (60 فأكثر) مع دوراتهم.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">using Microsoft.Data.SqlClient;</span><span class="ln" data-ln="1"> </span><span class="ln" data-ln="2">string cs = @&quot;Server=localhost\SQLEXPRESS;Database=TrainingDB;Trusted_Connection=True;TrustServerCertificate=True;&quot;;</span><span class="ln" data-ln="3">using var conn = new SqlConnection(cs);</span><span class="ln" data-ln="4">conn.Open();</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">var cmd = new SqlCommand(&quot;SELECT FullName, Course, Grade FROM Students WHERE Grade &gt;= 60&quot;, conn);</span><span class="ln" data-ln="7">using var r = cmd.ExecuteReader();</span><span class="ln" data-ln="8">while (r.Read())</span><span class="ln" data-ln="9">    Console.WriteLine($&quot;{r[&quot;FullName&quot;]} | {r[&quot;Course&quot;]} | {r[&quot;Grade&quot;]}&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> حل التمرين: برنامج ⁦C#⁩ يتصل بقاعدة البيانات ويطبع الطلاب الناجحين (درجتهم 60 فأكثر) بالشكل: الاسم | الدورة | الدرجة.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">using Microsoft.Data.SqlClient;</code>
+                        <span>توجيه using يستورد مكتبة Microsoft.Data.SqlClient لنستخدم أصناف الاتصال بـ SQL Server مثل SqlConnection و SqlCommand.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">string cs = @&quot;Server=localhost\SQLEXPRESS;Database=TrainingDB;Trusted_Connection=True;TrustServerCertificate=True;&quot;;</code>
+                        <span>نص الاتصال: Server اسم الخادم (نسخة SQLEXPRESS على جهازك)، و Database اسم القاعدة، و Trusted_Connection=True للدخول بحساب Windows، و TrustServerCertificate=True لقبول شهادة الخادم المحلي. علامة @ تجعل الشرطة المائلة \ حرفًا عاديًا داخل النص.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">using var conn = new SqlConnection(cs);</code>
+                        <span>ننشئ كائن الاتصال، و using var تضمن إغلاقه تلقائيًا عند الانتهاء.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">conn.Open();</code>
+                        <span>نفتح الاتصال بالخادم فعليًا.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">var cmd = new SqlCommand(&quot;SELECT FullName, Course, Grade FROM Students WHERE Grade &gt;= 60&quot;, conn);</code>
+                        <span>نجهّز أمر SELECT يجلب الاسم والدورة والدرجة للطلاب الذين درجتهم 60 أو أكثر، ونربطه بالاتصال conn.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">using var r = cmd.ExecuteReader();</code>
+                        <span>ExecuteReader تنفّذ الاستعلام وتعيد قارئًا سمّيناه r لنقرأ النتائج صفًا صفًا.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">while (r.Read())</code>
+                        <span>r.Read() تنتقل للصف التالي وتعيد true ما دام هناك صفوف، فتستمر الحلقة حتى آخر صف. لم نضع { } لأن جسم الحلقة سطر واحد فقط.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">Console.WriteLine($&quot;{r[&quot;FullName&quot;]} | {r[&quot;Course&quot;]} | {r[&quot;Grade&quot;]}&quot;);</code>
+                        <span>نطبع قيم أعمدة الصف الحالي بكتابة اسم كل عمود بين القوسين المربعين، مثل r[&quot;FullName&quot;]، ونفصل بينها بالرمز |.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">تمرين 3 من 3 · تحدٍّ</div>
+                        <h2>تحدٍّ: عدد الطلاب ومتوسطهم من ⁦C#⁩</h2>
+                        <p class="lead">استخدم ExecuteScalar لطباعة عدد الطلاب، ثم متوسط الدرجات بخانة عشرية واحدة.</p>
+                            <details class="sol">
+                                <summary>اعرض الحل المقترح</summary>
+                                <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">using var conn = new SqlConnection(cs);</span><span class="ln" data-ln="1">conn.Open();</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">int count = (int)new SqlCommand(&quot;SELECT COUNT(*) FROM Students&quot;, conn).ExecuteScalar();</span><span class="ln" data-ln="4">decimal avg = (decimal)new SqlCommand(&quot;SELECT AVG(Grade) FROM Students&quot;, conn).ExecuteScalar();</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">Console.WriteLine($&quot;عدد الطلاب: {count}&quot;);</span><span class="ln" data-ln="7">Console.WriteLine($&quot;المتوسط: {avg:F1}&quot;);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> حل التمرين: برنامج يحسب عدد الطلاب ومتوسط درجاتهم من قاعدة البيانات باستخدام ExecuteScalar، ثم يطبعهما مع تقريب المتوسط لرقم عشري واحد.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">using var conn = new SqlConnection(cs);</code>
+                        <span>ننشئ اتصالًا بقاعدة البيانات باستخدام نص الاتصال cs (المعرّف سابقًا)، و using var تغلقه تلقائيًا.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">conn.Open();</code>
+                        <span>نفتح الاتصال قبل تنفيذ الأوامر.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">int count = (int)new SqlCommand(&quot;SELECT COUNT(*) FROM Students&quot;, conn).ExecuteScalar();</code>
+                        <span>ExecuteScalar تنفّذ الاستعلام وتعيد قيمة واحدة فقط (أول خانة في النتيجة)، وهي مناسبة لـ COUNT. لكنها تعيد النوع العام object، لذلك نحوّلها بـ (int) إلى رقم صحيح لنحفظها في count.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">decimal avg = (decimal)new SqlCommand(&quot;SELECT AVG(Grade) FROM Students&quot;, conn).ExecuteScalar();</code>
+                        <span>بنفس الطريقة نجلب متوسط الدرجات ونحوّله بـ (decimal) لأن العمود Grade عشري. ملاحظة: إن كان الجدول فارغًا فإن AVG تعيد NULL ويفشل هذا التحويل.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">Console.WriteLine($&quot;عدد الطلاب: {count}&quot;);</code>
+                        <span>نطبع عدد الطلاب داخل الرسالة.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">Console.WriteLine($&quot;المتوسط: {avg:F1}&quot;);</code>
+                        <span>نطبع المتوسط، والتنسيق :F1 يعرض الرقم برقم واحد بعد الفاصلة العشرية (مثل 83.5) بدل خانات كثيرة.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+                            </details>
+                    </div>
+                </section>
+
+                <section class="slide" hidden>
+                    <div class="slide-inner">
+                        <div class="eyebrow">مراجعة سريعة</div>
+                        <h2>اختبر نفسك</h2>
+                        <ol class="deck-quiz" id="deckQuiz">
+                                <li>
+                                    <div>ماذا يحدث عند تنفيذ DELETE FROM Students بدون WHERE؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">لا شيء</span>
+                                            <span class="opt" data-correct="0">يُحذف أول صف</span>
+                                            <span class="opt" data-correct="1">تُحذف كل الصفوف</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>أي دالة تحسب المتوسط؟</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">SUM</span>
+                                            <span class="opt" data-correct="1">AVG</span>
+                                            <span class="opt" data-correct="0">COUNT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>لتنفيذ INSERT من ⁦C#⁩ نستخدم:</div>
+                                    <div class="opts">
+                                            <span class="opt" data-correct="0">ExecuteReader</span>
+                                            <span class="opt" data-correct="1">ExecuteNonQuery</span>
+                                            <span class="opt" data-correct="0">ReadLine</span>
+                                    </div>
+                                </li>
+                        </ol>
+                        <button class="btn" type="button" id="revealQuiz">أظهر الإجابات</button>
+                    </div>
+                </section>
+
+            <section class="slide slide-end" hidden>
+                <div class="slide-inner">
+                    <div class="eyebrow">نهاية اليوم 9</div>
+                    <h2>الواجب</h2>
+                    <p class="lead">أكمل المشروع النهائي وجهّز عرضًا مدته 5 دقائق.</p>
+                    <div class="lesson-actions">
+                        <a class="btn big" href="../lessons/day-9.html">العودة لصفحة الدرس</a>
+                    </div>
+                    <div class="flash ok" id="caFlash" role="status" hidden></div>
+                </div>
+            </section>
+        </main>
+
+        <div class="deck-controls deck-bar">
+            <button class="deck-btn" type="button" id="prevBtn" title="السابق (→)">→ السابق</button>
+            <span class="deck-count" id="deckCount"></span>
+            <button class="deck-btn" type="button" id="nextBtn" title="التالي (← أو المسافة)">التالي ←</button>
+        </div>
+        <div class="deck-progress"><i id="deckProgress"></i></div>
+    </div>
+    <script src="../js/site.js"></script>
+    <script src="../js/static-site.js"></script>
+    <script src="../js/present.js"></script>
+</body>
+</html>

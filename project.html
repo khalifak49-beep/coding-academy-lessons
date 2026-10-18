@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>المشروع النهائي · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("trainer" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-playground="editor.html" data-root="">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="false" href="index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="editor.html">محرر HTML</a>
+                <a class="tab trainer-only" aria-selected="true" href="project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <section class="view">
+    <div class="panel stack">
+        <span class="pill t-proj self-start">35 درجة من 100</span>
+        <h1 class="h1">المشروع النهائي: نظام إدارة بيانات صغير</h1>
+        <p class="prose">يبني كل متدرب نظامًا صغيرًا يجمع اللغات الثلاث: <b>صفحة ويب</b> تمثل واجهة النظام، و<b>قاعدة بيانات</b> في SQL Server، و<b>برنامج ⁦C#⁩</b> يدير البيانات (إضافة، عرض، تعديل، حذف، إحصائيات). المشروع فردي، ولكل متدرب فكرة مختلفة.</p>
+    </div>
+
+    <div>
+        <h2 class="h2">أفكار المشاريع (فكرة لكل متدرب)</h2>
+        <div class="scroll">
+            <table>
+                <thead><tr><th>#</th><th>الفكرة</th><th>الجدول الرئيسي وأعمدته</th></tr></thead>
+                <tbody>
+                        <tr><td class="num">1</td><td><b>نظام سجل الطلاب</b></td><td>Students: الاسم، البريد، العمر، الدورة، الدرجة</td></tr>
+                        <tr><td class="num">2</td><td><b>مكتبة الكتب</b></td><td>Books: العنوان، المؤلف، السنة، التصنيف، متاح/معار</td></tr>
+                        <tr><td class="num">3</td><td><b>مخزون متجر صغير</b></td><td>Products: الاسم، السعر، الكمية، الفئة</td></tr>
+                        <tr><td class="num">4</td><td><b>مواعيد عيادة</b></td><td>Appointments: المريض، الطبيب، التاريخ، الحالة</td></tr>
+                        <tr><td class="num">5</td><td><b>سجل الموظفين</b></td><td>Employees: الاسم، القسم، الراتب، تاريخ التعيين</td></tr>
+                        <tr><td class="num">6</td><td><b>مكتبة الأفلام</b></td><td>Movies: العنوان، السنة، النوع، التقييم من 10</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="grid g2">
+        <div class="panel">
+            <h3>المتطلبات الأساسية</h3>
+            <ol class="clean">
+                <li><b>HTML وCSS:</b> صفحة رئيسية فيها رأس وقائمة تنقل، ونموذج إدخال للعنصر، وجدول يعرض أمثلة من البيانات، وتذييل.</li>
+                <li><b>SQL Server:</b> قاعدة بيانات باسم المشروع، وجدول رئيسي بمفتاح أساسي، و5 صفوف تجريبية، وملف <code>queries.sql</code> فيه 5 استعلامات.</li>
+                <li><b>⁦C#⁩:</b> برنامج Console بقائمة: عرض، إضافة، تعديل، حذف، إحصائيات، خروج. يستخدم الباراميترات وTryParse.</li>
+            </ol>
+        </div>
+        <div class="panel">
+            <h3>المراحل الزمنية</h3>
+            <div class="timeline">
+                <div class="slot"><time>اليوم 6</time><span>إعلان المشروع واختيار الفكرة</span></div>
+                <div class="slot"><time>اليوم 7</time><span>تسليم صفحة HTML وCSS (واجب)</span></div>
+                <div class="slot"><time>اليوم 8</time><span>إنشاء قاعدة البيانات والجدول (واجب)</span></div>
+                <div class="slot"><time>اليوم 9</time><span>آخر 20 دقيقة: برنامج ⁦C#⁩ بإشراف المدرب</span></div>
+                <div class="slot"><time>اليوم 10</time><span>اللمسات الأخيرة ثم العرض (7 دقائق لكل متدرب)</span></div>
+            </div>
+            <p class="muted small"><b>نقاط إضافية (حتى 3):</b> بحث بالاسم، أو ترتيب حسب عمود، أو جدول ثانٍ مرتبط.</p>
+        </div>
+    </div>
+
+    <div class="sec">
+        <h3>سكربت قاعدة البيانات (مثال: نظام سجل الطلاب)</h3>
+        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">SQL</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">CREATE DATABASE SchoolDB;</span><span class="ln" data-ln="1">GO</span><span class="ln" data-ln="2">USE SchoolDB;</span><span class="ln" data-ln="3">GO</span><span class="ln" data-ln="4">CREATE TABLE Students (</span><span class="ln" data-ln="5">    Id       INT IDENTITY(1,1) PRIMARY KEY,</span><span class="ln" data-ln="6">    FullName NVARCHAR(100) NOT NULL,</span><span class="ln" data-ln="7">    Email    NVARCHAR(100),</span><span class="ln" data-ln="8">    Age      INT,</span><span class="ln" data-ln="9">    Course   NVARCHAR(50),</span><span class="ln" data-ln="10">    Grade    DECIMAL(5,2)</span><span class="ln" data-ln="11">);</span><span class="ln" data-ln="12">INSERT INTO Students (FullName, Email, Age, Course, Grade) VALUES</span><span class="ln" data-ln="13"> (N&#x27;سارة أحمد&#x27;, &#x27;sara@mail.com&#x27;, 22, N&#x27;C#&#x27;, 95),</span><span class="ln" data-ln="14"> (N&#x27;خالد سالم&#x27;, &#x27;khaled@mail.com&#x27;, 25, N&#x27;HTML&#x27;, 78),</span><span class="ln" data-ln="15"> (N&#x27;مريم يوسف&#x27;, &#x27;maryam@mail.com&#x27;, 20, N&#x27;SQL&#x27;, 88),</span><span class="ln" data-ln="16"> (N&#x27;علي حسن&#x27;, &#x27;ali@mail.com&#x27;, 23, N&#x27;C#&#x27;, 64),</span><span class="ln" data-ln="17"> (N&#x27;نورة سعيد&#x27;, &#x27;noura@mail.com&#x27;, 21, N&#x27;HTML&#x27;, 91);</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> سكربت المشروع النهائي: ينشئ قاعدة البيانات SchoolDB وبداخلها جدول Students، ثم يضيف خمسة طلاب كبيانات أولية. عند التشغيل تظهر رسالة بنجاح الأوامر و(5 rows affected).</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">CREATE DATABASE SchoolDB;</code>
+                        <span>الأمر CREATE DATABASE ينشئ قاعدة بيانات جديدة فارغة اسمها SchoolDB لمشروعنا.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">GO</code>
+                        <span>GO ليست أمر SQL، بل فاصل يخبر SSMS بتنفيذ ما قبله كدفعة مستقلة، حتى تُنشأ قاعدة البيانات قبل استخدامها في الأسطر التالية.</span>
+                    </li>
+                    <li data-ln="2">
+                        <code dir="ltr">USE SchoolDB;</code>
+                        <span>الأمر USE يجعل SchoolDB القاعدة الحالية، فيُنشأ الجدول بداخلها.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">CREATE TABLE Students (</code>
+                        <span>ننشئ جدول الطلاب Students، وبين القوسين نعرّف أعمدته.</span>
+                    </li>
+                    <li data-ln="5">
+                        <code dir="ltr">Id       INT IDENTITY(1,1) PRIMARY KEY,</code>
+                        <span>Id رقم صحيح يولّده SQL Server تلقائيًا بفضل IDENTITY(1,1) (يبدأ من 1 ويزيد 1)، وهو المفتاح الأساسي PRIMARY KEY الذي لا يتكرر، وسنستخدمه في البرنامج لتحديد الطالب عند التعديل أو الحذف.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">FullName NVARCHAR(100) NOT NULL,</code>
+                        <span>اسم الطالب نص NVARCHAR يدعم العربية حتى 100 حرف، و NOT NULL تجعله إلزاميًا.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">Email    NVARCHAR(100),</code>
+                        <span>البريد الإلكتروني نص اختياري يمكن تركه فارغًا (NULL).</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">Age      INT,</code>
+                        <span>العمر رقم صحيح.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">Course   NVARCHAR(50),</code>
+                        <span>اسم الدورة نص حتى 50 حرفًا.</span>
+                    </li>
+                    <li data-ln="10">
+                        <code dir="ltr">Grade    DECIMAL(5,2)</code>
+                        <span>الدرجة رقم عشري DECIMAL(5,2): 5 خانات منها خانتان بعد الفاصلة. آخر عمود فلا فاصلة بعده.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">);</code>
+                        <span>القوس المغلق ينهي تعريف الأعمدة، والفاصلة المنقوطة تنهي أمر إنشاء الجدول.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">INSERT INTO Students (FullName, Email, Age, Course, Grade) VALUES</code>
+                        <span>الأمر INSERT INTO يضيف صفوفًا للجدول في الأعمدة المذكورة، ثم VALUES تسبق القيم. لا نكتب Id لأنه تلقائي.</span>
+                    </li>
+                    <li data-ln="13">
+                        <code dir="ltr">(N&#x27;سارة أحمد&#x27;, &#x27;sara@mail.com&#x27;, 22, N&#x27;C#&#x27;, 95),</code>
+                        <span>هذا السطر والسطران بعده ثلاثة طلاب، كل قوسين صف بالترتيب: الاسم، البريد، العمر، الدورة، الدرجة. البادئة N قبل النص العربي تحفظه كـ Unicode فلا يتحول إلى علامات ؟؟؟.</span>
+                    </li>
+                    <li data-ln="16">
+                        <code dir="ltr">(N&#x27;علي حسن&#x27;, &#x27;ali@mail.com&#x27;, 23, N&#x27;C#&#x27;, 64),</code>
+                        <span>هذا السطر والذي بعده طالبان إضافيان. الصف الأخير ينتهي بفاصلة منقوطة بدل الفاصلة لإنهاء أمر INSERT.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>هيكل برنامج ⁦C#⁩ الجاهز للبدء</h3>
+        <p class="prose muted">ينسخه المتدرب في مشروع Console جديد بعد تثبيت حزمة Microsoft.Data.SqlClient، ويكمل الدوال الثلاث الأخيرة بنفسه.</p>
+        <div class="codewrap">
+    <div class="codebox">
+        <div class="codebar">
+            <span class="lang">⁦C#⁩</span>
+            <span class="acts">
+                <button type="button" data-copy>نسخ</button>
+            </span>
+        </div>
+        <pre><code><span class="ln" data-ln="0">using Microsoft.Data.SqlClient;</span><span class="ln" data-ln="1">Console.OutputEncoding = System.Text.Encoding.UTF8;</span><span class="ln" data-ln="2"> </span><span class="ln" data-ln="3">string cs = @&quot;Server=localhost\SQLEXPRESS;Database=SchoolDB;Trusted_Connection=True;TrustServerCertificate=True;&quot;;</span><span class="ln" data-ln="4">string choice = &quot;&quot;;</span><span class="ln" data-ln="5"> </span><span class="ln" data-ln="6">while (choice != &quot;0&quot;)</span><span class="ln" data-ln="7">{</span><span class="ln" data-ln="8">    Console.WriteLine(&quot;\n===== نظام سجل الطلاب =====&quot;);</span><span class="ln" data-ln="9">    Console.WriteLine(&quot;1) عرض الطلاب   2) إضافة طالب   3) تعديل درجة&quot;);</span><span class="ln" data-ln="10">    Console.WriteLine(&quot;4) حذف طالب    5) إحصائيات     0) خروج&quot;);</span><span class="ln" data-ln="11">    Console.Write(&quot;اختيارك: &quot;);</span><span class="ln" data-ln="12">    choice = Console.ReadLine();</span><span class="ln" data-ln="13"> </span><span class="ln" data-ln="14">    switch (choice)</span><span class="ln" data-ln="15">    {</span><span class="ln" data-ln="16">        case &quot;1&quot;: ShowAll(); break;</span><span class="ln" data-ln="17">        case &quot;2&quot;: AddStudent(); break;</span><span class="ln" data-ln="18">        case &quot;3&quot;: UpdateGrade(); break;</span><span class="ln" data-ln="19">        case &quot;4&quot;: DeleteStudent(); break;</span><span class="ln" data-ln="20">        case &quot;5&quot;: Stats(); break;</span><span class="ln" data-ln="21">        case &quot;0&quot;: Console.WriteLine(&quot;وداعًا&quot;); break;</span><span class="ln" data-ln="22">        default: Console.WriteLine(&quot;اختيار غير صحيح&quot;); break;</span><span class="ln" data-ln="23">    }</span><span class="ln" data-ln="24">}</span><span class="ln" data-ln="25"> </span><span class="ln" data-ln="26">void ShowAll()</span><span class="ln" data-ln="27">{</span><span class="ln" data-ln="28">    using var conn = new SqlConnection(cs);</span><span class="ln" data-ln="29">    conn.Open();</span><span class="ln" data-ln="30">    var cmd = new SqlCommand(&quot;SELECT Id, FullName, Course, Grade FROM Students&quot;, conn);</span><span class="ln" data-ln="31">    using var r = cmd.ExecuteReader();</span><span class="ln" data-ln="32">    while (r.Read())</span><span class="ln" data-ln="33">        Console.WriteLine($&quot;{r[&quot;Id&quot;]}. {r[&quot;FullName&quot;]} | {r[&quot;Course&quot;]} | {r[&quot;Grade&quot;]}&quot;);</span><span class="ln" data-ln="34">}</span><span class="ln" data-ln="35"> </span><span class="ln" data-ln="36">void AddStudent()</span><span class="ln" data-ln="37">{</span><span class="ln" data-ln="38">    Console.Write(&quot;الاسم: &quot;);   string name = Console.ReadLine();</span><span class="ln" data-ln="39">    Console.Write(&quot;الدورة: &quot;);  string course = Console.ReadLine();</span><span class="ln" data-ln="40">    Console.Write(&quot;الدرجة: &quot;);</span><span class="ln" data-ln="41">    if (!decimal.TryParse(Console.ReadLine(), out decimal grade))</span><span class="ln" data-ln="42">    {</span><span class="ln" data-ln="43">        Console.WriteLine(&quot;درجة غير صحيحة&quot;); return;</span><span class="ln" data-ln="44">    }</span><span class="ln" data-ln="45">    using var conn = new SqlConnection(cs);</span><span class="ln" data-ln="46">    conn.Open();</span><span class="ln" data-ln="47">    var cmd = new SqlCommand(</span><span class="ln" data-ln="48">        &quot;INSERT INTO Students (FullName, Course, Grade) VALUES (@n, @c, @g)&quot;, conn);</span><span class="ln" data-ln="49">    cmd.Parameters.AddWithValue(&quot;@n&quot;, name);</span><span class="ln" data-ln="50">    cmd.Parameters.AddWithValue(&quot;@c&quot;, course);</span><span class="ln" data-ln="51">    cmd.Parameters.AddWithValue(&quot;@g&quot;, grade);</span><span class="ln" data-ln="52">    cmd.ExecuteNonQuery();</span><span class="ln" data-ln="53">    Console.WriteLine(&quot;تمت الإضافة ✔&quot;);</span><span class="ln" data-ln="54">}</span><span class="ln" data-ln="55"> </span><span class="ln" data-ln="56">// أكمل أنت: UpdateGrade و DeleteStudent و Stats</span><span class="ln" data-ln="57">void UpdateGrade() { /* UPDATE Students SET Grade = @g WHERE Id = @id */ }</span><span class="ln" data-ln="58">void DeleteStudent() { /* DELETE FROM Students WHERE Id = @id */ }</span><span class="ln" data-ln="59">void Stats() { /* SELECT COUNT(*), AVG(Grade), MAX(Grade) FROM Students */ }</span></code></pre>
+    </div>
+        <details class="explain" open>
+            <summary>شرح الكود سطرًا بسطر</summary>
+                <p class="explain-sum"><b>ماذا يفعل هذا الكود؟</b> هيكل برنامج المشروع النهائي: قائمة نصية تتكرر حتى يختار المستخدم 0، وكل رقم يستدعي دالة تتعامل مع قاعدة البيانات SchoolDB. دالتا العرض والإضافة جاهزتان، وعليك إكمال التعديل والحذف والإحصائيات.</p>
+            <ol class="explain-list">
+                    <li data-ln="0">
+                        <code dir="ltr">using Microsoft.Data.SqlClient;</code>
+                        <span>توجيه using يستورد مكتبة Microsoft.Data.SqlClient لنستخدم SqlConnection و SqlCommand للتعامل مع SQL Server.</span>
+                    </li>
+                    <li data-ln="1">
+                        <code dir="ltr">Console.OutputEncoding = System.Text.Encoding.UTF8;</code>
+                        <span>نضبط ترميز الطباعة في الشاشة على UTF8 حتى تظهر الحروف العربية والرموز بشكل صحيح بدل علامات استفهام.</span>
+                    </li>
+                    <li data-ln="3">
+                        <code dir="ltr">string cs = @&quot;Server=localhost\SQLEXPRESS;Database=SchoolDB;Trusted_Connection=True;TrustServerCertificate=True;&quot;;</code>
+                        <span>نص الاتصال بقاعدة البيانات: Server اسم الخادم (نسخة SQLEXPRESS على جهازك)، و Database هي SchoolDB، و Trusted_Connection=True للدخول بحساب Windows، و TrustServerCertificate=True لقبول شهادة الخادم المحلي. علامة @ تجعل \ حرفًا عاديًا. نعرّفه مرة واحدة وتستخدمه كل الدوال.</span>
+                    </li>
+                    <li data-ln="4">
+                        <code dir="ltr">string choice = &quot;&quot;;</code>
+                        <span>متغير يحفظ اختيار المستخدم، نبدأه بنص فارغ حتى يكون مختلفًا عن &quot;0&quot; فتبدأ الحلقة.</span>
+                    </li>
+                    <li data-ln="6">
+                        <code dir="ltr">while (choice != &quot;0&quot;)</code>
+                        <span>حلقة while تكرر عرض القائمة ما دام اختيار المستخدم ليس &quot;0&quot;. عندما يكتب 0 يتوقف التكرار وينتهي البرنامج.</span>
+                    </li>
+                    <li data-ln="7">
+                        <code dir="ltr">{</code>
+                        <span>القوس { يبدأ جسم الحلقة، أي الأوامر التي تتكرر في كل دورة، والقوس } المقابل ينهيه.</span>
+                    </li>
+                    <li data-ln="8">
+                        <code dir="ltr">Console.WriteLine(&quot;\n===== نظام سجل الطلاب =====&quot;);</code>
+                        <span>نطبع عنوان القائمة. الرمز \n داخل النص يعني سطرًا جديدًا، فيترك سطرًا فارغًا قبل العنوان لتنظيم الشاشة.</span>
+                    </li>
+                    <li data-ln="9">
+                        <code dir="ltr">Console.WriteLine(&quot;1) عرض الطلاب   2) إضافة طالب   3) تعديل درجة&quot;);</code>
+                        <span>هذا السطر والذي بعده يطبعان خيارات القائمة مع رقم كل خيار.</span>
+                    </li>
+                    <li data-ln="11">
+                        <code dir="ltr">Console.Write(&quot;اختيارك: &quot;);</code>
+                        <span>نطلب من المستخدم كتابة رقم الخيار، و Write تبقيه على نفس السطر.</span>
+                    </li>
+                    <li data-ln="12">
+                        <code dir="ltr">choice = Console.ReadLine();</code>
+                        <span>نقرأ ما كتبه المستخدم ونحفظه في choice. لاحظ أننا لا نكتب string هنا لأن المتغير معرّف مسبقًا.</span>
+                    </li>
+                    <li data-ln="14">
+                        <code dir="ltr">switch (choice)</code>
+                        <span>الأمر switch يقارن قيمة choice بعدة حالات ويُنفّذ الحالة المطابقة، وهو أوضح من كتابة if كثيرة.</span>
+                    </li>
+                    <li data-ln="16">
+                        <code dir="ltr">case &quot;1&quot;: ShowAll(); break;</code>
+                        <span>هذا السطر والسطران بعده: إذا كان الاختيار &quot;1&quot; نستدعي ShowAll، و&quot;2&quot; نستدعي AddStudent، و&quot;3&quot; نستدعي UpdateGrade. الكلمة break تُنهي switch (وليس الحلقة) فنعود لعرض القائمة.</span>
+                    </li>
+                    <li data-ln="19">
+                        <code dir="ltr">case &quot;4&quot;: DeleteStudent(); break;</code>
+                        <span>هذا السطر والذي بعده: &quot;4&quot; يستدعي DeleteStudent لحذف طالب، و&quot;5&quot; يستدعي Stats للإحصائيات.</span>
+                    </li>
+                    <li data-ln="21">
+                        <code dir="ltr">case &quot;0&quot;: Console.WriteLine(&quot;وداعًا&quot;); break;</code>
+                        <span>إذا اختار 0 نطبع رسالة وداع، ثم يتحقق شرط الحلقة فتتوقف لأن choice أصبح &quot;0&quot;.</span>
+                    </li>
+                    <li data-ln="22">
+                        <code dir="ltr">default: Console.WriteLine(&quot;اختيار غير صحيح&quot;); break;</code>
+                        <span>الحالة default تُنفّذ إذا لم يطابق الاختيار أيًا من الحالات السابقة، فننبّه المستخدم ونعيد القائمة.</span>
+                    </li>
+                    <li data-ln="26">
+                        <code dir="ltr">void ShowAll()</code>
+                        <span>نعرّف دالة اسمها ShowAll لعرض كل الطلاب. void تعني أنها لا تعيد قيمة. هي دالة محلية مكتوبة بعد الكود الرئيسي ويمكنها استخدام المتغير cs.</span>
+                    </li>
+                    <li data-ln="28">
+                        <code dir="ltr">using var conn = new SqlConnection(cs);</code>
+                        <span>ننشئ اتصالًا بقاعدة البيانات، و using var تغلقه تلقائيًا عند نهاية الدالة.</span>
+                    </li>
+                    <li data-ln="29">
+                        <code dir="ltr">conn.Open();</code>
+                        <span>نفتح الاتصال بالخادم فعليًا.</span>
+                    </li>
+                    <li data-ln="30">
+                        <code dir="ltr">var cmd = new SqlCommand(&quot;SELECT Id, FullName, Course, Grade FROM Students&quot;, conn);</code>
+                        <span>نجهّز أمر SELECT يجلب رقم الطالب واسمه ودورته ودرجته، ونربطه بالاتصال.</span>
+                    </li>
+                    <li data-ln="31">
+                        <code dir="ltr">using var r = cmd.ExecuteReader();</code>
+                        <span>ExecuteReader تنفّذ الاستعلام وتعيد قارئًا r لقراءة النتائج صفًا صفًا.</span>
+                    </li>
+                    <li data-ln="32">
+                        <code dir="ltr">while (r.Read())</code>
+                        <span>r.Read() تنتقل للصف التالي وتعيد true ما دامت هناك صفوف، فنكرر الطباعة لكل طالب.</span>
+                    </li>
+                    <li data-ln="33">
+                        <code dir="ltr">Console.WriteLine($&quot;{r[&quot;Id&quot;]}. {r[&quot;FullName&quot;]} | {r[&quot;Course&quot;]} | {r[&quot;Grade&quot;]}&quot;);</code>
+                        <span>نطبع بيانات الطالب الحالي، و r[&quot;Id&quot;] مثلًا تجلب قيمة العمود Id من الصف الحالي. علامة $ تسمح بوضع القيم داخل { }.</span>
+                    </li>
+                    <li data-ln="36">
+                        <code dir="ltr">void AddStudent()</code>
+                        <span>دالة AddStudent تطلب بيانات طالب جديد وتضيفه إلى قاعدة البيانات.</span>
+                    </li>
+                    <li data-ln="38">
+                        <code dir="ltr">Console.Write(&quot;الاسم: &quot;);   string name = Console.ReadLine();</code>
+                        <span>في سطر واحد: نطبع سؤال الاسم ثم نقرأ إجابة المستخدم ونحفظها في name. يمكن كتابة أمرين في سطر لأن كلًا منهما ينتهي بفاصلة منقوطة.</span>
+                    </li>
+                    <li data-ln="39">
+                        <code dir="ltr">Console.Write(&quot;الدورة: &quot;);  string course = Console.ReadLine();</code>
+                        <span>بنفس الطريقة نسأل عن الدورة ونحفظها في course.</span>
+                    </li>
+                    <li data-ln="40">
+                        <code dir="ltr">Console.Write(&quot;الدرجة: &quot;);</code>
+                        <span>نطلب إدخال الدرجة.</span>
+                    </li>
+                    <li data-ln="41">
+                        <code dir="ltr">if (!decimal.TryParse(Console.ReadLine(), out decimal grade))</code>
+                        <span>decimal.TryParse تحاول تحويل النص إلى رقم عشري: إن نجحت تعيد true وتضع الرقم في grade (عبر out)، وإن فشلت تعيد false دون أن يتوقف البرنامج. العلامة ! تعني &quot;ليس&quot;، أي: إذا فشل التحويل.</span>
+                    </li>
+                    <li data-ln="43">
+                        <code dir="ltr">Console.WriteLine(&quot;درجة غير صحيحة&quot;); return;</code>
+                        <span>إذا كانت الدرجة غير صالحة نطبع تنبيهًا، ثم return تخرج من الدالة فورًا دون إضافة شيء لقاعدة البيانات.</span>
+                    </li>
+                    <li data-ln="45">
+                        <code dir="ltr">using var conn = new SqlConnection(cs);</code>
+                        <span>بعد التأكد من صحة المدخلات ننشئ الاتصال، و using var تغلقه تلقائيًا.</span>
+                    </li>
+                    <li data-ln="46">
+                        <code dir="ltr">conn.Open();</code>
+                        <span>نفتح الاتصال.</span>
+                    </li>
+                    <li data-ln="47">
+                        <code dir="ltr">var cmd = new SqlCommand(</code>
+                        <span>ننشئ أمر SqlCommand على سطرين لطول النص.</span>
+                    </li>
+                    <li data-ln="48">
+                        <code dir="ltr">&quot;INSERT INTO Students (FullName, Course, Grade) VALUES (@n, @c, @g)&quot;, conn);</code>
+                        <span>أمر الإضافة يستخدم معاملات @n و @c و @g بدل القيم الحقيقية، وهي أماكن محجوزة تُملأ بأمان في الأسطر التالية.</span>
+                    </li>
+                    <li data-ln="49">
+                        <code dir="ltr">cmd.Parameters.AddWithValue(&quot;@n&quot;, name);</code>
+                        <span>هذا السطر والسطران بعده يربطون كل معامل بقيمته: @n بالاسم و @c بالدورة و @g بالدرجة. القيم تُرسل كبيانات منفصلة عن نص الأمر، فلا يمكن تنفيذها كأوامر SQL، وهذا يحمي من هجوم SQL Injection.</span>
+                    </li>
+                    <li data-ln="52">
+                        <code dir="ltr">cmd.ExecuteNonQuery();</code>
+                        <span>ExecuteNonQuery تنفّذ أمر INSERT فعليًا. هي للأوامر التي لا تعيد جدول نتائج، وتعيد عدد الصفوف المتأثرة (لم نحفظه هنا).</span>
+                    </li>
+                    <li data-ln="53">
+                        <code dir="ltr">Console.WriteLine(&quot;تمت الإضافة ✔&quot;);</code>
+                        <span>نطبع رسالة تأكيد للمستخدم بنجاح الإضافة.</span>
+                    </li>
+                    <li data-ln="56">
+                        <code dir="ltr">// أكمل أنت: UpdateGrade و DeleteStudent و Stats</code>
+                        <span>السطر الذي يبدأ بـ // تعليق لا ينفّذه ⁦C#⁩. هنا يخبرك أن الدوال الثلاث التالية عليك إكمالها بنفسك.</span>
+                    </li>
+                    <li data-ln="57">
+                        <code dir="ltr">void UpdateGrade() { /* UPDATE Students SET Grade = @g WHERE Id = @id */ }</code>
+                        <span>دالة فارغة الآن، وداخل /* */ تعليق يلمّح للأمر المطلوب: UPDATE مع معاملين @g و @id. اقرأ رقم الطالب ودرجته الجديدة ثم استخدم ExecuteNonQuery، ولا تنسَ WHERE حتى لا تتغير درجات الجميع.</span>
+                    </li>
+                    <li data-ln="58">
+                        <code dir="ltr">void DeleteStudent() { /* DELETE FROM Students WHERE Id = @id */ }</code>
+                        <span>دالة الحذف: اقرأ رقم الطالب ونفّذ DELETE بمعامل @id عبر ExecuteNonQuery. شرط WHERE هنا ضروري جدًا، فبدونه تُحذف كل الصفوف.</span>
+                    </li>
+                    <li data-ln="59">
+                        <code dir="ltr">void Stats() { /* SELECT COUNT(*), AVG(Grade), MAX(Grade) FROM Students */ }</code>
+                        <span>دالة الإحصائيات: الاستعلام يعيد صفًا واحدًا بثلاث قيم (العدد والمتوسط وأعلى درجة)، فيمكنك قراءته بـ ExecuteReader ثم r.Read() مرة واحدة، أو تنفيذ ثلاثة استعلامات بـ ExecuteScalar.</span>
+                    </li>
+            </ol>
+        </details>
+</div>
+
+    </div>
+    <div class="sec">
+        <h3>واجهة HTML</h3>
+        <p class="prose muted">في <a href="editor.html">محرر HTML</a> اختر القالب «بداية المشروع النهائي» لتبدأ منه.</p>
+    </div>
+
+    <div>
+        <h2 class="h2">معايير تقييم المشروع (35 درجة)</h2>
+        <div class="scroll">
+            <table>
+                <thead><tr><th>المحور</th><th class="num">الدرجة</th><th>ما يُقيَّم</th></tr></thead>
+                <tbody>
+                        <tr>
+                            <td><b>صفحة HTML وCSS</b></td>
+                            <td class="num">8</td>
+                            <td><ul class="clean"> <li>هيكل صحيح وتقسيم header/nav/main/footer (2)</li>  <li>نموذج إدخال بأربعة حقول مناسبة على الأقل (2)</li>  <li>جدول عرض بيانات (2)</li>  <li>تنسيق CSS مرتب وواضح (2)</li> </ul></td>
+                        </tr>
+                        <tr>
+                            <td><b>قاعدة البيانات SQL Server</b></td>
+                            <td class="num">8</td>
+                            <td><ul class="clean"> <li>جدول بمفتاح أساسي وأنواع بيانات مناسبة (3)</li>  <li>5 صفوف تجريبية على الأقل (2)</li>  <li>استعلامات SELECT وWHERE وتجميع صحيحة (3)</li> </ul></td>
+                        </tr>
+                        <tr>
+                            <td><b>برنامج ⁦C#⁩</b></td>
+                            <td class="num">12</td>
+                            <td><ul class="clean"> <li>قائمة رئيسية تعمل بـ while وswitch (2)</li>  <li>العرض والإضافة من القاعدة (4)</li>  <li>التعديل والحذف (3)</li>  <li>الإحصائيات &#x2B; التعامل مع الإدخال الخاطئ (3)</li> </ul></td>
+                        </tr>
+                        <tr>
+                            <td><b>العرض والشرح</b></td>
+                            <td class="num">7</td>
+                            <td><ul class="clean"> <li>وضوح العرض والالتزام بالوقت (3)</li>  <li>فهم الكود والإجابة عن الأسئلة (4)</li> </ul></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    </main>
+    <script src="js/site.js"></script>
+    <script src="js/static-site.js"></script>
+    
+</body>
+</html>
