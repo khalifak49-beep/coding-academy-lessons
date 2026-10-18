@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>محرر HTML · أساسيات البرمجة</title>
+    <script>
+        // شاشة الدخول الموحدة للطلاب
+        (function () {
+            try { if (localStorage.getItem("ca-auth") === "b3f90063cdaae099") return; } catch (e) { }
+            location.replace("login.html?next=" + encodeURIComponent(location.href));
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-playground="editor.html">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>دروس الدورة للمتدربين</span>
+                </a>
+                <div class="tools">
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="false" href="index.html">الدروس</a>
+                <a class="tab" aria-selected="true" href="editor.html">محرر HTML</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <section class="view">
+    <div class="panel stack">
+        <h1 class="h2">محرر HTML وCSS</h1>
+        <p class="muted">اكتب الكود وشاهد النتيجة مباشرة. المحرر يقترح عليك الوسوم والخصائص أثناء الكتابة مثل Visual Studio، وزر «جرّب في المحرر» في الدروس يفتح المثال هنا. عملك يُحفظ تلقائيًا في متصفحك.</p>
+        <div class="tips" aria-label="اختصارات المحرر">
+            <span class="tip"><kbd>Tab</kbd> يقبل الاقتراح أو التكملة الرمادية</span>
+            <span class="tip"><code>!</code> ثم <kbd>Tab</kbd> هيكل صفحة كاملة بالعربية</span>
+            <span class="tip"><code>ul&gt;li*3</code> ثم <kbd>Tab</kbd> قائمة بثلاثة عناصر</span>
+            <span class="tip"><code>div.card</code> ثم <kbd>Tab</kbd> صندوق بكلاس</span>
+            <span class="tip"><code>table&gt;tr*2&gt;td*3</code> ثم <kbd>Tab</kbd> جدول</span>
+            <span class="tip"><kbd>Ctrl</kbd>+<kbd>Space</kbd> إظهار الاقتراحات</span>
+        </div>
+    </div>
+    <div class="play-bar">
+        <label for="starter" class="muted">ابدأ من:</label>
+        <select id="starter">
+            <option value="">اختر قالبًا…</option>
+            <option value="blank">صفحة فارغة</option>
+            <option value="project">بداية المشروع النهائي</option>
+        </select>
+        <button class="btn" type="button" id="formatCode" hidden>ترتيب الكود</button>
+        <button class="btn" type="button" id="copyCode">نسخ الكود</button>
+        <span class="status" id="editorStatus" aria-live="polite"></span>
+    </div>
+    <div class="play">
+        <div class="editor-wrap">
+            <div id="monaco" dir="ltr" hidden></div>
+            <textarea id="editor" spellcheck="false" aria-label="محرر الكود"></textarea>
+        </div>
+        <iframe id="preview" title="معاينة الصفحة" sandbox=""></iframe>
+    </div>
+</section>
+
+<script type="text/plain" id="tpl-blank"><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>صفحتي</title>
+  <style>
+    body { font-family: Tahoma; padding: 20px; }
+  </style>
+</head>
+<body>
+  <h1>اكتب هنا</h1>
+</body>
+</html></script>
+
+<script type="text/plain" id="tpl-project"><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { margin: 0; font-family: Tahoma; background: #f4f6f8; }
+  header { background: #0f766e; color: white; padding: 16px; }
+  nav { display: flex; gap: 16px; background: #134e4a; padding: 10px 16px; }
+  nav a { color: white; text-decoration: none; }
+  main { padding: 20px; max-width: 700px; margin: auto; }
+  .box { background: white; padding: 16px; border-radius: 10px; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border-bottom: 1px solid #ddd; padding: 8px; text-align: right; }
+</style>
+</head>
+<body>
+<header><h1>نظام سجل الطلاب</h1></header>
+<nav><a href="#">الرئيسية</a><a href="#">الطلاب</a><a href="#">تسجيل</a></nav>
+<main>
+  <div class="box">
+    <h2>تسجيل طالب</h2>
+    <form>
+      <p><label>الاسم <input type="text"></label></p>
+      <p><label>الدورة <select><option>C#</option><option>HTML</option></select></label></p>
+      <button>حفظ</button>
+    </form>
+  </div>
+  <div class="box">
+    <h2>قائمة الطلاب</h2>
+    <table>
+      <tr><th>#</th><th>الاسم</th><th>الدورة</th><th>الدرجة</th></tr>
+      <tr><td>1</td><td>سارة</td><td>C#</td><td>95</td></tr>
+    </table>
+  </div>
+</main>
+</body>
+</html></script>
+
+
+    </main>
+    <script src="js/site.js"></script>
+    <script src="js/static-site.js"></script>
+    
+    <script src="lib/monaco/vs/loader.js"></script>
+    <script src="lib/emmet-monaco/emmet-monaco.min.js"></script>
+    <script src="js/editor-hints.js?v=eJR8e6oflo-tyeGKd3gccR7pvaOkcpgWnM_iE8i2Eag"></script>
+    <script src="js/playground.js?v=28dF1vXBsAkroTSdFiTO2UvmJ-klxqZZotqEgDPF_Sw"></script>
+
+</body>
+</html>

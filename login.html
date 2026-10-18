@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>تسجيل الدخول · أساسيات البرمجة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+    <main class="wrap">
+        <div class="login">
+            <div class="login-intro">
+                <span class="eyebrow">دورة أساسيات البرمجة</span>
+                <h1>HTML و&#x2066;C#&#x2069; وSQL Server</h1>
+                <p class="muted">دروس الدورة، والمحرر لتجربة الأكواد، وتحميل الدروس PDF وWord.</p>
+                <div class="pills">
+                    <span class="pill t-html">HTML وCSS</span>
+                    <span class="pill t-cs">&#x2066;C#&#x2069;</span>
+                    <span class="pill t-sql">SQL Server</span>
+                </div>
+            </div>
+            <form class="panel form" id="loginForm">
+                <h2>تسجيل الدخول</h2>
+                <label for="u">اسم المستخدم</label>
+                <input id="u" autocomplete="username" dir="ltr" autofocus required />
+                <label for="p">كلمة المرور</label>
+                <input id="p" type="password" autocomplete="current-password" dir="ltr" required />
+                <span class="field-error" id="err" role="alert"></span>
+                <button class="btn primary" type="submit">دخول</button>
+                <p class="muted small">اسم المستخدم وكلمة المرور من المدرب.</p>
+            </form>
+        </div>
+    </main>
+    <script>
+        (function () {
+            const expected = "b3f90063cdaae099787824384a99437b06b356bdb2c9ff13c6168cf555ddf8eb";
+            const form = document.getElementById("loginForm"), err = document.getElementById("err");
+            async function sha256(text) {
+                const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+                return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+            }
+            form.addEventListener("submit", async e => {
+                e.preventDefault();
+                const hash = await sha256("ca:" + document.getElementById("u").value.trim() + ":" + document.getElementById("p").value);
+                if (hash !== expected) { err.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة"; return; }
+                try { localStorage.setItem("ca-auth", expected.slice(0, 16)); } catch (x) { }
+                const next = new URLSearchParams(location.search).get("next");
+                let target = "index.html";
+                try { if (next && new URL(next).origin === location.origin) target = next; } catch (x) { }
+                location.replace(target);
+            });
+        })();
+    </script>
+</body>
+</html>
