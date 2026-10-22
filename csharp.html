@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>محرر C# · أساسيات البرمجة</title>
+    <script>
+    // بوابة الدخول: تعرف من دخل (مدرب أو متدرب) وتمنع المتدرب من صفحات المدرب والدروس غير المفتوحة
+    (function () {
+        var ACC = {"trainer":{"t":"1d1960c2ab54c250","r":"trainer","n":"\u0627\u0644\u0645\u062F\u0631\u0628"},"student1":{"t":"73fe0bb89e5afd7e","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 1"},"student2":{"t":"412fda9187c19945","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 2"},"student3":{"t":"c0bb846f3ccc87be","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 3"},"student4":{"t":"9c760debed294409","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 4"},"student5":{"t":"d5e3fe1353917766","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 5"},"student6":{"t":"9d1d1ee2858371ac","r":"student","n":"\u0627\u0644\u0645\u062A\u062F\u0631\u0628 6"}}, root = "";
+        var s = null;
+        try { s = JSON.parse(localStorage.getItem("ca-session") || "null"); } catch (e) { }
+        var a = s && ACC[s.u];
+        if (!a || a.t !== s.t) { location.replace(root + "login.html?next=" + encodeURIComponent(location.href)); return; }
+        var html = document.documentElement;
+        html.dataset.role = a.r;
+        html.dataset.repo = "khalifak49-beep/CodingAcademy";
+        window.CA_USER = { u: s.u, role: a.r, name: a.n };
+        if (("" === "trainer" || "" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+    })();
+</script>
+<style>
+    html:not([data-role="trainer"]) .trainer-only { display: none !important; }
+    html[data-role="trainer"] .student-only { display: none !important; }
+</style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body data-playground="editor.html" data-csharp="csharp.html" data-root="">
+    <header class="top">
+        <div class="wrap">
+            <div class="row">
+                <a class="brand" href="index.html">
+                    <strong>أساسيات البرمجة: HTML و&#x2066;C#&#x2069; وSQL Server</strong>
+                    <span>أسبوعان · 10 أيام · ساعتان يوميًا</span>
+                </a>
+                <div class="tools">
+                    <span class="who" id="whoAmI"></span>
+                    <button class="btn" id="presentBtn" type="button" aria-pressed="false" title="تكبير الخط للعرض على البروجكتر">تكبير الخط</button>
+                    <button class="btn" id="logoutBtn" type="button" data-login="login.html">خروج</button>
+                </div>
+            </div>
+            <nav class="tabs" aria-label="أقسام الموقع">
+                <a class="tab" aria-selected="false" href="index.html">الدروس</a>
+                <a class="tab" aria-selected="false" href="editor.html">محرر HTML</a>
+                <a class="tab" aria-selected="true" href="csharp.html">محرر &#x2066;C#&#x2069;</a>
+                <a class="tab trainer-only" aria-selected="false" href="project.html">المشروع النهائي</a>
+                <a class="tab trainer-only" aria-selected="false" href="grades.html">الدرجات والحضور</a>
+                <a class="tab trainer-only" aria-selected="false" href="exams.html">الاختبارات</a>
+                <a class="tab trainer-only" aria-selected="false" href="settings.html">الإعدادات</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="flash ok" id="caFlash" role="status" hidden></div>
+        <section class="view" id="csApp" data-worker="csharp/runner-worker.js">
+    <div class="panel stack">
+        <h1 class="h2">محرر &#x2066;C#&#x2069;: برامج Console</h1>
+        <p class="muted">اكتب برنامج &#x2066;C#&#x2069; واضغط «تشغيل»، فيظهر الناتج في الكونسول مثل Visual Studio. عندما يطلب البرنامج إدخالًا (<code>Console.ReadLine</code>) اكتب في سطر الكونسول واضغط Enter. البرنامج يعمل داخل متصفحك.</p>
+        <div class="tips">
+            <span class="tip"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> تشغيل</span>
+            <span class="tip"><code>cw</code> ثم <kbd>Tab</kbd> ← <code>Console.WriteLine</code></span>
+            <span class="tip"><code>readint</code> ثم <kbd>Tab</kbd> قراءة رقم</span>
+            <span class="tip"><code>for</code> أو <code>if</code> أو <code>menu</code> ثم <kbd>Tab</kbd></span>
+            <span class="tip">بعد النقطة <code>Console.</code> أو <code>Math.</code> تظهر الاقتراحات</span>
+        </div>
+    </div>
+
+    <div class="play-bar">
+        <button class="btn primary" type="button" id="runBtn">▶ تشغيل</button>
+        <button class="btn" type="button" id="stopBtn" disabled>⏹ إيقاف</button>
+        <button class="btn" type="button" id="clearBtn">مسح الكونسول</button>
+        <label for="csSample" class="muted">أمثلة:</label>
+        <select id="csSample">
+            <option value="">اختر مثالًا…</option>
+            <option value="hello">برنامج ترحيب</option>
+            <option value="calc">آلة حاسبة (switch)</option>
+            <option value="grades">درجات الطلاب (مصفوفة)</option>
+            <option value="guess">لعبة تخمين الرقم</option>
+            <option value="students">قائمة طلاب (List وclass)</option>
+            <option value="empty">برنامج فارغ</option>
+        </select>
+        <button class="btn" type="button" id="csCopy">نسخ الكود</button>
+        <span class="status" id="csStatus" aria-live="polite"></span>
+    </div>
+
+    <div class="cs-layout">
+        <div class="editor-wrap cs-editor">
+            <div id="csMonaco" dir="ltr" hidden></div>
+            <textarea id="csFallback" spellcheck="false" dir="ltr" aria-label="كود C#"></textarea>
+        </div>
+        <div class="console" dir="rtl" aria-label="الكونسول">
+            <div class="console-bar"><span>●</span><span>●</span><span>●</span> Console</div>
+            <div class="console-body">
+                <pre id="conOut"></pre>
+                <div class="con-line" id="conLine" hidden>
+                    <span class="con-caret">&gt;</span>
+                    <input id="conIn" autocomplete="off" spellcheck="false" aria-label="إدخال للبرنامج" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="cs-errors" id="csErrors"></ul>
+</section>
+
+<script type="text/plain" id="cs-tpl-hello">
+Console.Write("ما اسمك؟ ");
+string name = Console.ReadLine();
+
+Console.Write("كم عمرك؟ ");
+int age = int.Parse(Console.ReadLine());
+
+Console.WriteLine($"أهلًا {name}، بعد 5 سنوات سيكون عمرك {age + 5}");
+</script>
+<script type="text/plain" id="cs-tpl-calc">
+Console.Write("العدد الأول: ");
+double x = double.Parse(Console.ReadLine());
+Console.Write("العملية (+ - * /): ");
+string op = Console.ReadLine();
+Console.Write("العدد الثاني: ");
+double y = double.Parse(Console.ReadLine());
+
+switch (op)
+{
+    case "+": Console.WriteLine(x + y); break;
+    case "-": Console.WriteLine(x - y); break;
+    case "*": Console.WriteLine(x * y); break;
+    case "/":
+        if (y == 0) Console.WriteLine("لا يمكن القسمة على صفر");
+        else Console.WriteLine(x / y);
+        break;
+    default: Console.WriteLine("عملية غير معروفة"); break;
+}
+</script>
+<script type="text/plain" id="cs-tpl-grades">
+int[] grades = new int[6];
+for (int i = 0; i < grades.Length; i++)
+{
+    Console.Write($"درجة الطالب {i + 1}: ");
+    grades[i] = int.Parse(Console.ReadLine());
+}
+
+int sum = 0, max = grades[0], passed = 0;
+foreach (int g in grades)
+{
+    sum += g;
+    if (g > max) max = g;
+    if (g >= 60) passed++;
+}
+Console.WriteLine($"المتوسط: {(double)sum / grades.Length:F1}");
+Console.WriteLine($"الأعلى: {max} - الناجحون: {passed}");
+</script>
+<script type="text/plain" id="cs-tpl-guess">
+int secret = Random.Shared.Next(1, 101);
+int guess = 0, tries = 0;
+
+while (guess != secret)
+{
+    Console.Write("خمّن رقمًا من 1 إلى 100: ");
+    guess = int.Parse(Console.ReadLine());
+    tries++;
+    if (guess < secret) Console.WriteLine("أكبر ⬆");
+    else if (guess > secret) Console.WriteLine("أصغر ⬇");
+}
+Console.WriteLine($"أحسنت! عرفته في {tries} محاولات");
+</script>
+<script type="text/plain" id="cs-tpl-students">
+var students = new List<Student>();
+string choice = "";
+
+while (choice != "0")
+{
+    Console.WriteLine("1) إضافة طالب   2) عرض الطلاب   0) خروج");
+    choice = Console.ReadLine();
+    switch (choice)
+    {
+        case "1":
+            Console.Write("الاسم: ");
+            string name = Console.ReadLine();
+            Console.Write("الدرجة: ");
+            int grade = int.Parse(Console.ReadLine());
+            students.Add(new Student { Name = name, Grade = grade });
+            break;
+        case "2":
+            foreach (var s in students)
+                Console.WriteLine($"{s.Name}: {s.Grade} - {(s.Grade >= 60 ? "ناجح" : "راسب")}");
+            break;
+    }
+}
+
+class Student
+{
+    public string Name { get; set; }
+    public int Grade { get; set; }
+}
+</script>
+<script type="text/plain" id="cs-tpl-empty">
+Console.WriteLine("مرحبًا بالعالم!");
+</script>
+
+
+    </main>
+    <script src="js/site.js"></script>
+    <script src="js/static-site.js"></script>
+    
+    <script src="lib/monaco/vs/loader.js"></script>
+    <script src="js/csharp-hints.js"></script>
+    <script src="js/csharp-editor.js"></script>
+
+</body>
+</html>

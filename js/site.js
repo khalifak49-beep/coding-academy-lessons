@@ -39,6 +39,11 @@
             };
             if (navigator.clipboard) navigator.clipboard.writeText(pre.innerText).then(done, fallback); else fallback();
         }
+        const tryCs = e.target.closest("[data-try-cs]");
+        if (tryCs) {
+            try { sessionStorage.setItem("csIncoming", tryCs.closest(".codebox").querySelector("pre").innerText); } catch { }
+            location.href = document.body.dataset.csharp || "/CSharp";
+        }
         const tryBtn = e.target.closest("[data-try]");
         if (tryBtn) {
             store.set("playCode", tryBtn.closest(".codebox").querySelector("pre").innerText);
