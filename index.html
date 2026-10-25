@@ -61,14 +61,15 @@
             <div>
                 <div class="eyebrow">لوحة المدرب</div>
                 <h1 class="h2" style="margin:0">
-الدرس الحالي: اليوم 4 · أول برنامج بـ ⁦C#⁩: المتغيرات وأنواع البيانات                </h1>
+الدرس الحالي: اليوم 5 · العمليات والشروط &#x2B; اختبار منتصف الدورة                </h1>
             </div>
                 <div class="pills">
-                    <a class="btn" href="lessons/day-4.html">افتح الدرس</a>
-                    <a class="btn primary" href="present/day-4.html">▶ ابدأ العرض</a>
+                    <a class="btn" href="lessons/day-5.html">افتح الدرس</a>
+                    <a class="btn primary" href="present/day-5.html">▶ ابدأ العرض</a>
                 </div>
         </div>
         <div class="flowbar" aria-hidden="true">
+                <span class="step st-done"></span>
                 <span class="step st-done"></span>
                 <span class="step st-done"></span>
                 <span class="step st-done"></span>
@@ -78,18 +79,17 @@
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
-                <span class="step st-upcoming"></span>
         </div>
         <div class="control-row">
-                <button class="btn ok" type="button" data-set-completed="4" data-confirm="إكمال اليوم 4 وفتح الدرس التالي للمتدربين؟">✓ إكمال اليوم 4</button>
-                <button class="btn" type="button" data-set-completed="2" data-confirm="إعادة فتح اليوم 3؟ سيعود هو الدرس الحالي.">↶ إعادة فتح اليوم 3</button>
+                <button class="btn ok" type="button" data-set-completed="5" data-confirm="إكمال اليوم 5 وفتح الدرس التالي للمتدربين؟">✓ إكمال اليوم 5</button>
+                <button class="btn" type="button" data-set-completed="3" data-confirm="إعادة فتح اليوم 4؟ سيعود هو الدرس الحالي.">↶ إعادة فتح اليوم 4</button>
             <label class="muted small" for="completedSelect">أو حدّد عدد الدروس المكتملة:</label>
             <select id="completedSelect">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
-                    <option value="3" selected="selected">3</option>
-                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="4" selected="selected">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
                     <option value="7">7</option>
@@ -99,7 +99,7 @@
             </select>
             <button class="btn" type="button" id="applyCompleted">تطبيق</button>
         </div>
-        <p class="muted small" style="margin:0">التغيير يظهر للمتدربين خلال دقيقتين تقريبًا. اكتمل 3 من 10. <span id="ghStatus"></span></p>
+        <p class="muted small" style="margin:0">التغيير يظهر للمتدربين خلال دقيقتين تقريبًا. اكتمل 4 من 10. <span id="ghStatus"></span></p>
     </div>
 
     <div class="panel student-only">
@@ -107,19 +107,19 @@
             <div>
                 <div class="eyebrow">مسار الدورة</div>
                 <h1 class="h2" style="margin:0">
-الدرس الحالي: اليوم 4 · أول برنامج بـ ⁦C#⁩: المتغيرات وأنواع البيانات                </h1>
+الدرس الحالي: اليوم 5 · العمليات والشروط &#x2B; اختبار منتصف الدورة                </h1>
             </div>
             <div class="pills">
-                <span class="muted small">اكتمل 3 من 10</span>
-                    <a class="btn primary" href="lessons/day-4.html">افتح الدرس الحالي</a>
+                <span class="muted small">اكتمل 4 من 10</span>
+                    <a class="btn primary" href="lessons/day-5.html">افتح الدرس الحالي</a>
             </div>
         </div>
         <div class="flowbar" aria-hidden="true">
                 <span class="step st-done"></span>
                 <span class="step st-done"></span>
                 <span class="step st-done"></span>
+                <span class="step st-done"></span>
                 <span class="step st-current"></span>
-                <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
                 <span class="step st-upcoming"></span>
@@ -198,7 +198,7 @@
                         <tr>
                             <td class="num"><b>4</b><br><small class="muted">أسبوع 1</small></td>
                             <td>
-                                <span class="status-pill st-current ">● الدرس الحالي</span>
+                                <span class="status-pill st-done ">✓ مكتمل</span>
                             </td>
                             <td><span class="pill t-cs">⁦C#⁩</span></td>
                             <td>
@@ -215,16 +215,14 @@
                         <tr>
                             <td class="num"><b>5</b><br><small class="muted">أسبوع 1</small></td>
                             <td>
-                                <span class="status-pill st-upcoming trainer-only">○ لم يبدأ</span>
-                                    <span class="status-pill st-upcoming student-only">🔒 لم يبدأ</span>
+                                <span class="status-pill st-current ">● الدرس الحالي</span>
                             </td>
                             <td><span class="pill t-cs">⁦C#⁩</span></td>
                             <td>
-                                <a class="trainer-only" href="lessons/day-5.html"><b>العمليات والشروط &#x2B; اختبار منتصف الدورة</b></a>
-                                    <span class="student-only"><span class="muted">العمليات والشروط &#x2B; اختبار منتصف الدورة</span><br><small class="muted">يُفتح عندما نصل إليه في الدورة</small></span>
+                                <a class="" href="lessons/day-5.html"><b>العمليات والشروط &#x2B; اختبار منتصف الدورة</b></a>
                             </td>
                             <td>
-                                <div class="pills trainer-only">
+                                <div class="pills ">
                                     <a class="btn" href="downloads/day-5.pdf" download>PDF</a>
                                     <a class="btn" href="downloads/day-5.docx" download>Word</a>
                                 </div>
@@ -329,7 +327,7 @@
                 </tbody>
             </table>
         </div>
-        <p class="muted small">آخر تحديث للموقع: 2026/10/25 07:54</p>
+        <p class="muted small">آخر تحديث للموقع: 2026/10/25 08:21</p>
     </div>
 </section>
 
