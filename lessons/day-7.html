@@ -17,7 +17,7 @@
         html.dataset.role = a.r;
         html.dataset.repo = "khalifak49-beep/CodingAcademy";
         window.CA_USER = { u: s.u, role: a.r, name: a.n };
-        if (("" === "trainer" || "0" === "0") && a.r !== "trainer") location.replace(root + "index.html");
+        if (("" === "trainer" || "1" === "0") && a.r !== "trainer") location.replace(root + "index.html");
     })();
 </script>
 <style>
@@ -79,18 +79,14 @@
                     <span class="lbl">الشروط &#x2B; اختبار المنتصف<small>اليوم 5 · مكتمل</small></span>
                 </a>
             <div class="wk">الأسبوع 2</div>
-                <a class="day st-current " href="day-6.html" aria-current="false">
-                    <span class="n">6</span>
-                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · الدرس الحالي</small></span>
+                <a class="day st-done " href="day-6.html" aria-current="false">
+                    <span class="n">✓</span>
+                    <span class="lbl">الحلقات والمصفوفات<small>اليوم 6 · مكتمل</small></span>
                 </a>
-                <a class="day st-upcoming trainer-only" href="day-7.html" aria-current="true">
+                <a class="day st-current " href="day-7.html" aria-current="true">
                     <span class="n">7</span>
-                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
+                    <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · الدرس الحالي</small></span>
                 </a>
-                    <span class="day locked st-upcoming student-only" title="يُفتح عندما نصل إليه في الدورة">
-                        <span class="n">🔒</span>
-                        <span class="lbl">الدوال وList والكلاسات<small>اليوم 7 · لم يبدأ</small></span>
-                    </span>
                 <a class="day st-upcoming trainer-only" href="day-8.html" aria-current="false">
                     <span class="n">8</span>
                     <span class="lbl">إنشاء الجداول وSELECT<small>اليوم 8 · لم يبدأ</small></span>
@@ -121,12 +117,13 @@
         <div class="lesson-head">
             <div class="pills">
                 <span class="pill t-cs">⁦C#⁩</span>
-                <span class="status-pill st-upcoming">○ لم يبدأ</span>
+                <span class="status-pill st-current">● الدرس الحالي</span>
                 <span class="eyebrow">اليوم 7 · الأسبوع 2 · ساعتان</span>
             </div>
             <h1>الدوال والقوائم List ومدخل للكائنات</h1>
             <div class="lesson-actions">
                 <a class="btn primary trainer-only" href="../present/day-7.html">▶ ابدأ عرض الدرس</a>
+                    <button class="btn ok trainer-only" type="button" data-set-completed="7" data-confirm="إكمال اليوم 7 وفتح الدرس التالي للمتدربين؟">✓ إكمال الدرس</button>
                 <a class="btn" href="../downloads/day-7.pdf" download>تحميل PDF</a>
                 <a class="btn" href="../downloads/day-7.docx" download>تحميل Word</a>
             </div>
